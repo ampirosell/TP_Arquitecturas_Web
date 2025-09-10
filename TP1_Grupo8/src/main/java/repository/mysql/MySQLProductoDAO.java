@@ -7,6 +7,7 @@ import entity.Producto;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import util.DBCreationTables;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -21,51 +22,17 @@ public class MySQLProductoDAO implements ProductoDAO {
     private final Connection conn;
 
     private FacturaProductoDAO facturaProductoDAO;
+    private DBCreationTables dbCreationTables;
 
-    public MySQLProductoDAO(Connection connection, FacturaProductoDAO facturaProductoDAO) throws SQLException {
+    public MySQLProductoDAO(Connection connection, FacturaProductoDAO facturaProductoDAO, DBCreationTables dbCreationTables) throws SQLException {
         this.conn = connection;
         this.facturaProductoDAO = facturaProductoDAO;
-        crearTablaSiNoExiste();
 
+        this.dbCreationTables = dbCreationTables;
+
+        dbCreationTables.crearTablasSiNoExisten();
     }
 
-    private void crearTablaSiNoExiste() {
-        final String sql = "CREATE TABLE IF NOT EXISTS producto (" +
-                "idProducto INT AUTO_INCREMENT PRIMARY KEY," +
-                "nombre VARCHAR(45) NOT NULL," +
-                "valor FLOAT NOT NULL" +
-                ");";
-
-        try (Statement st = conn.createStatement()) {
-            st.execute(sql);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void parseoCsv() {
-        // Abrimos y procesamos el CSV
-        try (InputStream inputStream = getClass().getClassLoader()
-                .getResourceAsStream("csvFiles/productos.csv")) {
-            // Verificamos que el archivo exista
-            if (inputStream == null) {
-                throw new FileNotFoundException("No se encontró productos.csv en resources");
-            }
-            // Creamos reader y parser dentro de try-with-resources para cerrarlos automáticamente y que no gasten recursos innecesarios
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-                 CSVParser parser = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(reader)) {
-                // Iteramos por cada fila del CSV
-                for(CSVRecord row: parser) {
-                    this.crearProducto(Integer.parseInt(row.get("idProducto")), row.get("nombre"), Double.valueOf(row.get("valor")));
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error en parseo de CSV para productos: " + e.getMessage());
-            e.printStackTrace();
-            System.exit(5);
-        }
-    }
 
     @Override
     public Map<String, Object> obtenerRecaudacionMaxima() throws SQLException {

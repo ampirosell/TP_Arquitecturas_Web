@@ -12,6 +12,7 @@ import entity.Producto;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import util.DBCreationTables;
 
 
 import java.io.*;
@@ -29,58 +30,19 @@ public class MySQLClienteDAO implements ClienteDAO {
     private FacturaProductoDAO facturaProductoDAO;
     private ProductoDAO productoDAO;
 
-    public MySQLClienteDAO(Connection connection, FacturaDAO facturaDAO, FacturaProductoDAO facturaProductoDAO, ProductoDAO productoDAO) throws SQLException {
+    private DBCreationTables  dbCreationTables;
+
+    public MySQLClienteDAO(Connection connection, FacturaDAO facturaDAO, FacturaProductoDAO facturaProductoDAO, ProductoDAO productoDAO, DBCreationTables dbCreationTables) throws SQLException {
         this.conn = connection;
         this.facturaDAO = facturaDAO;
         this.facturaProductoDAO = facturaProductoDAO;
         this.productoDAO = productoDAO;
-        crearTablaSiNoExiste();
+        this.dbCreationTables = dbCreationTables;
 
+        dbCreationTables.crearTablasSiNoExisten();
     }
 
-    private void crearTablaSiNoExiste() {
-        final String sql = "CREATE TABLE IF NOT EXISTS cliente (" +
-                "idCliente INT AUTO_INCREMENT PRIMARY KEY," +
-                "nombre VARCHAR(500) NOT NULL," +
-                "email VARCHAR(150) NOT NULL" +
-                ");";
 
-        try (Statement st = conn.createStatement()) {
-            st.execute(sql);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void parseoCsv() {
-        // Abrimos y procesamos el CSV
-        try (InputStream inputStream = getClass().getClassLoader()
-                .getResourceAsStream("csvFiles/clientes.csv")) {
-            // Verificamos que el archivo exista
-            if (inputStream == null) {
-                throw new FileNotFoundException("No se encontró clientes.csv en resources");
-            }
-            // Creamos reader y parser dentro de try-with-resources para cerrarlos automáticamente y que no gasten recursos innecesarios
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-                 CSVParser parser = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(reader)) {
-
-                // Iteramos por cada fila del CSV
-                for (CSVRecord row : parser) {
-                    // Creamos el cliente usando los datos de cada fila
-                    this.crearCliente(
-                            Integer.parseInt(row.get("idCliente")),
-                            row.get("nombre"),
-                            row.get("email")
-                    );
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error en parseo de CSV para clientes: " + e.getMessage());
-            e.printStackTrace();
-            System.exit(3);
-        }
-    }
     @Override
     public void crearCliente(int idCliente, String nombre, String email) {
         String sql = "INSERT INTO cliente (idCliente, nombre, email) VALUES (?, ?, ?)";
@@ -132,7 +94,6 @@ public class MySQLClienteDAO implements ClienteDAO {
     @Override
     public List<Cliente> listarOrdenadoPorRecaudacion()  throws SQLException {
         ArrayList<Map<String, Object>> lista = new ArrayList<>();
-        Map<String, Object> map = new HashMap<>();
 
         List<Cliente> clientesOrdenado = new ArrayList<>();
         List<Cliente> clientes = this.listarTodos();
@@ -154,6 +115,7 @@ public class MySQLClienteDAO implements ClienteDAO {
                 }
 
             }
+            Map<String, Object> map = new HashMap<>();
             map.put("cliente", cliente);
             map.put("recaudacion", recaudacion);
             lista.add(map);

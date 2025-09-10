@@ -5,6 +5,7 @@ import entity.FacturaProducto;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import util.DBCreationTables;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -19,55 +20,17 @@ public class MySQLFacturaProductoDAO implements FacturaProductoDAO {
 
     private final Connection conn;
 
-    public MySQLFacturaProductoDAO(Connection connection) throws SQLException {
+    private DBCreationTables dbCreationTables;
+
+    public MySQLFacturaProductoDAO(Connection connection, DBCreationTables dbCreationTables) throws SQLException {
         this.conn = connection;
-        crearTablaSiNoExiste();
+
+        this.dbCreationTables = dbCreationTables;
+
+        dbCreationTables.crearTablasSiNoExisten();
 
     }
 
-    private void crearTablaSiNoExiste() {
-        final String sql = "CREATE TABLE IF NOT EXISTS factura_producto (" +
-                "idFactura INT NOT NULL," +
-                "idProducto INT NOT NULL," +
-                "cantidad INT NOT NULL," +
-                "FOREIGN KEY (idFactura) REFERENCES factura(idFactura),"+
-                "FOREIGN KEY (idProducto) REFERENCES producto(idProducto)"+
-                ");";
-
-//TODO: ALTER TABLE DE FK FACTURA
-
-        try (Statement st = conn.createStatement()) {
-            st.execute(sql);
-        } catch (Exception e) {
-            System.out.println("Error en creación de tabla para FacturaProducto: "+e.getMessage());
-            e.printStackTrace();
-            System.exit(2);
-        }
-    }
-
-    @Override
-    public void parseoCsv() {
-        // Abrimos y procesamos el CSV
-        try (InputStream inputStream = getClass().getClassLoader()
-                .getResourceAsStream("csvFiles/facturas-productos.csv")) {
-            // Verificamos que el archivo exista
-            if (inputStream == null) {
-                throw new FileNotFoundException("No se encontró facturas-productos.csv en resources");
-            }
-            // Creamos reader y parser dentro de try-with-resources para cerrarlos automáticamente y que no gasten recursos innecesarios
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-                 CSVParser parser = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(reader)) {
-                // Iteramos por cada fila del CSV
-                for(CSVRecord row: parser) {
-                    this.crearFacturaProducto(Integer.parseInt(row.get("idProducto")), Integer.parseInt(row.get("cantidad")),Integer.parseInt(row.get("idFactura")));
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error en parseo de CSV para facturas: " + e.getMessage());
-            e.printStackTrace();
-            System.exit(4);
-        }
-    }
     @Override
     public void crearFacturaProducto(Integer idProducto, Integer cantidad, Integer idFactura) {
         String sql = "INSERT INTO factura_producto(idProducto, cantidad, idFactura) VALUES (?, ?, ?)";
@@ -100,6 +63,7 @@ public class MySQLFacturaProductoDAO implements FacturaProductoDAO {
         }
         return facturasProductos;
     }
+
 
     @Override
     public List<FacturaProducto> listarPorProducto(Integer idProducto) throws SQLException {

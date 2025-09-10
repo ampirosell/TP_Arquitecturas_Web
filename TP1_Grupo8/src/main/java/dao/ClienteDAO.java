@@ -11,8 +11,6 @@ public interface ClienteDAO {
 
     List<Cliente> listarOrdenadoPorRecaudacion()  throws SQLException ;
 
-
     void crearCliente(int id, String nombre, String email);
 
-    void parseoCsv();
 }

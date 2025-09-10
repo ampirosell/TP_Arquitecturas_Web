@@ -14,5 +14,4 @@ public interface FacturaDAO {
 
     List<Factura> listarPorCliente(Integer idCliente) throws SQLException;
 
-    void parseoCsv();
 }

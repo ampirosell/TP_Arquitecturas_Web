@@ -7,7 +7,9 @@ import dao.FacturaDAO;
 import dao.FacturaProductoDAO;
 import dao.ProductoDAO;
 import entity.FacturaProducto;
+import util.CSVParser;
 import repository.mysql.MySQLDAOFactory;
+import util.DBCreationTables;
 
 import java.sql.SQLException;
 
@@ -48,5 +50,9 @@ public  abstract  class DAOFactory {
     public abstract ProductoDAO crearProductoDAO() throws SQLException;
 
     public abstract FacturaProductoDAO crearFacturaProductoDAO() throws SQLException;
+
+    public abstract DBCreationTables getDBCreationTables();
+
+    public abstract CSVParser getCSVParser() throws SQLException;
 
 }

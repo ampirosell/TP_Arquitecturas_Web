@@ -6,8 +6,11 @@ import dao.FacturaProductoDAO;
 import dao.ProductoDAO;
 import factory.DAOFactory;
 import factory.DBType;
+import util.CSVParser;
+import util.DBCreationTables;
 
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Main {
@@ -16,26 +19,30 @@ public class Main {
             // 1. Creamos la factory de MySQL
             DAOFactory factory = DAOFactory.getInstance(DBType.MYSQL);
 
+            DBCreationTables dbCreationTables = factory.getDBCreationTables();
+
+            CSVParser csvParser = factory.getCSVParser();
+
             // 2. Obtenemos el DAO
 
+            ClienteDAO clienteDAO = factory.crearClienteDAO();
             FacturaDAO facturaDAO = factory.crearFacturaDAO();
             ProductoDAO productoDAO = factory.crearProductoDAO();
             FacturaProductoDAO facturaProductoDAO = factory.crearFacturaProductoDAO();
-            ClienteDAO clienteDAO = factory.crearClienteDAO();
 
-
+            //si mi tabla esta vacía, parseo los datos
+            if(clienteDAO.listarTodos().size()==0){
+                csvParser.parseoCsvClientes();
+            }
             if(facturaDAO.listarTodos().size()==0){
-                facturaDAO.parseoCsv();
+                csvParser.parseoCsvFacturas();
             }
             if(productoDAO.listarTodos().size()==0){
-                productoDAO.parseoCsv();
+                csvParser.parseoCsvProductos();
             }
 
             if(facturaProductoDAO.listarTodos().size()==0){
-                facturaProductoDAO.parseoCsv();
-            }
-            if(clienteDAO.listarTodos().size()==0){
-                clienteDAO.parseoCsv();
+                csvParser.parseoCsvFacturaProductos();
             }
 
             // 4. Listamos todas las personas
@@ -48,7 +55,7 @@ public class Main {
 
             System.out.println(productoDAO.obtenerRecaudacionMaxima());
 
-            System.out.println(clienteDAO.listarOrdenadoPorRecaudacion());
+            clienteDAO.listarOrdenadoPorRecaudacion().forEach(System.out::println);
 
         } catch (SQLException e) {
             System.out.println("Error en main: "+e.getMessage());

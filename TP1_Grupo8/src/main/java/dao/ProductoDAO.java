@@ -13,7 +13,5 @@ public interface ProductoDAO {
     
     void crearProducto(int id, String nombre, Double valor);
 
-    void parseoCsv();
-
     Map<String,Object> obtenerRecaudacionMaxima() throws SQLException;
 }
