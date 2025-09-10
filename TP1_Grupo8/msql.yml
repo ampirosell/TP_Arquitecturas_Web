@@ -6,6 +6,6 @@ services:
     restart: unless-stopped
     environment:
       - "MYSQL_ALLOW_EMPTY_PASSWORD=yes"
-      - "MYSQL_DATABASE=tp1_grupo10"
+      - "MYSQL_DATABASE=tp1_grupo8"
     ports:
       - "3306:3306"
