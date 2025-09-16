@@ -12,7 +12,7 @@ public final class ConexionMySQL {
     private static volatile ConexionMySQL instance;
     private Connection conn;
 
-    private static final String URL = "jdbc:mysql://localhost:3306/tp1_grupo10?createDatabaseIfNotExist=true";
+    private static final String URL = "jdbc:mysql://localhost:3306/tp1_grupo8?createDatabaseIfNotExist=true";
     private static final String USER = "root";
     private static final String PASSWORD = "";
         //constructor privado
