@@ -1,23 +1,39 @@
 package org.integrador.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "estudiante")
 public class Estudiante {
 
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "estudiante_id")
     private Long estudianteId;
+    
+    @Column(name = "nombre", nullable = false)
     private String nombre;
+    
+    @Column(name = "apellido", nullable = false)
     private String apellido;
+    
+    @Column(name = "edad", nullable = false)
     private Integer edad;
+    
+    @Column(name = "genero", nullable = false)
     private String genero;
-    private String dni; //sino el numero es muy grande
+    
+    @Column(name = "dni", unique = true, nullable = false)
+    private String dni;
+    
+    @Column(name = "ciudad_residencia", nullable = false)
     private String ciudadDeResidencia;
-    private String numeroLU; //dejamos string sino el numero es muy grande
+    
+    @Column(name = "numero_lu", unique = true, nullable = false)
+    private String numeroLU;
+    
+    @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<EstudianteDeCarrera> carreras;
 
     public Long getId() {

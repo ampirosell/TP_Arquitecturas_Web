@@ -1,0 +1,15 @@
+# Archivos a ignorar en Docker
+target/
+!target/*.jar
+*.log
+.git
+.gitignore
+README.md
+IMPLEMENTACION_COMPLETA.md
+CAMBIOS_CLAVE_COMPUESTA.md
+diagramas.md
+*.md
+.DS_Store
+.vscode/
+.idea/
+*.iml
