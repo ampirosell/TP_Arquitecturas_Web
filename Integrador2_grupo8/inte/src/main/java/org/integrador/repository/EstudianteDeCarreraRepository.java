@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface EstudianteDeCarreraRepository extends JpaRepository<EstudianteDeCarrera, EstudianteCarreraId> {
 
-    // Consultas para el reporte de carreras por año
+    // Consultas para el reporte de carrera por año
     @Query("SELECT YEAR(ec.fechaInscripcion) as año, " +
            "COUNT(CASE WHEN ec.graduado = false THEN 1 END) as inscriptos, " +
            "COUNT(CASE WHEN ec.graduado = true THEN 1 END) as egresados " +

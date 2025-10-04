@@ -63,12 +63,6 @@ public class EstudianteController {
         return ResponseEntity.ok(estudiantes);
     }
 
-    // Endpoint adicional: estudiantes por carrera
-    @GetMapping("/carrera/{nombreCarrera}")
-    public ResponseEntity<List<Estudiante>> obtenerEstudiantesPorCarrera(@PathVariable String nombreCarrera) {
-        List<Estudiante> estudiantes = estudianteService.obtenerEstudiantesPorCarrera(nombreCarrera);
-        return ResponseEntity.ok(estudiantes);
-    }
 
     // Obtener estudiante por ID
     @GetMapping("/{id}")
@@ -78,18 +72,6 @@ public class EstudianteController {
             return ResponseEntity.ok(estudiante.get());
         } else {
             return ResponseEntity.notFound().build();
-        }
-    }
-
-    // Actualizar estudiante
-    @PutMapping("/{id}")
-    public ResponseEntity<?> actualizarEstudiante(@PathVariable Long id, @RequestBody Estudiante estudiante) {
-        try {
-            estudiante.setId(id);
-            Estudiante estudianteActualizado = estudianteService.actualizarEstudiante(estudiante);
-            return ResponseEntity.ok(estudianteActualizado);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
     }
 
@@ -111,10 +93,4 @@ public class EstudianteController {
         return ResponseEntity.ok(existe);
     }
 
-    // Verificar existencia por número LU
-    @GetMapping("/existe/libreta/{numeroLU}")
-    public ResponseEntity<Boolean> existeEstudiantePorNumeroLU(@PathVariable String numeroLU) {
-        boolean existe = estudianteService.existeEstudiantePorNumeroLU(numeroLU);
-        return ResponseEntity.ok(existe);
-    }
 }

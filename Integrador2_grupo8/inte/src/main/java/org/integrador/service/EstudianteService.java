@@ -18,12 +18,9 @@ public class EstudianteService {
 
     // a) Dar de alta un estudiante
     public Estudiante crearEstudiante(Estudiante estudiante) {
-        // Validaciones
+        // Validacion
         if (estudianteRepository.existsByDni(estudiante.getDni())) {
             throw new RuntimeException("Ya existe un estudiante con el DNI: " + estudiante.getDni());
-        }
-        if (estudianteRepository.existsByNumeroLU(estudiante.getNumeroLU())) {
-            throw new RuntimeException("Ya existe un estudiante con el número de libreta: " + estudiante.getNumeroLU());
         }
         
         return estudianteRepository.save(estudiante);
@@ -49,19 +46,9 @@ public class EstudianteService {
         return estudianteRepository.findByCarreraAndCiudad(nombreCarrera, ciudad);
     }
 
-    // Consulta adicional: estudiantes por carrera
-    public List<Estudiante> obtenerEstudiantesPorCarrera(String nombreCarrera) {
-        return estudianteRepository.findByCarrera(nombreCarrera);
-    }
-
     // Obtener estudiante por ID
     public Optional<Estudiante> obtenerEstudiantePorId(Long id) {
         return estudianteRepository.findById(id);
-    }
-
-    // Actualizar estudiante
-    public Estudiante actualizarEstudiante(Estudiante estudiante) {
-        return estudianteRepository.save(estudiante);
     }
 
     // Eliminar estudiante
@@ -74,8 +61,4 @@ public class EstudianteService {
         return estudianteRepository.existsByDni(dni);
     }
 
-    // Verificar si existe estudiante por número LU
-    public boolean existeEstudiantePorNumeroLU(String numeroLU) {
-        return estudianteRepository.existsByNumeroLU(numeroLU);
-    }
 }

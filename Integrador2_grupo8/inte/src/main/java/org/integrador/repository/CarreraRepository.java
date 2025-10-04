@@ -24,9 +24,4 @@ public interface CarreraRepository extends JpaRepository<Carrera, Long> {
            "ORDER BY totalInscripciones DESC")
     List<Object[]> findCarrerasWithStudentCount();
 
-    // Buscar carrera por nombre
-    Optional<Carrera> findByNombre(String nombre);
-
-    // Verificar si existe carrera por nombre
-    boolean existsByNombre(String nombre);
 }

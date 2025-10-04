@@ -33,17 +33,8 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
     List<Estudiante> findByCarreraAndCiudad(@Param("nombreCarrera") String nombreCarrera, 
                                           @Param("ciudad") String ciudad);
 
-    // Consulta adicional: estudiantes por carrera
-    @Query("SELECT DISTINCT e FROM Estudiante e " +
-           "JOIN e.carreras ec " +
-           "JOIN ec.carrera c " +
-           "WHERE c.nombre = :nombreCarrera " +
-           "ORDER BY e.apellido, e.nombre")
-    List<Estudiante> findByCarrera(@Param("nombreCarrera") String nombreCarrera);
 
     // Verificar si existe estudiante por DNI
     boolean existsByDni(String dni);
 
-    // Verificar si existe estudiante por número de libreta universitaria
-    boolean existsByNumeroLU(String numeroLU);
 }

@@ -29,10 +29,7 @@ public class CarreraController {
 
     // b) Matricular un estudiante en una carrera
     @PostMapping("/{carreraId}/matricular/{estudianteId}")
-    public ResponseEntity<?> matricularEstudiante(
-            @PathVariable Long carreraId,
-            @PathVariable Long estudianteId,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInscripcion) {
+    public ResponseEntity<?> matricularEstudiante(@PathVariable Long carreraId, @PathVariable Long estudianteId, @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInscripcion) {
         
         try {
             EstudianteDeCarrera inscripcion = carreraService.matricularEstudiante(estudianteId, carreraId, fechaInscripcion);
@@ -42,30 +39,7 @@ public class CarreraController {
         }
     }
 
-    // Endpoint alternativo para matricular con objetos completos
-    @PostMapping("/matricular")
-    public ResponseEntity<?> matricularEstudianteCompleto(@RequestBody MatriculacionRequest request) {
-        try {
-            Optional<Estudiante> estudianteOpt = estudianteService.obtenerEstudiantePorId(request.getEstudianteId());
-            Optional<Carrera> carreraOpt = carreraService.obtenerCarreraPorId(request.getCarreraId());
-            
-            if (estudianteOpt.isEmpty()) {
-                return ResponseEntity.badRequest().body("Estudiante no encontrado");
-            }
-            if (carreraOpt.isEmpty()) {
-                return ResponseEntity.badRequest().body("Carrera no encontrada");
-            }
-            
-            EstudianteDeCarrera inscripcion = carreraService.matricularEstudiante(
-                estudianteOpt.get(), 
-                carreraOpt.get(), 
-                request.getFechaInscripcion()
-            );
-            return ResponseEntity.status(HttpStatus.CREATED).body(inscripcion);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
-        }
-    }
+
 
     // f) Recuperar carreras con estudiantes inscriptos ordenadas por cantidad
     @GetMapping("/con-estudiantes")
@@ -74,12 +48,6 @@ public class CarreraController {
         return ResponseEntity.ok(carreras);
     }
 
-    // Obtener carreras con conteo de estudiantes
-    @GetMapping("/con-conteo")
-    public ResponseEntity<List<Object[]>> obtenerCarrerasConConteoEstudiantes() {
-        List<Object[]> carreras = carreraService.obtenerCarrerasConConteoEstudiantes();
-        return ResponseEntity.ok(carreras);
-    }
 
     // Crear nueva carrera
     @PostMapping
@@ -110,28 +78,6 @@ public class CarreraController {
         }
     }
 
-    // Obtener carrera por nombre
-    @GetMapping("/nombre/{nombre}")
-    public ResponseEntity<?> obtenerCarreraPorNombre(@PathVariable String nombre) {
-        Optional<Carrera> carrera = carreraService.obtenerCarreraPorNombre(nombre);
-        if (carrera.isPresent()) {
-            return ResponseEntity.ok(carrera.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    // Actualizar carrera
-    @PutMapping("/{id}")
-    public ResponseEntity<?> actualizarCarrera(@PathVariable Long id, @RequestBody Carrera carrera) {
-        try {
-            carrera.setId(id);
-            Carrera carreraActualizada = carreraService.actualizarCarrera(carrera);
-            return ResponseEntity.ok(carreraActualizada);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
-        }
-    }
 
     // Eliminar carrera
     @DeleteMapping("/{id}")
@@ -144,31 +90,4 @@ public class CarreraController {
         }
     }
 
-    // Estadísticas de carrera
-    @GetMapping("/{id}/estadisticas")
-    public ResponseEntity<Map<String, Long>> obtenerEstadisticasCarrera(@PathVariable Long id) {
-        Map<String, Long> estadisticas = Map.of(
-            "totalEstudiantes", carreraService.contarEstudiantesPorCarrera(id),
-            "graduados", carreraService.contarGraduadosPorCarrera(id),
-            "activos", carreraService.contarActivosPorCarrera(id)
-        );
-        return ResponseEntity.ok(estadisticas);
-    }
-
-    // Clase interna para el request de matriculación
-    public static class MatriculacionRequest {
-        private Long estudianteId;
-        private Long carreraId;
-        private Date fechaInscripcion;
-
-        // Getters y Setters
-        public Long getEstudianteId() { return estudianteId; }
-        public void setEstudianteId(Long estudianteId) { this.estudianteId = estudianteId; }
-        
-        public Long getCarreraId() { return carreraId; }
-        public void setCarreraId(Long carreraId) { this.carreraId = carreraId; }
-        
-        public Date getFechaInscripcion() { return fechaInscripcion; }
-        public void setFechaInscripcion(Date fechaInscripcion) { this.fechaInscripcion = fechaInscripcion; }
-    }
 }

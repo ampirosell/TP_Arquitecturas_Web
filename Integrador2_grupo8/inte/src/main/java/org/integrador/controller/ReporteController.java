@@ -22,12 +22,7 @@ public class ReporteController {
         return ResponseEntity.ok(reporte);
     }
 
-    // Reporte formateado de carreras por año
-    @GetMapping("/carreras-por-ano/formateado")
-    public ResponseEntity<String> generarReporteCarrerasPorAñoFormateado() {
-        String reporteFormateado = reporteService.formatearReporteCarrerasPorAño();
-        return ResponseEntity.ok(reporteFormateado);
-    }
+
 
     // Reporte de una carrera específica por año
     @GetMapping("/carrera/{nombreCarrera}/por-ano")
@@ -37,11 +32,5 @@ public class ReporteController {
         return ResponseEntity.ok(reporte);
     }
 
-    // Reporte formateado de una carrera específica por año
-    @GetMapping("/carrera/{nombreCarrera}/por-ano/formateado")
-    public ResponseEntity<String> generarReporteCarreraPorAñoFormateado(
-            @PathVariable String nombreCarrera) {
-        String reporteFormateado = reporteService.formatearReporteCarreraPorAño(nombreCarrera);
-        return ResponseEntity.ok(reporteFormateado);
-    }
+
 }

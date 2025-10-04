@@ -57,29 +57,12 @@ public class CarreraService {
         return estudianteDeCarreraRepository.save(inscripcion);
     }
 
-    // Método sobrecargado para matricular con objetos completos
-    public EstudianteDeCarrera matricularEstudiante(Estudiante estudiante, Carrera carrera, Date fechaInscripcion) {
-        // Verificar que el estudiante no esté ya inscripto en esta carrera
-        EstudianteCarreraId id = new EstudianteCarreraId(estudiante.getId(), carrera.getId());
-        
-        if (estudianteDeCarreraRepository.existsById(id)) {
-            throw new RuntimeException("El estudiante ya está inscripto en esta carrera");
-        }
-
-        EstudianteDeCarrera inscripcion = new EstudianteDeCarrera(estudiante, carrera, 
-                                                                 fechaInscripcion != null ? fechaInscripcion : new Date());
-        return estudianteDeCarreraRepository.save(inscripcion);
-    }
 
     // f) Recuperar carreras con estudiantes inscriptos ordenadas por cantidad
     public List<Carrera> obtenerCarrerasConEstudiantesOrdenadasPorInscripciones() {
         return carreraRepository.findCarrerasWithStudentsOrderedByInscripciones();
     }
 
-    // Obtener carreras con conteo de estudiantes
-    public List<Object[]> obtenerCarrerasConConteoEstudiantes() {
-        return carreraRepository.findCarrerasWithStudentCount();
-    }
 
     // Crear nueva carrera
     public Carrera crearCarrera(Carrera carrera) {
@@ -99,24 +82,9 @@ public class CarreraService {
         return carreraRepository.findById(id);
     }
 
-    // Obtener carrera por nombre
-    public Optional<Carrera> obtenerCarreraPorNombre(String nombre) {
-        return carreraRepository.findByNombre(nombre);
-    }
-
-    // Actualizar carrera
-    public Carrera actualizarCarrera(Carrera carrera) {
-        return carreraRepository.save(carrera);
-    }
-
     // Eliminar carrera
     public void eliminarCarrera(Long id) {
         carreraRepository.deleteById(id);
-    }
-
-    // Verificar si existe carrera por nombre
-    public boolean existeCarreraPorNombre(String nombre) {
-        return carreraRepository.existsByNombre(nombre);
     }
 
     // Contar estudiantes por carrera
