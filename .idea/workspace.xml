@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="f7eb3c95-4ded-48f4-bc99-22d5d275d48d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/controller/CarreraController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/controller/CarreraController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/controller/DataController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/controller/DataController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/controller/EstudianteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/controller/EstudianteController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/controller/ReporteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/controller/ReporteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/InteApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/inte/InteApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,23 +29,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.Unnamed.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "integrador2-v2",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Hugo Ferrari/IdeaProjects/ArquitecturasWeb_TP1/TP_Arquitecturas_Web",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;integrador2-v2&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Hugo Ferrari/IdeaProjects/ArquitecturasWeb_TP1/TP_Arquitecturas_Web&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Pantufla\Desktop\facuTmp\arqui\TP_Arquitecturas_Web\Integrador2_grupo8\inte" />
+      <recent name="C:\Users\Pantufla\Desktop\facuTmp\arqui\TP_Arquitecturas_Web\Integrador2_grupo8\inte\src\main\java\org\integrador\inte" />
+      <recent name="C:\Users\Pantufla\Desktop\facuTmp\arqui\TP_Arquitecturas_Web\Integrador2_grupo8" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="TP_Arquitecturas_Web" />
@@ -85,7 +91,7 @@
               <list />
             </option>
             <option name="resolveToWorkspace" value="false" />
-            <option name="workingDirPath" value="$PROJECT_DIR$/Integrador2_grupo8/inte" />
+            <option name="workingDirPath" value="$PROJECT_DIR$/Integrador2_grupo8" />
           </MavenRunnerParameters>
         </option>
       </MavenSettings>
