@@ -1,4 +1,4 @@
-/*0package org.integrador.controller;
+package org.integrador.controller;
 
 import org.integrador.entity.Carrera;
 import org.integrador.entity.Estudiante;
@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/data")
-@CrossOrigin(origins = "*")
 public class DataController {
 
     @Autowired
@@ -25,7 +24,7 @@ public class DataController {
 
     @PostMapping("/init")
     public ResponseEntity<String> inicializarDatos() {
-        try {
+       /* try {
             // Crear carreras
             Carrera ingenieria = new Carrera("Ingeniería en Sistemas", 5);
             Carrera medicina = new Carrera("Medicina", 7);
@@ -106,7 +105,8 @@ public class DataController {
             return ResponseEntity.ok("Datos inicializados correctamente");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error al inicializar datos: " + e.getMessage());
-        }
+        }*/
+        return ResponseEntity.ok("Datos inicializados correctamente");
     }
 
     @DeleteMapping("/clear")
@@ -119,4 +119,4 @@ public class DataController {
             return ResponseEntity.badRequest().body("Error al limpiar datos: " + e.getMessage());
         }
     }
-}*/
+}

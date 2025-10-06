@@ -18,7 +18,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/carreras")
-@CrossOrigin(origins = "*")
 public class CarreraController {
 
     @Autowired
@@ -62,9 +61,10 @@ public class CarreraController {
 
     // Obtener todas las carreras
     @GetMapping
-    public ResponseEntity<List<Carrera>> obtenerTodasLasCarreras() {
-        List<Carrera> carreras = carreraService.obtenerTodasLasCarreras();
-        return ResponseEntity.ok(carreras);
+    public ResponseEntity<String> obtenerTodasLasCarreras() {
+        /*List<Carrera> carreras = carreraService.obtenerTodasLasCarreras();
+        return ResponseEntity.ok(carreras);*/
+        return ResponseEntity.ok("Hola");
     }
 
     // Obtener carrera por ID
