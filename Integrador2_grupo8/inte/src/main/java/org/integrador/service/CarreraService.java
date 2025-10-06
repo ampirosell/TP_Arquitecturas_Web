@@ -66,7 +66,8 @@ public class CarreraService {
 
     // Crear nueva carrera
     public Carrera crearCarrera(Carrera carrera) {
-        if (carreraRepository.existsByNombre(carrera.getNombre())) {
+        Optional<Carrera> carreraOptional = carreraRepository.findById(carrera.getId());
+        if (carreraOptional.isPresent()) {
             throw new RuntimeException("Ya existe una carrera con el nombre: " + carrera.getNombre());
         }
         return carreraRepository.save(carrera);

@@ -1,4 +1,4 @@
-package org.integrador.controller;
+/*0package org.integrador.controller;
 
 import org.integrador.entity.Carrera;
 import org.integrador.entity.Estudiante;
@@ -85,16 +85,16 @@ public class DataController {
 
             // Matricular estudiantes en carreras
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            
+
             // Juan Pérez en Ingeniería (2020)
             carreraService.matricularEstudiante(estudiantes.get(0), carreras.get(0), sdf.parse("2020-03-01"));
-            
+
             // María González en Medicina (2019)
             carreraService.matricularEstudiante(estudiantes.get(1), carreras.get(1), sdf.parse("2019-03-01"));
-            
+
             // Carlos López en Ingeniería (2021)
             carreraService.matricularEstudiante(estudiantes.get(2), carreras.get(0), sdf.parse("2021-03-01"));
-            
+
             // Ana Martínez en Derecho (2018) - Graduada
             EstudianteDeCarrera inscripcionAna = carreraService.matricularEstudiante(estudiantes.get(3), carreras.get(2), sdf.parse("2018-03-01"));
             inscripcionAna.setGraduado(true);
@@ -119,4 +119,4 @@ public class DataController {
             return ResponseEntity.badRequest().body("Error al limpiar datos: " + e.getMessage());
         }
     }
-}
+}*/
