@@ -1,64 +1,51 @@
 package org.integrador.service;
 
+
+import org.integrador.DTO.EstudianteDTO;
 import org.integrador.entity.Estudiante;
 import org.integrador.repository.EstudianteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
-@Service
-@Transactional
 public class EstudianteService {
 
-    @Autowired
-    private EstudianteRepository estudianteRepository;
+    private EntityManager em;
+    private EstudianteRepository er;
 
-    // a) Dar de alta un estudiante
-    public Estudiante crearEstudiante(Estudiante estudiante) {
-        // Validacion
-        if (estudianteRepository.existsByDni(estudiante.getDni())) {
-            throw new RuntimeException("Ya existe un estudiante con el DNI: " + estudiante.getDni());
-        }
-        
-        return estudianteRepository.save(estudiante);
+    public EstudianteService(EntityManager em){
+        this.em = em;
+        this.er = new EstudianteRepository(em);
     }
 
-    // c) Recuperar todos los estudiantes ordenados
-    public List<Estudiante> obtenerTodosLosEstudiantes() {
-        return estudianteRepository.findAllOrderedByApellidoAndNombre();
+    // a) Agregar estudiante
+    public void agregarEstudiante(Estudiante estudiante){
+        em.getTransaction().begin();
+        er.create(estudiante);
+        em.getTransaction().commit();
     }
 
-    // d) Recuperar estudiante por número de libreta universitaria
-    public Optional<Estudiante> obtenerEstudiantePorNumeroLU(String numeroLU) {
-        return estudianteRepository.findByNumeroLU(numeroLU);
+    // c) Obtener todos los estudiantes
+    public List<EstudianteDTO> obtenerEstudiantes(){
+        List<Estudiante> estudiantes = er.findAll();
+        return estudiantes.stream().map(EstudianteDTO::new).collect(Collectors.toList());
     }
 
-    // e) Recuperar estudiantes por género
-    public List<Estudiante> obtenerEstudiantesPorGenero(String genero) {
-        return estudianteRepository.findByGenero(genero);
+    // d) Obtener estudiante por LU
+    public EstudianteDTO obtenerEstudiantePorLU(String LU){
+        return new EstudianteDTO(er.findByLU(LU));
     }
 
-    // g) Recuperar estudiantes de una carrera filtrados por ciudad
-    public List<Estudiante> obtenerEstudiantesPorCarreraYCiudad(String nombreCarrera, String ciudad) {
-        return estudianteRepository.findByCarreraAndCiudad(nombreCarrera, ciudad);
+    // e) Obtener estudiantes por género
+    public List<EstudianteDTO> obtenerEstudiantesPorGenero(String genero){
+        List<Estudiante> estudiantes = er.findByGenero(genero);
+        return estudiantes.stream().map(EstudianteDTO::new).collect(Collectors.toList());
     }
 
-    // Obtener estudiante por ID
-    public Optional<Estudiante> obtenerEstudiantePorId(Long id) {
-        return estudianteRepository.findById(id);
+    // g) Obtener estudiantes por carrera y ciudad
+    public List<EstudianteDTO> obtenerEstudiantesPorCarreraCiudad(int idCarrera, String ciudad){
+        List<Estudiante> estudiantes = er.findByCarreraAndCiudad(idCarrera, ciudad);
+        return estudiantes.stream().map(EstudianteDTO::new).collect(Collectors.toList());
     }
-
-    // Eliminar estudiante
-    public void eliminarEstudiante(Long id) {
-        estudianteRepository.deleteById(id);
-    }
-
-    // Verificar si existe estudiante por DNI
-    public boolean existeEstudiantePorDni(String dni) {
-        return estudianteRepository.existsByDni(dni);
-    }
-
 }
