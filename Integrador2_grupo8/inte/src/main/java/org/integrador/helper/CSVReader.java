@@ -30,7 +30,7 @@ public class CSVReader {
     }
 
     private Iterable<CSVRecord> getData(String archivo) throws IOException {
-        String path = "integrador2/src/main/resources/" + archivo;
+        String path = "inte/src/main/resources/" + archivo;
         Reader in = new FileReader(path);
 
         CSVParser csvParser = CSVFormat.EXCEL
@@ -56,7 +56,7 @@ public class CSVReader {
     private void insertEstudiantes() throws IOException {
         for(CSVRecord row : getData("estudiantes.csv")) {
             //DNI,nombre,apellido,edad,genero,ciudad,LU
-            if(row.size() >= 7) {
+            if(row.size() >= 8) {
                 String estudianteIdString = row.get(0);
                 String dniString = row.get(1);
                 String nombre = row.get(2);
