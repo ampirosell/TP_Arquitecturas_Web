@@ -1,45 +1,18 @@
-version: '3.8'
-
 services:
-  # Base de datos MySQL
+  # Base de datos MySQL para Integrador 2 (JPA standalone)
   mysql:
     image: mysql:8.0
     container_name: inte_mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: inte_db
-      MYSQL_USER: inte_user
-      MYSQL_PASSWORD: inte_pass
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_DATABASE: mibase
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./database_setup.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - inte_network
-    restart: unless-stopped
-
-  # Aplicación Spring Boot
-  app:
-    build: .
-    container_name: inte_app
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/inte_db
-      SPRING_DATASOURCE_USERNAME: inte_user
-      SPRING_DATASOURCE_PASSWORD: inte_pass
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_JPA_SHOW_SQL: true
-    ports:
-      - "8080:8080"
-    depends_on:
-      - mysql
-    networks:
-      - inte_network
     restart: unless-stopped
 
 volumes:
   mysql_data:
-
-networks:
-  inte_network:
-    driver: bridge

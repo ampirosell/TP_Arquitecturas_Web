@@ -7,6 +7,9 @@ import org.integrador.entity.Carrera;
 import org.integrador.entity.Estudiante;
 import org.integrador.entity.EstudianteDeCarrera;
 import org.integrador.helper.CSVReader;
+import org.integrador.repository.CarreraRepository;
+import org.integrador.repository.EstudianteDeCarreraRepository;
+import org.integrador.repository.EstudianteRepository;
 import org.integrador.service.CarreraService;
 import org.integrador.service.EstudianteCarreraService;
 import org.integrador.service.EstudianteService;
@@ -32,15 +35,27 @@ public class InteApplication {
             CarreraService carreraService = new CarreraService(em);
             EstudianteCarreraService estudianteCarreraService = new EstudianteCarreraService(em);
 
+            // Inicializar repositorios para CSVReader
+            EstudianteRepository er = new EstudianteRepository(em);
+            CarreraRepository cr = new CarreraRepository(em);
+            EstudianteDeCarreraRepository ecr = new EstudianteDeCarreraRepository(em);
+
             // Cargar datos desde CSV
             System.out.println("1. Cargando datos desde archivos CSV...");
-            CSVReader csvReader = new CSVReader();
-            csvReader.cargarDatos(em);
+            CSVReader csvReader = new CSVReader(em, cr, ecr, er);
+            csvReader.populateDB();
             System.out.println("✓ Datos cargados exitosamente\n");
 
             // a) Agregar estudiante
             System.out.println("2. Agregando nuevo estudiante...");
-            Estudiante nuevoEstudiante = new Estudiante("Juan", "Pérez", 25, "M", "12345678", "Buenos Aires", "LU12345");
+            Estudiante nuevoEstudiante = new Estudiante();
+            nuevoEstudiante.setNombre("Juan");
+            nuevoEstudiante.setApellido("Pérez");
+            nuevoEstudiante.setEdad(25);
+            nuevoEstudiante.setGenero("M");
+            nuevoEstudiante.setDni("12345678");
+            nuevoEstudiante.setCiudadDeResidencia("Buenos Aires");
+            nuevoEstudiante.setNumeroLU("LU12345");
             estudianteService.agregarEstudiante(nuevoEstudiante);
             System.out.println("✓ Estudiante agregado: " + nuevoEstudiante.getNombre() + " " + nuevoEstudiante.getApellido() + "\n");
 
@@ -57,16 +72,16 @@ public class InteApplication {
             System.out.println("4. Listando todos los estudiantes:");
             List<EstudianteDTO> estudiantes = estudianteService.obtenerEstudiantes();
             for (EstudianteDTO est : estudiantes) {
-                System.out.println("  - " + est.getNombre() + " " + est.getApellido() + " (LU: " + est.getNumeroLU() + ")");
+                System.out.println("  - " + est.toString());
             }
             System.out.println("Total estudiantes: " + estudiantes.size() + "\n");
 
             // d) Obtener estudiante por LU
             System.out.println("5. Buscando estudiante por número de libreta:");
             if (!estudiantes.isEmpty()) {
-                String luBuscar = estudiantes.get(0).getNumeroLU();
+                String luBuscar = estudiantes.get(0).getLU();
                 EstudianteDTO estudianteEncontrado = estudianteService.obtenerEstudiantePorLU(luBuscar);
-                System.out.println("  - Encontrado: " + estudianteEncontrado.getNombre() + " " + estudianteEncontrado.getApellido() + "\n");
+                System.out.println("  - Encontrado: " + estudianteEncontrado.toString() + "\n");
             }
 
             // e) Obtener estudiantes por género
@@ -80,14 +95,14 @@ public class InteApplication {
             System.out.println("7. Carreras con estudiantes inscriptos:");
             List<CarreraDTO> carrerasConInscriptos = carreraService.obtenerCarrerasConInscriptos();
             for (CarreraDTO carrera : carrerasConInscriptos) {
-                System.out.println("  - " + carrera.getNombre() + " (Inscriptos: " + carrera.getCantidadInscriptos() + ")");
+                System.out.println("  - " + carrera.toString());
             }
             System.out.println();
 
             // g) Obtener estudiantes por carrera y ciudad
             System.out.println("8. Estudiantes por carrera y ciudad:");
             if (!carreras.isEmpty() && !estudiantes.isEmpty()) {
-                String ciudadBuscar = estudiantes.get(0).getCiudadDeResidencia();
+                String ciudadBuscar = estudiantes.get(0).toString().contains("Buenos Aires") ? "Buenos Aires" : "Córdoba";
                 List<EstudianteDTO> estudiantesPorCarreraCiudad = estudianteService.obtenerEstudiantesPorCarreraCiudad(
                     carreras.get(0).getId().intValue(), ciudadBuscar);
                 System.out.println("  Estudiantes de " + carreras.get(0).getNombre() + " en " + ciudadBuscar + ": " + estudiantesPorCarreraCiudad.size());
@@ -98,7 +113,7 @@ public class InteApplication {
             System.out.println("9. Generando reporte de carreras:");
             List<ReporteDTO> reporte = carreraService.generarReporte();
             for (ReporteDTO r : reporte) {
-                System.out.println("  - " + r.getCarrera() + ": " + r.getCantidadInscriptos() + " inscriptos, " + r.getCantidadGraduados() + " graduados");
+                System.out.println("  - " + r.toString());
             }
 
             System.out.println("\n=== APLICACIÓN COMPLETADA EXITOSAMENTE ===");

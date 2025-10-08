@@ -14,6 +14,18 @@ public class EstudianteDTO {
         this.LU = estudiante.getNumeroLU();
     }
 
+    public String getLU() {
+        return LU;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
     @Override
     public String toString() {
         return "\nLU = " + LU +
