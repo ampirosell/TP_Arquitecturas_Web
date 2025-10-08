@@ -7,7 +7,7 @@ import org.integrador.entity.EstudianteDeCarrera;
 
 import org.integrador.repository.EstudianteDeCarreraRepository;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import java.util.Date;
 
 public class EstudianteCarreraService {

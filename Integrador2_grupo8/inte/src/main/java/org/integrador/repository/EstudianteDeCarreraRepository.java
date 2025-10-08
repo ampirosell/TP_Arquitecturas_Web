@@ -2,7 +2,7 @@ package org.integrador.repository;
 
 
 import org.integrador.entity.EstudianteDeCarrera;
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import java.util.List;
 
 

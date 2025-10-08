@@ -5,7 +5,7 @@ import org.integrador.DTO.EstudianteDTO;
 import org.integrador.entity.Estudiante;
 import org.integrador.repository.EstudianteRepository;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import java.util.List;
 import java.util.stream.Collectors;
 

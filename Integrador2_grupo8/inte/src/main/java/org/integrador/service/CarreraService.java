@@ -5,7 +5,7 @@ import org.integrador.DTO.ReporteDTO;
 import org.integrador.entity.Carrera;
 import org.integrador.repository.CarreraRepository;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import java.util.List;
 
 public class CarreraService {

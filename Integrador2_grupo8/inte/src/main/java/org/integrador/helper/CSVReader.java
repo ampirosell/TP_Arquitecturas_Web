@@ -10,7 +10,7 @@ import org.integrador.repository.CarreraRepository;
 import org.integrador.repository.EstudianteRepository;
 import org.integrador.repository.EstudianteDeCarreraRepository;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;

@@ -1,14 +1,14 @@
 # Integrador 2 - Sistema de Estudiantes
 
 ## Descripción
-Sistema de registro de estudiantes universitarios con Spring Boot, MySQL y Docker. Implementa todas las funcionalidades requeridas con consultas JPQL optimizadas y clave compuesta.
+Sistema de registro de estudiantes universitarios con **JPA standalone** (sin Spring Boot), MySQL y Docker. Implementa todas las funcionalidades requeridas con consultas JPQL optimizadas y clave compuesta. Los resultados se muestran en la terminal.
 
 ## Tecnologías
 - Java 17
-- Spring Boot 3.5.6
+- **JPA/Hibernate (standalone)**
 - MySQL 8.0
-- JPA/Hibernate
 - Docker & Docker Compose
+- Maven
 
 ## Estructura del proyecto
 ```
@@ -16,8 +16,9 @@ src/main/java/org/integrador/
 ├── entity/ (Estudiante, Carrera, EstudianteDeCarrera, EstudianteCarreraId)
 ├── repository/ (Repositorios con JPQL)
 ├── service/ (Lógica de negocio)
-├── controller/ (API REST)
-└── inte/ (Main class)
+├── DTO/ (Data Transfer Objects)
+├── helper/ (CSVReader)
+└── inte/ (Main class - ejecuta consultas y muestra resultados en terminal)
 ```
 
 ## Entidades
@@ -34,17 +35,61 @@ src/main/java/org/integrador/
 - ✅ Entidades JPA con relaciones correctas
 - ✅ Clave compuesta con mejores prácticas JPA
 
+### 2. Funcionalidades implementadas
+- ✅ a) Agregar estudiante
+- ✅ b) Matricular estudiante en carrera
+- ✅ c) Obtener todos los estudiantes ordenados por apellido
+- ✅ d) Obtener estudiante por número de libreta universitaria
+- ✅ e) Obtener estudiantes por género
+- ✅ f) Obtener carreras con estudiantes inscriptos ordenadas por cantidad
+- ✅ g) Obtener estudiantes de una carrera específica que viven en una ciudad específica
+- ✅ 3) Generar reporte de carreras con inscriptos y graduados
 
-## Endpoints principales
-- `POST /api/estudiantes` - Crear estudiante
-- `GET /api/estudiantes` - Listar estudiantes ordenados
-- `GET /api/estudiantes/libreta/{numeroLU}` - Buscar por libreta
-- `GET /api/estudiantes/genero/{genero}` - Buscar por género
-- `GET /api/estudiantes/carrera/{carrera}/ciudad/{ciudad}` - Estudiantes por carrera y ciudad
-- `POST /api/carreras/matricular` - Matricular estudiante
-- `GET /api/carreras/con-estudiantes` - Carreras con estudiantes ordenadas
-- `POST /api/data/init` - Inicializar datos de prueba
+## Ejecución
 
+### Prerequisitos
+- Java 17
+- Maven
+- Docker (para MySQL)
+
+### Pasos para ejecutar
+
+1. **Iniciar MySQL con Docker:**
+```bash
+cd Integrador2_grupo8
+docker-compose up -d
+```
+
+2. **Compilar y ejecutar:**
+```bash
+cd inte
+mvn clean compile
+mvn exec:java
+```
+
+### Salida esperada
+La aplicación ejecutará todas las consultas requeridas y mostrará los resultados en la terminal:
+
+```
+=== INTEGRADOR 2 - SISTEMA DE ESTUDIANTES ===
+Iniciando aplicación JPA...
+
+1. Cargando datos desde archivos CSV...
+✓ Datos cargados exitosamente
+
+2. Agregando nuevo estudiante...
+✓ Estudiante agregado: Juan Pérez
+
+3. Matriculando estudiante en carrera...
+✓ Estudiante matriculado en carrera: Ingeniería en Sistemas
+
+4. Listando todos los estudiantes:
+  - García, María (LU: LU12345)
+  - López, Carlos (LU: LU12346)
+  ...
+
+=== APLICACIÓN COMPLETADA EXITOSAMENTE ===
+```
 
 ## Arquitectura
 
@@ -52,7 +97,11 @@ src/main/java/org/integrador/
 1. **Entity**: Estudiante, Carrera, EstudianteDeCarrera, EstudianteCarreraId
 2. **Repository**: Consultas JPQL optimizadas
 3. **Service**: Lógica de negocio y transacciones
-4. **Controller**: API REST con endpoints documentados
+4. **Main**: Ejecuta consultas y muestra resultados en terminal
+
+### Diferencias con Integrador 3
+- **Integrador 2**: JPA standalone, resultados en terminal
+- **Integrador 3**: Spring Boot con REST endpoints
 
 
 ## Diagramas del Sistema

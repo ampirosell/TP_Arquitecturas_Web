@@ -4,8 +4,8 @@ import org.integrador.entity.Estudiante;
 
 
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 
 
 public class EstudianteRepository implements Repository<Estudiante>{

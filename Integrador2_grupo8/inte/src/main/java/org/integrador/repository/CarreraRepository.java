@@ -6,7 +6,7 @@ import org.integrador.DTO.ReporteDTO;
 import org.integrador.entity.Carrera;
 
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
