@@ -25,7 +25,7 @@ public class InteApplication {
         private static final EntityManagerFactory emf;
 
         static {
-            emf = Persistence.createEntityManagerFactory("Example");
+            emf = Persistence.createEntityManagerFactory("integrador2");
         }
 
     public static void main(String[] args) {
