@@ -6,6 +6,10 @@
 
     <persistence-unit name="Example">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>org.integrador.entity.Estudiante</class>
+        <class>org.integrador.entity.Carrera</class>
+        <class>org.integrador.entity.EstudianteDeCarrera</class>
+        <class>org.integrador.entity.EstudianteCarreraId</class>
 
 
         <properties>
@@ -13,7 +17,7 @@
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mibase"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
-            <property name="jakarta.persistence.jdbc.password" value=""/>
+            <property name="jakarta.persistence.jdbc.password" value="root"/>
 
             <!-- Configuración de Hibernate -->
             <property name="hibernate.hbm2ddl.auto" value="update"/>

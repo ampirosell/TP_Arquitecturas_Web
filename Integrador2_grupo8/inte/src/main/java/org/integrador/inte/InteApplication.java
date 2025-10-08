@@ -22,11 +22,16 @@ import java.util.List;
 
 public class InteApplication {
 
+        private static final EntityManagerFactory emf;
+
+        static {
+            emf = Persistence.createEntityManagerFactory("Example");
+        }
+
     public static void main(String[] args) {
         System.out.println("=== INTEGRADOR 2 - SISTEMA DE ESTUDIANTES ===");
         System.out.println("Iniciando aplicación JPA...\n");
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Example");
         EntityManager em = emf.createEntityManager();
 
         try {
@@ -46,30 +51,10 @@ public class InteApplication {
             csvReader.populateDB();
             System.out.println("✓ Datos cargados exitosamente\n");
 
-            // a) Agregar estudiante
-            System.out.println("2. Agregando nuevo estudiante...");
-            Estudiante nuevoEstudiante = new Estudiante();
-            nuevoEstudiante.setNombre("Juan");
-            nuevoEstudiante.setApellido("Pérez");
-            nuevoEstudiante.setEdad(25);
-            nuevoEstudiante.setGenero("M");
-            nuevoEstudiante.setDni("12345678");
-            nuevoEstudiante.setCiudadDeResidencia("Buenos Aires");
-            nuevoEstudiante.setNumeroLU("LU12345");
-            estudianteService.agregarEstudiante(nuevoEstudiante);
-            System.out.println("✓ Estudiante agregado: " + nuevoEstudiante.getNombre() + " " + nuevoEstudiante.getApellido() + "\n");
-
-            // b) Matricular estudiante en carrera
-            System.out.println("3. Matriculando estudiante en carrera...");
-            List<Carrera> carreras = carreraService.obtenerTodasLasCarreras();
-            if (!carreras.isEmpty()) {
-                Carrera primeraCarrera = carreras.get(0);
-                estudianteCarreraService.matricularEstudiante(nuevoEstudiante, primeraCarrera, new Date());
-                System.out.println("✓ Estudiante matriculado en carrera: " + primeraCarrera.getNombre() + "\n");
-            }
+            // Los datos ya están cargados desde CSV, ahora ejecutamos las consultas requeridas
 
             // c) Obtener todos los estudiantes
-            System.out.println("4. Listando todos los estudiantes:");
+            System.out.println("2. Listando todos los estudiantes:");
             List<EstudianteDTO> estudiantes = estudianteService.obtenerEstudiantes();
             for (EstudianteDTO est : estudiantes) {
                 System.out.println("  - " + est.toString());
@@ -77,7 +62,7 @@ public class InteApplication {
             System.out.println("Total estudiantes: " + estudiantes.size() + "\n");
 
             // d) Obtener estudiante por LU
-            System.out.println("5. Buscando estudiante por número de libreta:");
+            System.out.println("3. Buscando estudiante por número de libreta:");
             if (!estudiantes.isEmpty()) {
                 String luBuscar = estudiantes.get(0).getLU();
                 EstudianteDTO estudianteEncontrado = estudianteService.obtenerEstudiantePorLU(luBuscar);
@@ -85,14 +70,14 @@ public class InteApplication {
             }
 
             // e) Obtener estudiantes por género
-            System.out.println("6. Estudiantes por género:");
+            System.out.println("4. Estudiantes por género:");
             List<EstudianteDTO> estudiantesMasculinos = estudianteService.obtenerEstudiantesPorGenero("M");
             System.out.println("  Estudiantes masculinos: " + estudiantesMasculinos.size());
             List<EstudianteDTO> estudiantesFemeninos = estudianteService.obtenerEstudiantesPorGenero("F");
             System.out.println("  Estudiantes femeninos: " + estudiantesFemeninos.size() + "\n");
 
             // f) Obtener carreras con inscriptos
-            System.out.println("7. Carreras con estudiantes inscriptos:");
+            System.out.println("5. Carreras con estudiantes inscriptos:");
             List<CarreraDTO> carrerasConInscriptos = carreraService.obtenerCarrerasConInscriptos();
             for (CarreraDTO carrera : carrerasConInscriptos) {
                 System.out.println("  - " + carrera.toString());
@@ -100,7 +85,8 @@ public class InteApplication {
             System.out.println();
 
             // g) Obtener estudiantes por carrera y ciudad
-            System.out.println("8. Estudiantes por carrera y ciudad:");
+            System.out.println("6. Estudiantes por carrera y ciudad:");
+            List<Carrera> carreras = carreraService.obtenerTodasLasCarreras();
             if (!carreras.isEmpty() && !estudiantes.isEmpty()) {
                 String ciudadBuscar = estudiantes.get(0).toString().contains("Buenos Aires") ? "Buenos Aires" : "Córdoba";
                 List<EstudianteDTO> estudiantesPorCarreraCiudad = estudianteService.obtenerEstudiantesPorCarreraCiudad(
@@ -110,7 +96,7 @@ public class InteApplication {
             System.out.println();
 
             // 3) Generar reporte
-            System.out.println("9. Generando reporte de carreras:");
+            System.out.println("7. Generando reporte de carreras:");
             List<ReporteDTO> reporte = carreraService.generarReporte();
             for (ReporteDTO r : reporte) {
                 System.out.println("  - " + r.toString());
