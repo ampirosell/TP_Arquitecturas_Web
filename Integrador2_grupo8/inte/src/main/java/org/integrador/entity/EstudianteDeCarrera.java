@@ -35,7 +35,7 @@ public class EstudianteDeCarrera {
     public EstudianteDeCarrera() {}
 
     public EstudianteDeCarrera(Estudiante estudiante, Carrera carrera, Date fechaInscripcion) {
-        this.id = new EstudianteCarreraId(estudiante.getId(), carrera.getId());
+        this.id = new EstudianteCarreraId(estudiante.getId(), carrera.getCarreraId());
         this.estudiante = estudiante;
         this.carrera = carrera;
         this.fechaInscripcion = fechaInscripcion;

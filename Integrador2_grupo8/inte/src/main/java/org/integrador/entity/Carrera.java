@@ -6,7 +6,16 @@ import java.util.List;
 @Entity
 @Table(name = "carrera")
 public class Carrera {
+<<<<<<< Updated upstream
     
+=======
+    public Carrera(String nombre, Integer duracion) {
+        this.nombre = nombre;
+        this.duracion = duracion;
+        this.estudiantes = new ArrayList<>();
+    }
+
+>>>>>>> Stashed changes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "carrera_id")
@@ -24,17 +33,13 @@ public class Carrera {
     // Constructores
     public Carrera() {}
 
-    public Carrera(String nombre, Integer duracion) {
-        this.nombre = nombre;
-        this.duracion = duracion;
-    }
 
     // Getters y Setters
-    public Long getId() {
+    public Long getCarreraId() {
         return carreraId;
     }
 
-    public void setId(Long carreraId) {
+    public void setCarreraId(Long carreraId) {
         this.carreraId = carreraId;
     }
 
