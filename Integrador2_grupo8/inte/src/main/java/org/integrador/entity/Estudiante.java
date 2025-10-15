@@ -6,8 +6,7 @@ import java.util.List;
 @Entity
 @Table(name = "estudiante")
 public class Estudiante {
-<<<<<<< Updated upstream
-=======
+
     public Estudiante(String nombre, String apellido, Integer edad, String genero, String dni, String ciudadDeResidencia, String numeroLU) {
         this.nombre = nombre;
         this.apellido = apellido;
@@ -18,7 +17,6 @@ public class Estudiante {
         this.numeroLU = numeroLU;
         this.carreras = new ArrayList<>();
     }
->>>>>>> Stashed changes
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

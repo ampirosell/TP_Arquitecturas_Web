@@ -7,9 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class InteApplication {
 
     public static void main(String[] args) {
-<<<<<<< Updated upstream
         SpringApplication.run(InteApplication.class, args);
-=======
+
         System.out.println("=== INTEGRADOR 2 - SISTEMA DE ESTUDIANTES ===");
         System.out.println("Iniciando aplicación JPA...\n");
 
@@ -96,7 +95,6 @@ public class InteApplication {
             em.close();
             emf.close();
         }
->>>>>>> Stashed changes
     }
 
 }
