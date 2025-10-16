@@ -29,8 +29,7 @@ public class InteApplication {
         }
 
     public static void main(String[] args) {
-        System.out.println("=== INTEGRADOR 2 - SISTEMA DE ESTUDIANTES ===");
-        System.out.println("Iniciando aplicación JPA...\n");
+        System.out.println("=== SISTEMA DE ESTUDIANTES ===\n");
 
         EntityManager em = emf.createEntityManager();
 
@@ -46,38 +45,36 @@ public class InteApplication {
             EstudianteDeCarreraRepository ecr = new EstudianteDeCarreraRepository(em);
 
             // Cargar datos desde CSV
-            System.out.println("1. Cargando datos desde archivos CSV...");
             CSVReader csvReader = new CSVReader(em, cr, ecr, er);
             csvReader.populateDB();
-            System.out.println("✓ Datos cargados exitosamente\n");
 
             // Los datos ya están cargados desde CSV, ahora ejecutamos las consultas requeridas
 
             // c) Obtener todos los estudiantes
-            System.out.println("2. Listando todos los estudiantes:");
+            System.out.println("c) Todos los estudiantes:");
             List<EstudianteDTO> estudiantes = estudianteService.obtenerEstudiantes();
             for (EstudianteDTO est : estudiantes) {
                 System.out.println("  - " + est.toString());
             }
-            System.out.println("Total estudiantes: " + estudiantes.size() + "\n");
+            System.out.println("Total: " + estudiantes.size() + "\n");
 
             // d) Obtener estudiante por LU
-            System.out.println("3. Buscando estudiante por número de libreta:");
+            System.out.println("d) Estudiante por libreta universitaria:");
             if (!estudiantes.isEmpty()) {
                 String luBuscar = estudiantes.get(0).getLU();
                 EstudianteDTO estudianteEncontrado = estudianteService.obtenerEstudiantePorLU(luBuscar);
-                System.out.println("  - Encontrado: " + estudianteEncontrado.toString() + "\n");
+                System.out.println("  - " + estudianteEncontrado.toString() + "\n");
             }
 
             // e) Obtener estudiantes por género
-            System.out.println("4. Estudiantes por género:");
-            List<EstudianteDTO> estudiantesMasculinos = estudianteService.obtenerEstudiantesPorGenero("M");
-            System.out.println("  Estudiantes masculinos: " + estudiantesMasculinos.size());
-            List<EstudianteDTO> estudiantesFemeninos = estudianteService.obtenerEstudiantesPorGenero("F");
-            System.out.println("  Estudiantes femeninos: " + estudiantesFemeninos.size() + "\n");
+            System.out.println("e) Estudiantes por género:");
+            List<EstudianteDTO> estudiantesMasculinos = estudianteService.obtenerEstudiantesPorGenero("Male");
+            System.out.println("  Masculinos: " + estudiantesMasculinos.size());
+            List<EstudianteDTO> estudiantesFemeninos = estudianteService.obtenerEstudiantesPorGenero("Female");
+            System.out.println("  Femeninos: " + estudiantesFemeninos.size() + "\n");
 
             // f) Obtener carreras con inscriptos
-            System.out.println("5. Carreras con estudiantes inscriptos:");
+            System.out.println("f) Carreras con estudiantes inscriptos:");
             List<CarreraDTO> carrerasConInscriptos = carreraService.obtenerCarrerasConInscriptos();
             for (CarreraDTO carrera : carrerasConInscriptos) {
                 System.out.println("  - " + carrera.toString());
@@ -85,24 +82,22 @@ public class InteApplication {
             System.out.println();
 
             // g) Obtener estudiantes por carrera y ciudad
-            System.out.println("6. Estudiantes por carrera y ciudad:");
+            System.out.println("g) Estudiantes por carrera y ciudad:");
             List<Carrera> carreras = carreraService.obtenerTodasLasCarreras();
             if (!carreras.isEmpty() && !estudiantes.isEmpty()) {
                 String ciudadBuscar = estudiantes.get(0).toString().contains("Buenos Aires") ? "Buenos Aires" : "Córdoba";
                 List<EstudianteDTO> estudiantesPorCarreraCiudad = estudianteService.obtenerEstudiantesPorCarreraCiudad(
                     carreras.get(0).getId().intValue(), ciudadBuscar);
-                System.out.println("  Estudiantes de " + carreras.get(0).getNombre() + " en " + ciudadBuscar + ": " + estudiantesPorCarreraCiudad.size());
+                System.out.println("  " + carreras.get(0).getNombre() + " en " + ciudadBuscar + ": " + estudiantesPorCarreraCiudad.size());
             }
             System.out.println();
 
             // 3) Generar reporte
-            System.out.println("7. Generando reporte de carreras:");
+            System.out.println("3) Reporte de carreras:");
             List<ReporteDTO> reporte = carreraService.generarReporte();
             for (ReporteDTO r : reporte) {
                 System.out.println("  - " + r.toString());
             }
-
-            System.out.println("\n=== APLICACIÓN COMPLETADA EXITOSAMENTE ===");
 
         } catch (Exception e) {
             System.err.println("Error durante la ejecución: " + e.getMessage());

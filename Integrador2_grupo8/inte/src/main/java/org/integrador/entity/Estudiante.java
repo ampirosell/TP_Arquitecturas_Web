@@ -9,13 +9,13 @@ import java.util.List;
 @Entity
 @Table(name = "estudiante")
 public class Estudiante {
-    public Estudiante(Long estudianteId, String nombre, String apellido, Integer edad, String genero, String dni, String ciudadDeResidencia, String numeroLU) {
-        this.estudianteId = estudianteId;
+    public Estudiante(int dni, String nombre, String apellido, Integer edad, String genero, String ciudadDeResidencia, String numeroLU) {
+        this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
         this.genero = genero;
-        this.dni = dni;
+
         this.ciudadDeResidencia = ciudadDeResidencia;
         this.numeroLU = numeroLU;
         this.carreras = new ArrayList<>();
@@ -25,14 +25,13 @@ public class Estudiante {
         this.carreras = new ArrayList<>();
     }
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "estudiante_id")
-    private Long estudianteId;
+    @Column(name = "dni")
+    private int dni;
     
     @Column(name = "nombre", nullable = false)
     private String nombre;
     
-    @Column(name = "apellido", nullable = false)
+    @Column(name = "apellido", nullable = false )
     private String apellido;
     
     @Column(name = "edad", nullable = false)
@@ -40,14 +39,11 @@ public class Estudiante {
     
     @Column(name = "genero", nullable = false)
     private String genero;
-    
-    @Column(name = "dni", unique = true, nullable = false)
-    private String dni;
-    
+
     @Column(name = "ciudad_residencia", nullable = false)
     private String ciudadDeResidencia;
     
-    @Column(name = "numero_lu", unique = true, nullable = false)
+    @Column(name = "numero_lu", nullable = false)
     private String numeroLU;
     
     @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -55,13 +51,8 @@ public class Estudiante {
 
 
 
-    public Long getId() {
-        return estudianteId;
-    }
 
-    public void setId(Long estudianteId) {
-        this.estudianteId = estudianteId;
-    }
+
 
     public String getNombre() {
         return nombre;
@@ -95,13 +86,10 @@ public class Estudiante {
         this.genero = genero;
     }
 
-    public String getDni() {
+    public int getDni() {
         return dni;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
 
     public String getCiudadDeResidencia() {
         return ciudadDeResidencia;

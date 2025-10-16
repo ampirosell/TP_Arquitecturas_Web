@@ -29,8 +29,8 @@ public class EstudianteRepository implements Repository<Estudiante>{
     }
 
     @Override
-    public Estudiante findById(long id) {
-        return em.find(Estudiante.class, id);
+    public Estudiante findById(int dni) {
+        return em.find(Estudiante.class, dni);
     }
     public Estudiante findByLU(String LU){
         String jpql = "SELECT e FROM Estudiante e WHERE numeroLU = :LU";
