@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class CSVReader {
     private EntityManager em;
@@ -30,7 +31,7 @@ public class CSVReader {
     }
 
     private Iterable<CSVRecord> getData(String archivo) throws IOException {
-        String path = "Integrador2_grupo8/inte/src/main/resources/" + archivo;
+        String path = "inte/src/main/resources/" + archivo;
         Reader in = new FileReader(path);
 
         CSVParser csvParser = CSVFormat.EXCEL
@@ -43,18 +44,51 @@ public class CSVReader {
 
     public void populateDB() throws Exception {
         try {
-           /* em.getTransaction().begin();
-            insertCarreras();
-            em.getTransaction().commit();
-*/
-           /* em.getTransaction().begin();
-            insertEstudiantes();
-            em.getTransaction().commit();
-*/
+            // Verificar si ya hay datos en la base de datos
+            boolean hayCarreras = cr.findAll().size() > 0;
+            boolean hayEstudiantes = er.findAll().size() > 0;
+            boolean hayMatriculas = ecr.findAll().size() > 0;
+            
+            System.out.println("Estado de la base de datos:");
+            System.out.println("  - Carreras: " + (hayCarreras ? "YA EXISTEN (" + cr.findAll().size() + ")" : "VACÍA"));
+            System.out.println("  - Estudiantes: " + (hayEstudiantes ? "YA EXISTEN (" + er.findAll().size() + ")" : "VACÍA"));
+            System.out.println("  - Matrículas: " + (hayMatriculas ? "YA EXISTEN (" + ecr.findAll().size() + ")" : "VACÍA"));
+            System.out.println();
 
-            em.getTransaction().begin();
-            insertMatriculas();
-            em.getTransaction().commit();
+            // Cargar carreras solo si no existen
+            if (!hayCarreras) {
+                System.out.println("Cargando carreras desde CSV...");
+                em.getTransaction().begin();
+                insertCarreras();
+                em.getTransaction().commit();
+                System.out.println("✓ Carreras cargadas: " + cr.findAll().size());
+            } else {
+                System.out.println("⚠ Saltando carga de carreras (ya existen)");
+            }
+
+            // Cargar estudiantes solo si no existen
+            if (!hayEstudiantes) {
+                System.out.println("Cargando estudiantes desde CSV...");
+                em.getTransaction().begin();
+                insertEstudiantes();
+                em.getTransaction().commit();
+                System.out.println("✓ Estudiantes cargados: " + er.findAll().size());
+            } else {
+                System.out.println("⚠ Saltando carga de estudiantes (ya existen)");
+            }
+
+            // Cargar matrículas solo si no existen
+            if (!hayMatriculas) {
+                System.out.println("Cargando matrículas desde CSV...");
+                em.getTransaction().begin();
+                insertMatriculas();
+                em.getTransaction().commit();
+                System.out.println("✓ Matrículas cargadas: " + ecr.findAll().size());
+            } else {
+                System.out.println("⚠ Saltando carga de matrículas (ya existen)");
+            }
+            
+            System.out.println();
         } catch (Exception e) {
             e.printStackTrace();
             if (em.getTransaction().isActive()) {
@@ -116,24 +150,48 @@ public class CSVReader {
 
     private void insertMatriculas() throws IOException {
         for (CSVRecord row : getData("estudianteCarrera.csv")) {
-            if (row.size() >= 3) { // id_estudiante,id_carrera,anio_inicio
+            if (row.size() >= 6) { // id,id_estudiante,id_carrera,inscripcion,graduacion,antiguedad
                 try {
-                    int dni = Integer.parseInt(row.get(0));
-                    int idCarrera = Integer.parseInt(row.get(1));
-                    int anioInicio = Integer.parseInt(row.get(2));
+                    int dni = Integer.parseInt(row.get("id_estudiante"));
+                    int idCarrera = Integer.parseInt(row.get("id_carrera"));
+                    int anioInicio = Integer.parseInt(row.get("inscripcion"));
+                    int anioGraduacion = Integer.parseInt(row.get("graduacion"));
 
                     // Convertir año a Date
                     Date fechaInscripcion = new GregorianCalendar(anioInicio, 0, 1).getTime();
+                    Date fechaGraduacion = null;
+                    if (anioGraduacion > 0) {
+                        fechaGraduacion = new GregorianCalendar(anioGraduacion, 0, 1).getTime();
+                    }
 
                     Estudiante estudiante = er.findById(dni);
                     Carrera carrera = cr.findById(idCarrera);
 
-                    // Crear matrícula
-                    EstudianteDeCarrera matricula = new EstudianteDeCarrera(estudiante, carrera, fechaInscripcion);
-
-                    em.getTransaction().begin();
-                    ecr.create(matricula);
-                    em.getTransaction().commit();
+                    if (estudiante != null && carrera != null) {
+                        // Verificar si la matrícula ya existe usando una consulta
+                        List<EstudianteDeCarrera> matriculasExistentes = em.createQuery(
+                            "SELECT ec FROM EstudianteDeCarrera ec WHERE ec.estudiante.dni = :dni AND ec.carrera.id = :carreraId", 
+                            EstudianteDeCarrera.class)
+                            .setParameter("dni", dni)
+                            .setParameter("carreraId", (long)idCarrera)
+                            .getResultList();
+                        
+                        if (matriculasExistentes.isEmpty()) {
+                            // Crear matrícula
+                            EstudianteDeCarrera matricula = new EstudianteDeCarrera(estudiante, carrera, fechaInscripcion);
+                            if (fechaGraduacion != null) {
+                                matricula.setFechaGraduacion(fechaGraduacion);
+                                matricula.setGraduado(true);
+                            }
+                            ecr.create(matricula);
+                        } else {
+                            System.out.println("Matrícula ya existe: DNI=" + dni + ", Carrera=" + idCarrera);
+                        }
+                    } else {
+                        System.err.println("No se pudo crear matrícula: estudiante=" + (estudiante != null ? "OK" : "NULL") + 
+                                         ", carrera=" + (carrera != null ? "OK" : "NULL") + 
+                                         " para DNI=" + dni + ", carrera=" + idCarrera);
+                    }
 
                 } catch (NumberFormatException e) {
                     System.err.println("Error en formato de datos: " + e.getMessage());

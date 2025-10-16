@@ -71,9 +71,9 @@ public class InteApplication {
 
             // e) Obtener estudiantes por género
             System.out.println("4. Estudiantes por género:");
-            List<EstudianteDTO> estudiantesMasculinos = estudianteService.obtenerEstudiantesPorGenero("M");
+            List<EstudianteDTO> estudiantesMasculinos = estudianteService.obtenerEstudiantesPorGenero("Male");
             System.out.println("  Estudiantes masculinos: " + estudiantesMasculinos.size());
-            List<EstudianteDTO> estudiantesFemeninos = estudianteService.obtenerEstudiantesPorGenero("F");
+            List<EstudianteDTO> estudiantesFemeninos = estudianteService.obtenerEstudiantesPorGenero("Female");
             System.out.println("  Estudiantes femeninos: " + estudiantesFemeninos.size() + "\n");
 
             // f) Obtener carreras con inscriptos

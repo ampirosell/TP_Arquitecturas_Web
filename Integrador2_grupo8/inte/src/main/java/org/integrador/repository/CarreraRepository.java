@@ -8,6 +8,7 @@ import org.integrador.entity.Carrera;
 
 import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -74,19 +75,21 @@ public class CarreraRepository implements Repository<Carrera> {
 
             String jpql2 = "SELECT ec.fechaGraduacion, COUNT(ec) " +
                     "FROM EstudianteDeCarrera ec " +
-                    "WHERE ec.carrera.id = :idCarrera AND ec.fechaGraduacion <> 0" +
+                    "WHERE ec.carrera.id = :idCarrera AND ec.fechaGraduacion IS NOT NULL " +
                     "GROUP BY ec.fechaGraduacion " +
                     "ORDER BY ec.fechaGraduacion";
 
             List<Object[]> inscriptosList = em.createQuery(jpql).setParameter("idCarrera", carrera.getId()).getResultList();
             List<Object[]> esgresadosList = em.createQuery(jpql2).setParameter("idCarrera", carrera.getId()).getResultList();
             for (Object[] resultado : inscriptosList){
-                int anio = (Integer) resultado[0];
+                Date fecha = (Date) resultado[0];
+                int anio = fecha.getYear() + 1900; // Convert Date to year
                 int inscriptos = ((Number) resultado[1]).intValue();
                 reporte.getInfoPorAnio().put(anio, new CarreraInfoDTO(inscriptos));
             }
             for (Object[] resultado : esgresadosList){
-                int anio = (Integer) resultado[0];
+                Date fecha = (Date) resultado[0];
+                int anio = fecha.getYear() + 1900; // Convert Date to year
                 int egresados = ((Number) resultado[1]).intValue();
                 CarreraInfoDTO c = reporte.getInfoPorAnio().get(anio);
                 if (c == null){
