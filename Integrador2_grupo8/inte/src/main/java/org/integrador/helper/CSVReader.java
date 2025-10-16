@@ -49,46 +49,28 @@ public class CSVReader {
             boolean hayEstudiantes = er.findAll().size() > 0;
             boolean hayMatriculas = ecr.findAll().size() > 0;
             
-            System.out.println("Estado de la base de datos:");
-            System.out.println("  - Carreras: " + (hayCarreras ? "YA EXISTEN (" + cr.findAll().size() + ")" : "VACÍA"));
-            System.out.println("  - Estudiantes: " + (hayEstudiantes ? "YA EXISTEN (" + er.findAll().size() + ")" : "VACÍA"));
-            System.out.println("  - Matrículas: " + (hayMatriculas ? "YA EXISTEN (" + ecr.findAll().size() + ")" : "VACÍA"));
-            System.out.println();
 
             // Cargar carreras solo si no existen
             if (!hayCarreras) {
-                System.out.println("Cargando carreras desde CSV...");
                 em.getTransaction().begin();
                 insertCarreras();
                 em.getTransaction().commit();
-                System.out.println("✓ Carreras cargadas: " + cr.findAll().size());
-            } else {
-                System.out.println("⚠ Saltando carga de carreras (ya existen)");
             }
 
             // Cargar estudiantes solo si no existen
+            
             if (!hayEstudiantes) {
-                System.out.println("Cargando estudiantes desde CSV...");
                 em.getTransaction().begin();
                 insertEstudiantes();
                 em.getTransaction().commit();
-                System.out.println("✓ Estudiantes cargados: " + er.findAll().size());
-            } else {
-                System.out.println("⚠ Saltando carga de estudiantes (ya existen)");
             }
 
             // Cargar matrículas solo si no existen
             if (!hayMatriculas) {
-                System.out.println("Cargando matrículas desde CSV...");
                 em.getTransaction().begin();
                 insertMatriculas();
                 em.getTransaction().commit();
-                System.out.println("✓ Matrículas cargadas: " + ecr.findAll().size());
-            } else {
-                System.out.println("⚠ Saltando carga de matrículas (ya existen)");
             }
-            
-            System.out.println();
         } catch (Exception e) {
             e.printStackTrace();
             if (em.getTransaction().isActive()) {
@@ -184,8 +166,6 @@ public class CSVReader {
                                 matricula.setGraduado(true);
                             }
                             ecr.create(matricula);
-                        } else {
-                            System.out.println("Matrícula ya existe: DNI=" + dni + ", Carrera=" + idCarrera);
                         }
                     } else {
                         System.err.println("No se pudo crear matrícula: estudiante=" + (estudiante != null ? "OK" : "NULL") + 

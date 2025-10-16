@@ -30,13 +30,7 @@ public class EstudianteDeCarreraRepository implements Repository<EstudianteDeCar
         @Override
         public EstudianteDeCarrera findById(int id) {
             EstudianteDeCarrera e = em.find(EstudianteDeCarrera.class, id);
-            if (e != null) {
-                System.out.println("Encontrado: " + e);
-                return e;
-            } else {
-                System.out.println("No existe");
-                return null;
-            }
+            return e;
 
         }
 
