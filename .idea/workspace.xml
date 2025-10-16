@@ -5,10 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7eb3c95-4ded-48f4-bc99-22d5d275d48d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/entity/Carrera.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/entity/Carrera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/entity/Estudiante.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/entity/Estudiante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/entity/EstudianteCarreraId.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/entity/EstudianteCarreraId.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/entity/EstudianteDeCarrera.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/entity/EstudianteDeCarrera.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/helper/CSVReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/helper/CSVReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/repository/CarreraRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/repository/CarreraRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/repository/EstudianteDeCarreraRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/repository/EstudianteDeCarreraRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/repository/EstudianteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/repository/EstudianteRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/repository/Repository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/repository/Repository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/service/EstudianteCarreraService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/service/EstudianteCarreraService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +48,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.InteApplication.executor": "Run",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Iván/OneDrive/Escritorio/integradorArqui/TP_Arquitecturas_Web/Integrador2_grupo8/inte/src/main/resources",
     "node.js.detected.package.eslint": "true",
@@ -52,7 +60,8 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -87,6 +96,7 @@
       <option name="presentableId" value="Default" />
       <updated>1757364693091</updated>
       <workItem from="1759845472580" duration="6822000" />
+      <workItem from="1760644536491" duration="2747000" />
     </task>
     <servers />
   </component>

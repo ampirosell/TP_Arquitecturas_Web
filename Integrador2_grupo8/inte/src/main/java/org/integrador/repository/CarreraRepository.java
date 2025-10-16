@@ -21,7 +21,7 @@ public class CarreraRepository implements Repository<Carrera> {
     }
     @Override
     public void create(Carrera object) {
-        em.persist(object);
+        em.merge(object);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class CarreraRepository implements Repository<Carrera> {
     }
 
     @Override
-    public Carrera findById(long id) {
+    public Carrera findById(int id) {
         return em.find(Carrera.class, id);
     }
 

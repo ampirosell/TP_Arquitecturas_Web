@@ -28,7 +28,7 @@ public class EstudianteDeCarreraRepository implements Repository<EstudianteDeCar
         }
 
         @Override
-        public EstudianteDeCarrera findById(long id) {
+        public EstudianteDeCarrera findById(int id) {
             EstudianteDeCarrera e = em.find(EstudianteDeCarrera.class, id);
             if (e != null) {
                 System.out.println("Encontrado: " + e);

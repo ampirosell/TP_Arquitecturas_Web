@@ -30,7 +30,7 @@ public class CSVReader {
     }
 
     private Iterable<CSVRecord> getData(String archivo) throws IOException {
-        String path = "inte/src/main/resources/" + archivo;
+        String path = "Integrador2_grupo8/inte/src/main/resources/" + archivo;
         Reader in = new FileReader(path);
 
         CSVParser csvParser = CSVFormat.EXCEL
@@ -43,38 +43,51 @@ public class CSVReader {
 
     public void populateDB() throws Exception {
         try {
-            em.getTransaction().begin();
-            insertEstudiantes();
+           /* em.getTransaction().begin();
             insertCarreras();
+            em.getTransaction().commit();
+*/
+           /* em.getTransaction().begin();
+            insertEstudiantes();
+            em.getTransaction().commit();
+*/
+
+            em.getTransaction().begin();
             insertMatriculas();
             em.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
         }
     }
 
     private void insertEstudiantes() throws IOException {
-        for(CSVRecord row : getData("estudiantes.csv")) {
-            //DNI,nombre,apellido,edad,genero,ciudad,LU
-            if(row.size() >= 8) {
-                String estudianteIdString = row.get(0);
-                String dniString = row.get(1);
-                String nombre = row.get(2);
-                String apellido = row.get(3);
-                String edadString = row.get(4);
-                String genero = row.get(5);
-                String ciudad = row.get(6);
-                String nroLUString = row.get(7);
-                if(!dniString.isEmpty() && !nombre.isEmpty() && !apellido.isEmpty() && !edadString.isEmpty() && !genero.isEmpty() && !nroLUString.isEmpty() && !ciudad.isEmpty()) {
+        for (CSVRecord row : getData("estudiantes.csv")) {
+            // DNI,nombre,apellido,edad,genero,ciudad,LU
+            if (row.size() >= 7) {
+                String dniString = row.get(0);
+                String nombre = row.get(1);
+                String apellido = row.get(2);
+                String edadString = row.get(3);
+                String genero = row.get(4);
+                String ciudad = row.get(5);
+                String nroLUString = row.get(6);
+
+                if (!dniString.isEmpty() && !nombre.isEmpty() && !apellido.isEmpty()
+                        && !edadString.isEmpty() && !genero.isEmpty()
+                        && !nroLUString.isEmpty() && !ciudad.isEmpty()) {
                     try {
-                        String nroLU = nroLUString;
-                        Long estudianteId = Long.parseLong(estudianteIdString);
+                        int dni = Integer.parseInt(dniString);
                         int edad = Integer.parseInt(edadString);
-                        String dni = dniString;
-                        Estudiante estudiante = new Estudiante(estudianteId, nombre, apellido, edad, genero,dni, nroLU, ciudad);
+                        String nroLU = nroLUString;
+
+                        Estudiante estudiante = new Estudiante(dni, nombre, apellido, edad, genero, nroLU, ciudad);
                         er.create(estudiante);
+
                     } catch (NumberFormatException e) {
-                        System.err.println("Error de formato en datos de dirección: " + e.getMessage());
+                        System.err.println("Error de formato en datos de estudiante: " + e.getMessage());
                     }
                 }
             }
@@ -100,13 +113,14 @@ public class CSVReader {
             }
         }
     }
+
     private void insertMatriculas() throws IOException {
         for (CSVRecord row : getData("estudianteCarrera.csv")) {
-            if (row.size() >= 4) { // id_estudiante,id_carrera,anio_inicio
+            if (row.size() >= 3) { // id_estudiante,id_carrera,anio_inicio
                 try {
-                    int dni = Integer.parseInt(row.get(1));
-                    int idCarrera = Integer.parseInt(row.get(2));
-                    int anioInicio = Integer.parseInt(row.get(3));
+                    int dni = Integer.parseInt(row.get(0));
+                    int idCarrera = Integer.parseInt(row.get(1));
+                    int anioInicio = Integer.parseInt(row.get(2));
 
                     // Convertir año a Date
                     Date fechaInscripcion = new GregorianCalendar(anioInicio, 0, 1).getTime();

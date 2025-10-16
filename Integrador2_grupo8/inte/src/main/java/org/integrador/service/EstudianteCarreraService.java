@@ -23,7 +23,7 @@ public class EstudianteCarreraService {
     // b) Matricular estudiante en una carrera
     public void matricularEstudiante(Estudiante estudiante, Carrera carrera, Date anioInscripcion){
         // Verificar si ya existe la matricula
-        if(ecr.existe(estudiante.getId(), carrera.getId())){
+        if(ecr.existe(estudiante.getDni(), carrera.getId())){
             throw new RuntimeException("El estudiante ya está inscripto en esta carrera");
         }
 
