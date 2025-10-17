@@ -1,11 +1,12 @@
 package org.integrador.controller;
 
+import org.integrador.DTO.ReporteDTO;
 import org.integrador.service.ReporteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/reportes")
@@ -15,33 +16,10 @@ public class ReporteController {
     @Autowired
     private ReporteService reporteService;
 
-    // 3) Reporte general de carreras por año
+    // h) Generar reporte de carreras con inscriptos y egresados por año
     @GetMapping("/carreras-por-ano")
-    public ResponseEntity<Map<String, Map<Integer, Map<String, Long>>>> generarReporteCarrerasPorAño() {
-        Map<String, Map<Integer, Map<String, Long>>> reporte = reporteService.generarReporteCarrerasPorAño();
+    public ResponseEntity<List<ReporteDTO>> generarReporteCarrerasPorAno() {
+        List<ReporteDTO> reporte = reporteService.generarReporteCarrerasPorAno();
         return ResponseEntity.ok(reporte);
-    }
-
-    // Reporte formateado de carreras por año
-    @GetMapping("/carreras-por-ano/formateado")
-    public ResponseEntity<String> generarReporteCarrerasPorAñoFormateado() {
-        String reporteFormateado = reporteService.formatearReporteCarrerasPorAño();
-        return ResponseEntity.ok(reporteFormateado);
-    }
-
-    // Reporte de una carrera específica por año
-    @GetMapping("/carrera/{nombreCarrera}/por-ano")
-    public ResponseEntity<Map<Integer, Map<String, Long>>> generarReporteCarreraPorAño(
-            @PathVariable String nombreCarrera) {
-        Map<Integer, Map<String, Long>> reporte = reporteService.generarReporteCarreraPorAño(nombreCarrera);
-        return ResponseEntity.ok(reporte);
-    }
-
-    // Reporte formateado de una carrera específica por año
-    @GetMapping("/carrera/{nombreCarrera}/por-ano/formateado")
-    public ResponseEntity<String> generarReporteCarreraPorAñoFormateado(
-            @PathVariable String nombreCarrera) {
-        String reporteFormateado = reporteService.formatearReporteCarreraPorAño(nombreCarrera);
-        return ResponseEntity.ok(reporteFormateado);
     }
 }

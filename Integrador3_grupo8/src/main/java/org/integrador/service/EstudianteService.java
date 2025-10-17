@@ -48,34 +48,4 @@ public class EstudianteService {
     public List<Estudiante> obtenerEstudiantesPorCarreraYCiudad(String nombreCarrera, String ciudad) {
         return estudianteRepository.findByCarreraAndCiudad(nombreCarrera, ciudad);
     }
-
-    // Consulta adicional: estudiantes por carrera
-    public List<Estudiante> obtenerEstudiantesPorCarrera(String nombreCarrera) {
-        return estudianteRepository.findByCarrera(nombreCarrera);
-    }
-
-    // Obtener estudiante por DNI
-    public Optional<Estudiante> obtenerEstudiantePorDni(Integer dni) {
-        return estudianteRepository.findByDni(dni);
-    }
-
-    // Actualizar estudiante
-    public Estudiante actualizarEstudiante(Estudiante estudiante) {
-        return estudianteRepository.save(estudiante);
-    }
-
-    // Eliminar estudiante por DNI
-    public void eliminarEstudiante(Integer dni) {
-        estudianteRepository.deleteById(dni);
-    }
-
-    // Verificar si existe estudiante por DNI
-    public boolean existeEstudiantePorDni(Integer dni) {
-        return estudianteRepository.existsByDni(dni);
-    }
-
-    // Verificar si existe estudiante por número LU
-    public boolean existeEstudiantePorNumeroLU(String numeroLU) {
-        return estudianteRepository.existsByNumeroLU(numeroLU);
-    }
 }

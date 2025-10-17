@@ -1,5 +1,6 @@
 package org.integrador.service;
 
+import org.integrador.DTO.CarreraConEstudiantesDTO;
 import org.integrador.entity.Carrera;
 import org.integrador.entity.Estudiante;
 import org.integrador.entity.EstudianteDeCarrera;
@@ -72,21 +73,8 @@ public class CarreraService {
     }
 
     // f) Recuperar carreras con estudiantes inscriptos ordenadas por cantidad
-    public List<Carrera> obtenerCarrerasConEstudiantesOrdenadasPorInscripciones() {
-        return carreraRepository.findCarrerasWithStudentsOrderedByInscripciones();
-    }
-
-    // Obtener carreras con conteo de estudiantes
-    public List<Object[]> obtenerCarrerasConConteoEstudiantes() {
-        return carreraRepository.findCarrerasWithStudentCount();
-    }
-
-    // Crear nueva carrera
-    public Carrera crearCarrera(Carrera carrera) {
-        if (carreraRepository.existsByNombre(carrera.getNombre())) {
-            throw new RuntimeException("Ya existe una carrera con el nombre: " + carrera.getNombre());
-        }
-        return carreraRepository.save(carrera);
+    public List<CarreraConEstudiantesDTO> obtenerCarrerasConEstudiantesOrdenadasPorInscripciones() {
+        return carreraRepository.findCarrerasWithStudentCountOrdered();
     }
 
     // Obtener todas las carreras
@@ -97,40 +85,5 @@ public class CarreraService {
     // Obtener carrera por ID
     public Optional<Carrera> obtenerCarreraPorId(Long id) {
         return carreraRepository.findById(id);
-    }
-
-    // Obtener carrera por nombre
-    public Optional<Carrera> obtenerCarreraPorNombre(String nombre) {
-        return carreraRepository.findByNombre(nombre);
-    }
-
-    // Actualizar carrera
-    public Carrera actualizarCarrera(Carrera carrera) {
-        return carreraRepository.save(carrera);
-    }
-
-    // Eliminar carrera
-    public void eliminarCarrera(Long id) {
-        carreraRepository.deleteById(id);
-    }
-
-    // Verificar si existe carrera por nombre
-    public boolean existeCarreraPorNombre(String nombre) {
-        return carreraRepository.existsByNombre(nombre);
-    }
-
-    // Contar estudiantes por carrera
-    public Long contarEstudiantesPorCarrera(Long carreraId) {
-        return estudianteDeCarreraRepository.countByCarrera(carreraId);
-    }
-
-    // Contar graduados por carrera
-    public Long contarGraduadosPorCarrera(Long carreraId) {
-        return estudianteDeCarreraRepository.countGraduadosByCarrera(carreraId);
-    }
-
-    // Contar estudiantes activos por carrera
-    public Long contarActivosPorCarrera(Long carreraId) {
-        return estudianteDeCarreraRepository.countActivosByCarrera(carreraId);
     }
 }

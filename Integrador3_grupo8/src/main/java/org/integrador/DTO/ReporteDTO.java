@@ -1,22 +1,21 @@
 package org.integrador.DTO;
 
-import java.util.Map;
-import java.util.TreeMap;
-
 public class ReporteDTO {
-    String nombreCarrera;
-    Map<Integer,CarreraInfoDTO> infoPorAnio;
-    public ReporteDTO(String nombreCarrera) {
+    private String nombreCarrera;
+    private Integer anio;
+    private Long inscriptos;
+    private Long egresados;
+
+    public ReporteDTO() {}
+
+    public ReporteDTO(String nombreCarrera, Integer anio, Long inscriptos, Long egresados) {
         this.nombreCarrera = nombreCarrera;
-        this.infoPorAnio = new TreeMap<>(); // Para mantener el orden de los años
+        this.anio = anio;
+        this.inscriptos = inscriptos;
+        this.egresados = egresados;
     }
 
-    @Override
-    public String toString() {
-        return "\nCarrera = " + nombreCarrera + ", " +
-                "Informacion de alumnos por año = " + infoPorAnio;
-    }
-
+    // Getters y Setters
     public String getNombreCarrera() {
         return nombreCarrera;
     }
@@ -25,11 +24,27 @@ public class ReporteDTO {
         this.nombreCarrera = nombreCarrera;
     }
 
-    public Map<Integer, CarreraInfoDTO> getInfoPorAnio() {
-        return infoPorAnio;
+    public Integer getAnio() {
+        return anio;
     }
 
-    public void setInfoPorAnio(Map<Integer, CarreraInfoDTO> infoPorAnio) {
-        this.infoPorAnio = infoPorAnio;
+    public void setAnio(Integer anio) {
+        this.anio = anio;
+    }
+
+    public Long getInscriptos() {
+        return inscriptos;
+    }
+
+    public void setInscriptos(Long inscriptos) {
+        this.inscriptos = inscriptos;
+    }
+
+    public Long getEgresados() {
+        return egresados;
+    }
+
+    public void setEgresados(Long egresados) {
+        this.egresados = egresados;
     }
 }

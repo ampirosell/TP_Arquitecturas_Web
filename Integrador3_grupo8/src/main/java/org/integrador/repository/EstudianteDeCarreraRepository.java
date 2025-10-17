@@ -1,5 +1,6 @@
 package org.integrador.repository;
 
+import org.integrador.DTO.ReporteDTO;
 import org.integrador.entity.EstudianteDeCarrera;
 import org.integrador.entity.EstudianteCarreraId;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,15 +24,17 @@ public interface EstudianteDeCarreraRepository extends JpaRepository<EstudianteD
            "ORDER BY YEAR(ec.fechaInscripcion)")
     List<Object[]> findReporteCarreraPorAño(@Param("nombreCarrera") String nombreCarrera);
 
-    // Reporte general de todas las carreras por año
-    @Query("SELECT c.nombre, YEAR(ec.fechaInscripcion) as año, " +
-           "COUNT(CASE WHEN ec.graduado = false THEN 1 END) as inscriptos, " +
-           "COUNT(CASE WHEN ec.graduado = true THEN 1 END) as egresados " +
+    // h) Reporte de carreras con inscriptos y egresados por año
+    @Query("SELECT new org.integrador.DTO.ReporteDTO(" +
+           "c.nombre, " +
+           "YEAR(ec.fechaInscripcion), " +
+           "COUNT(ec), " +
+           "SUM(CASE WHEN ec.graduado = true THEN 1 ELSE 0 END)) " +
            "FROM EstudianteDeCarrera ec " +
            "JOIN ec.carrera c " +
            "GROUP BY c.nombre, YEAR(ec.fechaInscripcion) " +
-           "ORDER BY c.nombre, YEAR(ec.fechaInscripcion)")
-    List<Object[]> findReporteGeneralCarrerasPorAño();
+           "ORDER BY c.nombre ASC, YEAR(ec.fechaInscripcion) ASC")
+    List<ReporteDTO> findReporteCarrerasPorAno();
 
     // Buscar inscripciones por estudiante y carrera
     @Query("SELECT ec FROM EstudianteDeCarrera ec " +
