@@ -6,15 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f7eb3c95-4ded-48f4-bc99-22d5d275d48d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/entity/Estudiante.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/entity/Estudiante.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/entity/EstudianteCarreraId.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/entity/EstudianteCarreraId.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/entity/EstudianteDeCarrera.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/entity/EstudianteDeCarrera.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/helper/CSVReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/helper/CSVReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/repository/CarreraRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/repository/CarreraRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/repository/EstudianteDeCarreraRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/repository/EstudianteDeCarreraRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/repository/EstudianteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/repository/EstudianteRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/repository/Repository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/repository/Repository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/service/EstudianteCarreraService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/java/org/integrador/service/EstudianteCarreraService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/resources/estudianteCarrera.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador2_grupo8/inte/src/main/resources/estudianteCarrera.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +37,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.InteApplication.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
@@ -70,7 +64,20 @@
       <recent name="C:\Users\Iván\OneDrive\Escritorio\integradorArqui\TP_Arquitecturas_Web\Integrador2_grupo8\inte\src\main\resources\META-INF" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.InteApplication">
+    <configuration name="InteApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.integrador.inte.InteApplication" />
+      <module name="inte" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.integrador.inte.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="InteApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="inte" />
@@ -79,6 +86,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.InteApplication" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -96,7 +108,9 @@
       <option name="presentableId" value="Default" />
       <updated>1757364693091</updated>
       <workItem from="1759845472580" duration="6822000" />
-      <workItem from="1760644536491" duration="2747000" />
+      <workItem from="1760644536491" duration="2829000" />
+      <workItem from="1760665928170" duration="757000" />
+      <workItem from="1760700944457" duration="916000" />
     </task>
     <servers />
   </component>
