@@ -55,8 +55,8 @@ public class EstudianteService {
     }
 
     // Obtener estudiante por ID
-    public Optional<Estudiante> obtenerEstudiantePorId(Long id) {
-        return estudianteRepository.findById(id);
+    public Optional<Estudiante> obtenerEstudiantePorDni(int dni) {
+        return estudianteRepository.findById(dni);
     }
 
     // Actualizar estudiante
@@ -65,12 +65,12 @@ public class EstudianteService {
     }
 
     // Eliminar estudiante
-    public void eliminarEstudiante(Long id) {
-        estudianteRepository.deleteById(id);
+    public void eliminarEstudiante(int dni) {
+        estudianteRepository.deleteById(dni);
     }
 
     // Verificar si existe estudiante por DNI
-    public boolean existeEstudiantePorDni(String dni) {
+    public boolean existeEstudiantePorDni(int dni) {
         return estudianteRepository.existsByDni(dni);
     }
 

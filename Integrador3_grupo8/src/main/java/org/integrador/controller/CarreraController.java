@@ -28,14 +28,14 @@ public class CarreraController {
     private EstudianteService estudianteService;
 
     // b) Matricular un estudiante en una carrera
-    @PostMapping("/{carreraId}/matricular/{estudianteId}")
+    @PostMapping("/{carreraId}/matricular/{dni}")
     public ResponseEntity<?> matricularEstudiante(
             @PathVariable Long carreraId,
-            @PathVariable Long estudianteId,
+            @PathVariable int dni,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInscripcion) {
         
         try {
-            EstudianteDeCarrera inscripcion = carreraService.matricularEstudiante(estudianteId, carreraId, fechaInscripcion);
+            EstudianteDeCarrera inscripcion = carreraService.matricularEstudiante(dni, carreraId, fechaInscripcion);
             return ResponseEntity.status(HttpStatus.CREATED).body(inscripcion);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
@@ -46,7 +46,7 @@ public class CarreraController {
     @PostMapping("/matricular")
     public ResponseEntity<?> matricularEstudianteCompleto(@RequestBody MatriculacionRequest request) {
         try {
-            Optional<Estudiante> estudianteOpt = estudianteService.obtenerEstudiantePorId(request.getEstudianteId());
+            Optional<Estudiante> estudianteOpt = estudianteService.obtenerEstudiantePorDni(request.getEstudianteId());
             Optional<Carrera> carreraOpt = carreraService.obtenerCarreraPorId(request.getCarreraId());
             
             if (estudianteOpt.isEmpty()) {
@@ -157,16 +157,16 @@ public class CarreraController {
 
     // Clase interna para el request de matriculación
     public static class MatriculacionRequest {
-        private Long estudianteId;
+        private int dni;
         private Long carreraId;
         private Date fechaInscripcion;
 
         // Getters y Setters
-        public Long getEstudianteId() { return estudianteId; }
-        public void setEstudianteId(Long estudianteId) { this.estudianteId = estudianteId; }
+        public int getEstudianteId() { return dni; }
+
         
         public Long getCarreraId() { return carreraId; }
-        public void setCarreraId(Long carreraId) { this.carreraId = carreraId; }
+
         
         public Date getFechaInscripcion() { return fechaInscripcion; }
         public void setFechaInscripcion(Date fechaInscripcion) { this.fechaInscripcion = fechaInscripcion; }

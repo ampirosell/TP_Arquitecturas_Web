@@ -11,8 +11,8 @@ public class EstudianteDeCarrera {
     private EstudianteCarreraId id;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("estudianteId")
-    @JoinColumn(name = "estudiante_id", nullable = false)
+    @MapsId("dni")
+    @JoinColumn(name = "dni", nullable = false)
     private Estudiante estudiante;
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,7 +35,7 @@ public class EstudianteDeCarrera {
     public EstudianteDeCarrera() {}
 
     public EstudianteDeCarrera(Estudiante estudiante, Carrera carrera, Date fechaInscripcion) {
-        this.id = new EstudianteCarreraId(estudiante.getId(), carrera.getId());
+        this.id = new EstudianteCarreraId(estudiante.getDni(), carrera.getId());
         this.estudiante = estudiante;
         this.carrera = carrera;
         this.fechaInscripcion = fechaInscripcion;
@@ -47,9 +47,6 @@ public class EstudianteDeCarrera {
         return id;
     }
 
-    public void setId(EstudianteCarreraId id) {
-        this.id = id;
-    }
 
     public Estudiante getEstudiante() {
         return estudiante;

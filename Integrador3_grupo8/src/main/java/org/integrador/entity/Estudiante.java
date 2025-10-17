@@ -9,8 +9,8 @@ public class Estudiante {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "estudiante_id")
-    private Long estudianteId;
+    @Column(name = "dni")
+    private int dni;
     
     @Column(name = "nombre", nullable = false)
     private String nombre;
@@ -23,10 +23,7 @@ public class Estudiante {
     
     @Column(name = "genero", nullable = false)
     private String genero;
-    
-    @Column(name = "dni", unique = true, nullable = false)
-    private String dni;
-    
+
     @Column(name = "ciudad_residencia", nullable = false)
     private String ciudadDeResidencia;
     
@@ -36,13 +33,8 @@ public class Estudiante {
     @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<EstudianteDeCarrera> carreras;
 
-    public Long getId() {
-        return estudianteId;
-    }
 
-    public void setId(Long estudianteId) {
-        this.estudianteId = estudianteId;
-    }
+
 
     public String getNombre() {
         return nombre;
@@ -76,11 +68,11 @@ public class Estudiante {
         this.genero = genero;
     }
 
-    public String getDni() {
+    public int getDni() {
         return dni;
     }
 
-    public void setDni(String dni) {
+    public void setDni(int dni) {
         this.dni = dni;
     }
 

@@ -72,8 +72,8 @@ public class EstudianteController {
 
     // Obtener estudiante por ID
     @GetMapping("/{id}")
-    public ResponseEntity<?> obtenerEstudiantePorId(@PathVariable Long id) {
-        Optional<Estudiante> estudiante = estudianteService.obtenerEstudiantePorId(id);
+    public ResponseEntity<?> obtenerEstudiantePorId(@PathVariable int dni) {
+        Optional<Estudiante> estudiante = estudianteService.obtenerEstudiantePorDni(dni);
         if (estudiante.isPresent()) {
             return ResponseEntity.ok(estudiante.get());
         } else {
@@ -83,9 +83,9 @@ public class EstudianteController {
 
     // Actualizar estudiante
     @PutMapping("/{id}")
-    public ResponseEntity<?> actualizarEstudiante(@PathVariable Long id, @RequestBody Estudiante estudiante) {
+    public ResponseEntity<?> actualizarEstudiante(@PathVariable int id, @RequestBody Estudiante estudiante) {
         try {
-            estudiante.setId(id);
+            estudiante.setDni(id);
             Estudiante estudianteActualizado = estudianteService.actualizarEstudiante(estudiante);
             return ResponseEntity.ok(estudianteActualizado);
         } catch (Exception e) {
@@ -95,7 +95,7 @@ public class EstudianteController {
 
     // Eliminar estudiante
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminarEstudiante(@PathVariable Long id) {
+    public ResponseEntity<?> eliminarEstudiante(@PathVariable int id) {
         try {
             estudianteService.eliminarEstudiante(id);
             return ResponseEntity.ok().body("Estudiante eliminado correctamente");
@@ -106,7 +106,7 @@ public class EstudianteController {
 
     // Verificar existencia por DNI
     @GetMapping("/existe/dni/{dni}")
-    public ResponseEntity<Boolean> existeEstudiantePorDni(@PathVariable String dni) {
+    public ResponseEntity<Boolean> existeEstudiantePorDni(@PathVariable int dni) {
         boolean existe = estudianteService.existeEstudiantePorDni(dni);
         return ResponseEntity.ok(existe);
     }

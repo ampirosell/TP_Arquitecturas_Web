@@ -7,33 +7,28 @@ import java.util.Objects;
 @Embeddable
 public class EstudianteCarreraId implements Serializable {
 
-    private Long estudianteId;
+    private int dni;
     private Long carreraId;
 
     // Constructores
     public EstudianteCarreraId() {}
 
-    public EstudianteCarreraId(Long estudianteId, Long carreraId) {
-        this.estudianteId = estudianteId;
+    public EstudianteCarreraId(int dni, Long carreraId) {
+        this.dni = dni;
         this.carreraId = carreraId;
     }
 
     // Getters y Setters
-    public Long getEstudianteId() {
-        return estudianteId;
+    public int getEstudianteDni() {
+        return dni;
     }
 
-    public void setEstudianteId(Long estudianteId) {
-        this.estudianteId = estudianteId;
-    }
 
     public Long getCarreraId() {
         return carreraId;
     }
 
-    public void setCarreraId(Long carreraId) {
-        this.carreraId = carreraId;
-    }
+
 
     // equals y hashCode son obligatorios para claves compuestas
     @Override
@@ -41,19 +36,19 @@ public class EstudianteCarreraId implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EstudianteCarreraId that = (EstudianteCarreraId) o;
-        return Objects.equals(estudianteId, that.estudianteId) &&
+        return Objects.equals(dni, that.dni) &&
                Objects.equals(carreraId, that.carreraId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(estudianteId, carreraId);
+        return Objects.hash(dni, carreraId);
     }
 
     @Override
     public String toString() {
         return "EstudianteCarreraId{" +
-                "estudianteId=" + estudianteId +
+                "estudianteId=" + dni +
                 ", carreraId=" + carreraId +
                 '}';
     }

@@ -43,7 +43,7 @@ public class DataController {
             estudiante1.setApellido("Pérez");
             estudiante1.setEdad(22);
             estudiante1.setGenero("Masculino");
-            estudiante1.setDni("12345678");
+            estudiante1.setDni(12345678);
             estudiante1.setCiudadDeResidencia("Buenos Aires");
             estudiante1.setNumeroLU("LU12345");
 
@@ -52,7 +52,7 @@ public class DataController {
             estudiante2.setApellido("González");
             estudiante2.setEdad(23);
             estudiante2.setGenero("Femenino");
-            estudiante2.setDni("87654321");
+            estudiante2.setDni(87654321);
             estudiante2.setCiudadDeResidencia("Córdoba");
             estudiante2.setNumeroLU("LU67890");
 
@@ -61,7 +61,7 @@ public class DataController {
             estudiante3.setApellido("López");
             estudiante3.setEdad(21);
             estudiante3.setGenero("Masculino");
-            estudiante3.setDni("11223344");
+            estudiante3.setDni(11223344);
             estudiante3.setCiudadDeResidencia("Buenos Aires");
             estudiante3.setNumeroLU("LU11111");
 
@@ -70,7 +70,7 @@ public class DataController {
             estudiante4.setApellido("Martínez");
             estudiante4.setEdad(24);
             estudiante4.setGenero("Femenino");
-            estudiante4.setDni("55667788");
+            estudiante4.setDni(55667788);
             estudiante4.setCiudadDeResidencia("Rosario");
             estudiante4.setNumeroLU("LU22222");
 

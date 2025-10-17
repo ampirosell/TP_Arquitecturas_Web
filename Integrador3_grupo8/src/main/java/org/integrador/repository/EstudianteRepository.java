@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
+public interface EstudianteRepository extends JpaRepository<Estudiante, Integer> {
 
     // c) Recuperar todos los estudiantes con criterio de ordenamiento
     @Query("SELECT e FROM Estudiante e ORDER BY e.apellido, e.nombre")
@@ -42,7 +42,7 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
     List<Estudiante> findByCarrera(@Param("nombreCarrera") String nombreCarrera);
 
     // Verificar si existe estudiante por DNI
-    boolean existsByDni(String dni);
+    boolean existsByDni(int dni);
 
     // Verificar si existe estudiante por número de libreta universitaria
     boolean existsByNumeroLU(String numeroLU);

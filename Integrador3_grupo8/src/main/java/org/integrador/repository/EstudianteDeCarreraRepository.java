@@ -35,8 +35,8 @@ public interface EstudianteDeCarreraRepository extends JpaRepository<EstudianteD
 
     // Buscar inscripciones por estudiante y carrera
     @Query("SELECT ec FROM EstudianteDeCarrera ec " +
-           "WHERE ec.estudiante.id = :estudianteId AND ec.carrera.id = :carreraId")
-    List<EstudianteDeCarrera> findByEstudianteAndCarrera(@Param("estudianteId") Long estudianteId, 
+           "WHERE ec.estudiante.dni = :dni AND ec.carrera.id = :carreraId")
+    List<EstudianteDeCarrera> findByEstudianteAndCarrera(@Param("dni") int dni,
                                                         @Param("carreraId") Long carreraId);
 
     // Contar estudiantes por carrera
