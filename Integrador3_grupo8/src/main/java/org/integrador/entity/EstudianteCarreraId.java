@@ -7,25 +7,32 @@ import java.util.Objects;
 @Embeddable
 public class EstudianteCarreraId implements Serializable {
 
-    private int dni;
+    private Integer dni;
     private Long carreraId;
 
     // Constructores
     public EstudianteCarreraId() {}
 
-    public EstudianteCarreraId(int dni, Long carreraId) {
+    public EstudianteCarreraId(Integer dni, Long carreraId) {
         this.dni = dni;
         this.carreraId = carreraId;
     }
 
     // Getters y Setters
-    public int getEstudianteDni() {
+    public Integer getDni() {
         return dni;
     }
 
+    public void setDni(Integer dni) {
+        this.dni = dni;
+    }
 
     public Long getCarreraId() {
         return carreraId;
+    }
+
+    public void setCarreraId(Long carreraId) {
+        this.carreraId = carreraId;
     }
 
 
@@ -48,7 +55,7 @@ public class EstudianteCarreraId implements Serializable {
     @Override
     public String toString() {
         return "EstudianteCarreraId{" +
-                "estudianteId=" + dni +
+                "dni=" + dni +
                 ", carreraId=" + carreraId +
                 '}';
     }

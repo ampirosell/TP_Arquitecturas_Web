@@ -70,9 +70,9 @@ public class EstudianteController {
         return ResponseEntity.ok(estudiantes);
     }
 
-    // Obtener estudiante por ID
-    @GetMapping("/{id}")
-    public ResponseEntity<?> obtenerEstudiantePorId(@PathVariable int dni) {
+    // Obtener estudiante por DNI
+    @GetMapping("/{dni}")
+    public ResponseEntity<?> obtenerEstudiantePorDni(@PathVariable Integer dni) {
         Optional<Estudiante> estudiante = estudianteService.obtenerEstudiantePorDni(dni);
         if (estudiante.isPresent()) {
             return ResponseEntity.ok(estudiante.get());
@@ -82,10 +82,10 @@ public class EstudianteController {
     }
 
     // Actualizar estudiante
-    @PutMapping("/{id}")
-    public ResponseEntity<?> actualizarEstudiante(@PathVariable int id, @RequestBody Estudiante estudiante) {
+    @PutMapping("/{dni}")
+    public ResponseEntity<?> actualizarEstudiante(@PathVariable Integer dni, @RequestBody Estudiante estudiante) {
         try {
-            estudiante.setDni(id);
+            estudiante.setDni(dni);
             Estudiante estudianteActualizado = estudianteService.actualizarEstudiante(estudiante);
             return ResponseEntity.ok(estudianteActualizado);
         } catch (Exception e) {
@@ -93,11 +93,11 @@ public class EstudianteController {
         }
     }
 
-    // Eliminar estudiante
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminarEstudiante(@PathVariable int id) {
+    // Eliminar estudiante por DNI
+    @DeleteMapping("/{dni}")
+    public ResponseEntity<?> eliminarEstudiante(@PathVariable Integer dni) {
         try {
-            estudianteService.eliminarEstudiante(id);
+            estudianteService.eliminarEstudiante(dni);
             return ResponseEntity.ok().body("Estudiante eliminado correctamente");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
@@ -106,7 +106,7 @@ public class EstudianteController {
 
     // Verificar existencia por DNI
     @GetMapping("/existe/dni/{dni}")
-    public ResponseEntity<Boolean> existeEstudiantePorDni(@PathVariable int dni) {
+    public ResponseEntity<Boolean> existeEstudiantePorDni(@PathVariable Integer dni) {
         boolean existe = estudianteService.existeEstudiantePorDni(dni);
         return ResponseEntity.ok(existe);
     }

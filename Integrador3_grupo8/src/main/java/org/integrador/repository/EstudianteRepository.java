@@ -42,7 +42,10 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Integer>
     List<Estudiante> findByCarrera(@Param("nombreCarrera") String nombreCarrera);
 
     // Verificar si existe estudiante por DNI
-    boolean existsByDni(int dni);
+    boolean existsByDni(Integer dni);
+
+    // Obtener estudiante por DNI
+    Optional<Estudiante> findByDni(Integer dni);
 
     // Verificar si existe estudiante por número de libreta universitaria
     boolean existsByNumeroLU(String numeroLU);

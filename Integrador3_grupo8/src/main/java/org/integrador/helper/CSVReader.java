@@ -56,25 +56,30 @@ public class CSVReader {
     private void insertEstudiantes() throws IOException {
         for(CSVRecord row : getData("estudiantes.csv")) {
             //DNI,nombre,apellido,edad,genero,ciudad,LU
-            if(row.size() >= 8) {
-                String estudianteIdString = row.get(0);
-                String dniString = row.get(1);
-                String nombre = row.get(2);
-                String apellido = row.get(3);
-                String edadString = row.get(4);
-                String genero = row.get(5);
-                String ciudad = row.get(6);
-                String nroLUString = row.get(7);
+            if(row.size() >= 7) {
+                String dniString = row.get(0);
+                String nombre = row.get(1);
+                String apellido = row.get(2);
+                String edadString = row.get(3);
+                String genero = row.get(4);
+                String ciudad = row.get(5);
+                String nroLUString = row.get(6);
                 if(!dniString.isEmpty() && !nombre.isEmpty() && !apellido.isEmpty() && !edadString.isEmpty() && !genero.isEmpty() && !nroLUString.isEmpty() && !ciudad.isEmpty()) {
                     try {
                         String nroLU = nroLUString;
-                        Long estudianteId = Long.parseLong(estudianteIdString);
-                        int edad = Integer.parseInt(edadString);
-                        String dni = dniString;
-                        Estudiante estudiante = new Estudiante(estudianteId, nombre, apellido, edad, genero,dni, nroLU, ciudad);
-                        er.create(estudiante);
+                        Integer dni = Integer.parseInt(dniString);
+                        Integer edad = Integer.parseInt(edadString);
+                        Estudiante estudiante = new Estudiante();
+                        estudiante.setDni(dni);
+                        estudiante.setNombre(nombre);
+                        estudiante.setApellido(apellido);
+                        estudiante.setEdad(edad);
+                        estudiante.setGenero(genero);
+                        estudiante.setCiudadDeResidencia(ciudad);
+                        estudiante.setNumeroLU(nroLU);
+                        er.save(estudiante);
                     } catch (NumberFormatException e) {
-                        System.err.println("Error de formato en datos de dirección: " + e.getMessage());
+                        System.err.println("Error de formato en datos de estudiante: " + e.getMessage());
                     }
                 }
             }
@@ -82,19 +87,19 @@ public class CSVReader {
     }
     private void insertCarreras() throws IOException {
         for(CSVRecord row : getData("carreras.csv")) {
-            //id_carrera,nombre, duracion
-            if(row.size() >= 3) {
-                String id_carreraString = row.get(0);
-                String nombre = row.get(1);
-                String duracionString = row.get(2);
-                if(!id_carreraString.isEmpty() && !nombre.isEmpty() && !duracionString.isEmpty()) {
+            //nombre,duracion
+            if(row.size() >= 2) {
+                String nombre = row.get(0);
+                String duracionString = row.get(1);
+                if(!nombre.isEmpty() && !duracionString.isEmpty()) {
                     try {
-                        Long id_carrera = Long.parseLong(id_carreraString);
-                        int duracion = Integer.parseInt(duracionString);
-                        Carrera carrera = new Carrera(id_carrera, nombre, duracion);
-                        cr.create(carrera);
+                        Integer duracion = Integer.parseInt(duracionString);
+                        Carrera carrera = new Carrera();
+                        carrera.setNombre(nombre);
+                        carrera.setDuracion(duracion);
+                        cr.save(carrera);
                     } catch (NumberFormatException e) {
-                        System.err.println("Error de formato en datos de dirección: " + e.getMessage());
+                        System.err.println("Error de formato en datos de carrera: " + e.getMessage());
                     }
                 }
             }
@@ -102,24 +107,23 @@ public class CSVReader {
     }
     private void insertMatriculas() throws IOException {
         for (CSVRecord row : getData("estudianteCarrera.csv")) {
-            if (row.size() >= 4) { // id_estudiante,id_carrera,anio_inicio
+            if (row.size() >= 3) { // dni,carrera_id,anio_inicio
                 try {
-                    int dni = Integer.parseInt(row.get(1));
-                    int idCarrera = Integer.parseInt(row.get(2));
-                    int anioInicio = Integer.parseInt(row.get(3));
+                    Integer dni = Integer.parseInt(row.get(0));
+                    Long idCarrera = Long.parseLong(row.get(1));
+                    Integer anioInicio = Integer.parseInt(row.get(2));
 
                     // Convertir año a Date
                     Date fechaInscripcion = new GregorianCalendar(anioInicio, 0, 1).getTime();
 
-                    Estudiante estudiante = er.findById(dni);
-                    Carrera carrera = cr.findById(idCarrera);
+                    Estudiante estudiante = er.findByDni(dni).orElse(null);
+                    Carrera carrera = cr.findById(idCarrera).orElse(null);
 
-                    // Crear matrícula
-                    EstudianteDeCarrera matricula = new EstudianteDeCarrera(estudiante, carrera, fechaInscripcion);
-
-                    em.getTransaction().begin();
-                    ecr.create(matricula);
-                    em.getTransaction().commit();
+                    if (estudiante != null && carrera != null) {
+                        // Crear matrícula
+                        EstudianteDeCarrera matricula = new EstudianteDeCarrera(estudiante, carrera, fechaInscripcion);
+                        ecr.save(matricula);
+                    }
 
                 } catch (NumberFormatException e) {
                     System.err.println("Error en formato de datos: " + e.getMessage());

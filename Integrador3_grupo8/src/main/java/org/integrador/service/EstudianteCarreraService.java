@@ -1,37 +1,33 @@
 package org.integrador.service;
 
-
 import org.integrador.entity.Carrera;
 import org.integrador.entity.Estudiante;
 import org.integrador.entity.EstudianteDeCarrera;
-
+import org.integrador.entity.EstudianteCarreraId;
 import org.integrador.repository.EstudianteDeCarreraRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityManager;
 import java.util.Date;
 
+@Service
+@Transactional
 public class EstudianteCarreraService {
 
-    private EntityManager em;
+    @Autowired
     private EstudianteDeCarreraRepository ecr;
 
-    public EstudianteCarreraService(EntityManager em){
-        this.em = em;
-        this.ecr = new EstudianteDeCarreraRepository(em);
-    }
-
     // b) Matricular estudiante en una carrera
-    public void matricularEstudiante(Estudiante estudiante, Carrera carrera, Date anioInscripcion){
+    public EstudianteDeCarrera matricularEstudiante(Estudiante estudiante, Carrera carrera, Date anioInscripcion){
         // Verificar si ya existe la matricula
-        if(ecr.existe(estudiante.getId(), carrera.getId())){
+        EstudianteCarreraId id = new EstudianteCarreraId(estudiante.getDni(), carrera.getId());
+        if(ecr.existsById(id)){
             throw new RuntimeException("El estudiante ya está inscripto en esta carrera");
         }
 
         EstudianteDeCarrera matricula = new EstudianteDeCarrera(estudiante, carrera, anioInscripcion);
-
-        em.getTransaction().begin();
-        ecr.create(matricula);
-        em.getTransaction().commit();
+        return ecr.save(matricula);
     }
 }
 

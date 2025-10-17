@@ -8,9 +8,8 @@ import java.util.List;
 public class Estudiante {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "dni")
-    private int dni;
+    @Column(name = "dni", nullable = false)
+    private Integer dni;
     
     @Column(name = "nombre", nullable = false)
     private String nombre;
@@ -68,11 +67,11 @@ public class Estudiante {
         this.genero = genero;
     }
 
-    public int getDni() {
+    public Integer getDni() {
         return dni;
     }
 
-    public void setDni(int dni) {
+    public void setDni(Integer dni) {
         this.dni = dni;
     }
 

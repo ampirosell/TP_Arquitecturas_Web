@@ -54,9 +54,9 @@ public class EstudianteService {
         return estudianteRepository.findByCarrera(nombreCarrera);
     }
 
-    // Obtener estudiante por ID
-    public Optional<Estudiante> obtenerEstudiantePorDni(int dni) {
-        return estudianteRepository.findById(dni);
+    // Obtener estudiante por DNI
+    public Optional<Estudiante> obtenerEstudiantePorDni(Integer dni) {
+        return estudianteRepository.findByDni(dni);
     }
 
     // Actualizar estudiante
@@ -64,13 +64,13 @@ public class EstudianteService {
         return estudianteRepository.save(estudiante);
     }
 
-    // Eliminar estudiante
-    public void eliminarEstudiante(int dni) {
+    // Eliminar estudiante por DNI
+    public void eliminarEstudiante(Integer dni) {
         estudianteRepository.deleteById(dni);
     }
 
     // Verificar si existe estudiante por DNI
-    public boolean existeEstudiantePorDni(int dni) {
+    public boolean existeEstudiantePorDni(Integer dni) {
         return estudianteRepository.existsByDni(dni);
     }
 

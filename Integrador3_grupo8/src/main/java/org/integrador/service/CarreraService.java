@@ -29,16 +29,9 @@ public class CarreraService {
     private EstudianteRepository estudianteRepository;
 
     // b) Matricular un estudiante en una carrera
-    public EstudianteDeCarrera matricularEstudiante(int dni, Long carreraId, Date fechaInscripcion) {
-        // Verificar que el estudiante no esté ya inscripto en esta carrera
-        EstudianteCarreraId id = new EstudianteCarreraId(dni, carreraId);
-        
-        if (estudianteDeCarreraRepository.existsById(id)) {
-            throw new RuntimeException("El estudiante ya está inscripto en esta carrera");
-        }
-
+    public EstudianteDeCarrera matricularEstudiante(Integer dni, Long carreraId, Date fechaInscripcion) {
         // Obtener las entidades completas
-        Optional<Estudiante> estudianteOpt = estudianteRepository.findById(dni);
+        Optional<Estudiante> estudianteOpt = estudianteRepository.findByDni(dni);
         Optional<Carrera> carreraOpt = carreraRepository.findById(carreraId);
         
         if (estudianteOpt.isEmpty()) {
@@ -46,6 +39,13 @@ public class CarreraService {
         }
         if (carreraOpt.isEmpty()) {
             throw new RuntimeException("Carrera no encontrada");
+        }
+
+        // Verificar que el estudiante no esté ya inscripto en esta carrera
+        EstudianteCarreraId id = new EstudianteCarreraId(dni, carreraId);
+        
+        if (estudianteDeCarreraRepository.existsById(id)) {
+            throw new RuntimeException("El estudiante ya está inscripto en esta carrera");
         }
 
         EstudianteDeCarrera inscripcion = new EstudianteDeCarrera(

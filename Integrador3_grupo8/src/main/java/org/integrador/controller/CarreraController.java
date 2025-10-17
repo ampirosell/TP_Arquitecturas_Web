@@ -31,7 +31,7 @@ public class CarreraController {
     @PostMapping("/{carreraId}/matricular/{dni}")
     public ResponseEntity<?> matricularEstudiante(
             @PathVariable Long carreraId,
-            @PathVariable int dni,
+            @PathVariable Integer dni,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaInscripcion) {
         
         try {
@@ -46,7 +46,7 @@ public class CarreraController {
     @PostMapping("/matricular")
     public ResponseEntity<?> matricularEstudianteCompleto(@RequestBody MatriculacionRequest request) {
         try {
-            Optional<Estudiante> estudianteOpt = estudianteService.obtenerEstudiantePorDni(request.getEstudianteId());
+            Optional<Estudiante> estudianteOpt = estudianteService.obtenerEstudiantePorDni(request.getDni());
             Optional<Carrera> carreraOpt = carreraService.obtenerCarreraPorId(request.getCarreraId());
             
             if (estudianteOpt.isEmpty()) {
@@ -157,16 +157,16 @@ public class CarreraController {
 
     // Clase interna para el request de matriculación
     public static class MatriculacionRequest {
-        private int dni;
+        private Integer dni;
         private Long carreraId;
         private Date fechaInscripcion;
 
         // Getters y Setters
-        public int getEstudianteId() { return dni; }
-
+        public Integer getDni() { return dni; }
+        public void setDni(Integer dni) { this.dni = dni; }
         
         public Long getCarreraId() { return carreraId; }
-
+        public void setCarreraId(Long carreraId) { this.carreraId = carreraId; }
         
         public Date getFechaInscripcion() { return fechaInscripcion; }
         public void setFechaInscripcion(Date fechaInscripcion) { this.fechaInscripcion = fechaInscripcion; }

@@ -1,0 +1,362 @@
+{
+  "info": {
+    "name": "Sistema de Estudiantes - Integrador 3",
+    "description": "Colección de endpoints para el sistema de registro de estudiantes universitarios",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8081/api",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Estudiantes",
+      "item": [
+        {
+          "name": "a) Crear estudiante",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dni\": 99999999,\n  \"nombre\": \"Pedro\",\n  \"apellido\": \"García\",\n  \"edad\": 23,\n  \"genero\": \"Masculino\",\n  \"ciudadDeResidencia\": \"Buenos Aires\",\n  \"numeroLU\": \"LU99999\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/estudiantes",
+              "host": ["{{baseUrl}}"],
+              "path": ["estudiantes"]
+            }
+          }
+        },
+        {
+          "name": "c) Obtener todos los estudiantes",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/estudiantes",
+              "host": ["{{baseUrl}}"],
+              "path": ["estudiantes"]
+            }
+          }
+        },
+        {
+          "name": "d) Obtener estudiante por número LU",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/estudiantes/libreta/LU12345",
+              "host": ["{{baseUrl}}"],
+              "path": ["estudiantes", "libreta", "LU12345"]
+            }
+          }
+        },
+        {
+          "name": "e) Obtener estudiantes por género",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/estudiantes/genero/Femenino",
+              "host": ["{{baseUrl}}"],
+              "path": ["estudiantes", "genero", "Femenino"]
+            }
+          }
+        },
+        {
+          "name": "g) Obtener estudiantes por carrera y ciudad",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/estudiantes/carrera/Ingeniería en Sistemas/ciudad/Buenos Aires",
+              "host": ["{{baseUrl}}"],
+              "path": ["estudiantes", "carrera", "Ingeniería en Sistemas", "ciudad", "Buenos Aires"]
+            }
+          }
+        },
+        {
+          "name": "Obtener estudiante por DNI",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/estudiantes/12345678",
+              "host": ["{{baseUrl}}"],
+              "path": ["estudiantes", "12345678"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar estudiante",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dni\": 12345678,\n  \"nombre\": \"Juan Carlos\",\n  \"apellido\": \"Pérez\",\n  \"edad\": 23,\n  \"genero\": \"Masculino\",\n  \"ciudadDeResidencia\": \"Buenos Aires\",\n  \"numeroLU\": \"LU12345\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/estudiantes/12345678",
+              "host": ["{{baseUrl}}"],
+              "path": ["estudiantes", "12345678"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar estudiante",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/estudiantes/99999999",
+              "host": ["{{baseUrl}}"],
+              "path": ["estudiantes", "99999999"]
+            }
+          }
+        },
+        {
+          "name": "Verificar existencia por DNI",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/estudiantes/existe/dni/12345678",
+              "host": ["{{baseUrl}}"],
+              "path": ["estudiantes", "existe", "dni", "12345678"]
+            }
+          }
+        },
+        {
+          "name": "Verificar existencia por número LU",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/estudiantes/existe/libreta/LU12345",
+              "host": ["{{baseUrl}}"],
+              "path": ["estudiantes", "existe", "libreta", "LU12345"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Carreras",
+      "item": [
+        {
+          "name": "b) Matricular estudiante en carrera",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/carreras/1/matricular/12345678?fechaInscripcion=2024-01-15",
+              "host": ["{{baseUrl}}"],
+              "path": ["carreras", "1", "matricular", "12345678"],
+              "query": [
+                {
+                  "key": "fechaInscripcion",
+                  "value": "2024-01-15"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Matricular estudiante (JSON)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dni\": 12345678,\n  \"carreraId\": 1,\n  \"fechaInscripcion\": \"2024-01-15\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/carreras/matricular",
+              "host": ["{{baseUrl}}"],
+              "path": ["carreras", "matricular"]
+            }
+          }
+        },
+        {
+          "name": "f) Obtener carreras con estudiantes",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/carreras/con-estudiantes",
+              "host": ["{{baseUrl}}"],
+              "path": ["carreras", "con-estudiantes"]
+            }
+          }
+        },
+        {
+          "name": "Obtener carreras con conteo",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/carreras/con-conteo",
+              "host": ["{{baseUrl}}"],
+              "path": ["carreras", "con-conteo"]
+            }
+          }
+        },
+        {
+          "name": "Crear carrera",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Ingeniería en Informática\",\n  \"duracion\": 5\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/carreras",
+              "host": ["{{baseUrl}}"],
+              "path": ["carreras"]
+            }
+          }
+        },
+        {
+          "name": "Obtener todas las carreras",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/carreras",
+              "host": ["{{baseUrl}}"],
+              "path": ["carreras"]
+            }
+          }
+        },
+        {
+          "name": "Obtener carrera por ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/carreras/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["carreras", "1"]
+            }
+          }
+        },
+        {
+          "name": "Obtener carrera por nombre",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/carreras/nombre/Ingeniería en Sistemas",
+              "host": ["{{baseUrl}}"],
+              "path": ["carreras", "nombre", "Ingeniería en Sistemas"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar carrera",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"carreraId\": 1,\n  \"nombre\": \"Ingeniería en Sistemas\",\n  \"duracion\": 6\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/carreras/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["carreras", "1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar carrera",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/carreras/8",
+              "host": ["{{baseUrl}}"],
+              "path": ["carreras", "8"]
+            }
+          }
+        },
+        {
+          "name": "Estadísticas de carrera",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/carreras/1/estadisticas",
+              "host": ["{{baseUrl}}"],
+              "path": ["carreras", "1", "estadisticas"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reportes",
+      "item": [
+        {
+          "name": "h) Reporte de carreras por año",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/reportes/carreras-por-ano",
+              "host": ["{{baseUrl}}"],
+              "path": ["reportes", "carreras-por-ano"]
+            }
+          }
+        },
+        {
+          "name": "Reporte formateado por año",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/reportes/carreras-por-ano/formateado",
+              "host": ["{{baseUrl}}"],
+              "path": ["reportes", "carreras-por-ano", "formateado"]
+            }
+          }
+        },
+        {
+          "name": "Reporte de carrera específica por año",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/reportes/carrera/Ingeniería en Sistemas/por-ano",
+              "host": ["{{baseUrl}}"],
+              "path": ["reportes", "carrera", "Ingeniería en Sistemas", "por-ano"]
+            }
+          }
+        },
+        {
+          "name": "Reporte formateado de carrera específica",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/reportes/carrera/Ingeniería en Sistemas/por-ano/formateado",
+              "host": ["{{baseUrl}}"],
+              "path": ["reportes", "carrera", "Ingeniería en Sistemas", "por-ano", "formateado"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

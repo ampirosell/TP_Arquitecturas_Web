@@ -1,11 +1,12 @@
-# Integrador 2 - Sistema de Estudiantes
+# Integrador 3 - Sistema de Estudiantes con REST API
 
 ## Descripción
-Sistema de registro de estudiantes universitarios con **JPA standalone** (sin Spring Boot), MySQL y Docker. Implementa todas las funcionalidades requeridas con consultas JPQL optimizadas y clave compuesta. Los resultados se muestran en la terminal.
+Sistema de registro de estudiantes universitarios con **Spring Boot**, **JPA/Hibernate**, MySQL y Docker. Implementa todas las funcionalidades requeridas con servicios REST y clave primaria basada en DNI.
 
 ## Tecnologías
 - Java 17
-- **JPA/Hibernate (standalone)**
+- **Spring Boot 3.5.6**
+- **JPA/Hibernate**
 - MySQL 8.0
 - Docker & Docker Compose
 - Maven
@@ -16,15 +17,16 @@ src/main/java/org/integrador/
 ├── entity/ (Estudiante, Carrera, EstudianteDeCarrera, EstudianteCarreraId)
 ├── repository/ (Repositorios con JPQL)
 ├── service/ (Lógica de negocio)
+├── controller/ (REST Controllers)
 ├── DTO/ (Data Transfer Objects)
 ├── helper/ (CSVReader)
-└── inte/ (Main class - ejecuta consultas y muestra resultados en terminal)
+└── inte/ (Main Spring Boot Application)
 ```
 
 ## Entidades
-- **Estudiante**: nombre, apellido, edad, género, dni, ciudad, numeroLU
-- **Carrera**: nombre, duracion
-- **EstudianteDeCarrera**: clave compuesta (estudiante_id + carrera_id), fecha inscripcion, graduado, fecha graduacion
+- **Estudiante**: dni (PK), nombre, apellido, edad, género, ciudadDeResidencia, numeroLU
+- **Carrera**: carreraId (PK), nombre, duracion
+- **EstudianteDeCarrera**: clave compuesta (dni + carreraId), fechaInscripcion, graduado, fechaGraduacion
 - **EstudianteCarreraId**: clase embeddable para clave compuesta (@EmbeddedId, @Embeddable, @MapsId)
 
 ## Requerimientos completados ✅
@@ -34,16 +36,17 @@ src/main/java/org/integrador/
 - ✅ Diagrama DER (diagramas.md)
 - ✅ Entidades JPA con relaciones correctas
 - ✅ Clave compuesta con mejores prácticas JPA
+- ✅ DNI como clave primaria
 
 ### 2. Funcionalidades implementadas
-- ✅ a) Agregar estudiante
-- ✅ b) Matricular estudiante en carrera
-- ✅ c) Obtener todos los estudiantes ordenados por apellido
-- ✅ d) Obtener estudiante por número de libreta universitaria
-- ✅ e) Obtener estudiantes por género
-- ✅ f) Obtener carreras con estudiantes inscriptos ordenadas por cantidad
-- ✅ g) Obtener estudiantes de una carrera específica que viven en una ciudad específica
-- ✅ 3) Generar reporte de carreras con inscriptos y graduados
+- ✅ a) Dar de alta un estudiante
+- ✅ b) Matricular un estudiante en una carrera
+- ✅ c) Recuperar todos los estudiantes ordenados por apellido
+- ✅ d) Recuperar un estudiante por número de libreta universitaria
+- ✅ e) Recuperar todos los estudiantes por género
+- ✅ f) Recuperar las carreras con estudiantes inscriptos ordenadas por cantidad
+- ✅ g) Recuperar los estudiantes de una carrera específica filtrados por ciudad
+- ✅ h) Generar reporte de las carreras con inscriptos y egresados por año
 
 ## Ejecución
 
@@ -56,148 +59,116 @@ src/main/java/org/integrador/
 
 1. **Iniciar MySQL con Docker:**
 ```bash
-cd Integrador2_grupo8
+cd Integrador3_grupo8
 docker-compose up -d
 ```
 
 2. **Compilar y ejecutar:**
 ```bash
-cd inte
 mvn clean compile
-mvn exec:java
+mvn spring-boot:run
 ```
 
-### Salida esperada
-La aplicación ejecutará todas las consultas requeridas y mostrará los resultados en la terminal:
+3. **La aplicación estará disponible en:** `http://localhost:8081`
 
+## API REST Endpoints
+
+### Estudiantes (`/api/estudiantes`)
+
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| POST | `/api/estudiantes` | Crear nuevo estudiante |
+| GET | `/api/estudiantes` | Obtener todos los estudiantes ordenados |
+| GET | `/api/estudiantes/{dni}` | Obtener estudiante por DNI |
+| GET | `/api/estudiantes/libreta/{numeroLU}` | Obtener estudiante por número LU |
+| GET | `/api/estudiantes/genero/{genero}` | Obtener estudiantes por género |
+| GET | `/api/estudiantes/carrera/{carrera}/ciudad/{ciudad}` | Obtener estudiantes por carrera y ciudad |
+| PUT | `/api/estudiantes/{dni}` | Actualizar estudiante |
+| DELETE | `/api/estudiantes/{dni}` | Eliminar estudiante |
+
+### Carreras (`/api/carreras`)
+
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| POST | `/api/carreras` | Crear nueva carrera |
+| POST | `/api/carreras/{carreraId}/matricular/{dni}` | Matricular estudiante en carrera |
+| POST | `/api/carreras/matricular` | Matricular estudiante (JSON) |
+| GET | `/api/carreras` | Obtener todas las carreras |
+| GET | `/api/carreras/con-estudiantes` | Obtener carreras con estudiantes ordenadas |
+| GET | `/api/carreras/{id}` | Obtener carrera por ID |
+| PUT | `/api/carreras/{id}` | Actualizar carrera |
+| DELETE | `/api/carreras/{id}` | Eliminar carrera |
+
+### Reportes (`/api/reportes`)
+
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| GET | `/api/reportes/carreras-por-ano` | Reporte de carreras por año |
+| GET | `/api/reportes/carreras-por-ano/formateado` | Reporte formateado |
+| GET | `/api/reportes/carrera/{nombre}/por-ano` | Reporte de carrera específica |
+
+## Testing con Postman
+
+1. **Importar la colección:** `Postman_Collection.json`
+2. **Configurar variable:** `baseUrl = http://localhost:8081/api`
+3. **Ejecutar requests** en el orden sugerido
+
+### Ejemplos de uso
+
+#### Crear estudiante:
+```json
+POST /api/estudiantes
+{
+  "dni": 99999999,
+  "nombre": "Pedro",
+  "apellido": "García",
+  "edad": 23,
+  "genero": "Masculino",
+  "ciudadDeResidencia": "Buenos Aires",
+  "numeroLU": "LU99999"
+}
 ```
-=== INTEGRADOR 2 - SISTEMA DE ESTUDIANTES ===
-Iniciando aplicación JPA...
 
-1. Cargando datos desde archivos CSV...
-✓ Datos cargados exitosamente
+#### Matricular estudiante:
+```json
+POST /api/carreras/1/matricular/12345678?fechaInscripcion=2024-01-15
+```
 
-2. Agregando nuevo estudiante...
-✓ Estudiante agregado: Juan Pérez
-
-3. Matriculando estudiante en carrera...
-✓ Estudiante matriculado en carrera: Ingeniería en Sistemas
-
-4. Listando todos los estudiantes:
-  - García, María (LU: LU12345)
-  - López, Carlos (LU: LU12346)
-  ...
-
-=== APLICACIÓN COMPLETADA EXITOSAMENTE ===
+#### Obtener estudiantes por género:
+```
+GET /api/estudiantes/genero/Femenino
 ```
 
 ## Arquitectura
 
 ### Capas
-1. **Entity**: Estudiante, Carrera, EstudianteDeCarrera, EstudianteCarreraId
-2. **Repository**: Consultas JPQL optimizadas
-3. **Service**: Lógica de negocio y transacciones
-4. **Main**: Ejecuta consultas y muestra resultados en terminal
+1. **Controller**: REST endpoints con validación
+2. **Service**: Lógica de negocio y transacciones
+3. **Repository**: Consultas JPQL optimizadas
+4. **Entity**: Mapeo JPA con relaciones
 
-### Diferencias con Integrador 3
+### Características técnicas
+- **Clave primaria**: DNI (Integer) para Estudiante
+- **Clave compuesta**: DNI + CarreraId para EstudianteDeCarrera
+- **Relaciones**: Many-to-Many con tabla intermedia
+- **Validaciones**: Duplicados, existencia de entidades
+- **Transacciones**: @Transactional en servicios
+
+## Base de datos
+
+### Tablas principales
+- **estudiante**: dni (PK), nombre, apellido, edad, genero, ciudad_residencia, numero_lu
+- **carrera**: carrera_id (PK), nombre, duracion
+- **estudiante_carrera**: dni (PK,FK), carrera_id (PK,FK), fecha_inscripcion, fecha_graduacion, graduado
+
+### Datos de ejemplo
+El script `database_setup.sql` incluye datos de prueba con:
+- 6 estudiantes
+- 8 carreras
+- 7 inscripciones
+
+## Diferencias con versiones anteriores
 - **Integrador 2**: JPA standalone, resultados en terminal
-- **Integrador 3**: Spring Boot con REST endpoints
-
-
-## Diagramas del Sistema
-
-### 1. Diagrama de Objetos
-
-```mermaid
-classDiagram
-    class Estudiante {
-        -Long estudianteId
-        -String nombre
-        -String apellido
-        -Integer edad
-        -String genero
-        -String dni
-        -String ciudadDeResidencia
-        -String numeroLU
-        -List~EstudianteDeCarrera~ carreras
-    }
-
-    class Carrera {
-        -Long carreraId
-        -String nombre
-        -Integer duracion
-        -List~EstudianteDeCarrera~ estudiantes
-    }
-
-    class EstudianteDeCarrera {
-        -EstudianteCarreraId id
-        -Estudiante estudiante
-        -Carrera carrera
-        -Date fechaInscripcion
-        -Date fechaGraduacion
-        -boolean graduado
-    }
-
-    Estudiante ||--o{ EstudianteDeCarrera
-    Carrera ||--o{ EstudianteDeCarrera
-```
-
-### 2. Diagrama Entidad-Relación (DER)
-
-```mermaid
-erDiagram
-    ESTUDIANTE {
-        bigint estudiante_id PK
-        varchar nombre
-        varchar apellido
-        int edad
-        varchar genero
-        varchar dni UK
-        varchar ciudad_residencia
-        varchar numero_lu UK
-    }
-
-    CARRERA {
-        bigint carrera_id PK
-        varchar nombre UK
-        int duracion
-    }
-
-    ESTUDIANTE_CARRERA {
-        bigint estudiante_id PK
-        bigint carrera_id PK
-        date fecha_inscripcion
-        date fecha_graduacion
-        boolean graduado
-    }
-
-    ESTUDIANTE ||--o{ ESTUDIANTE_CARRERA
-    CARRERA ||--o{ ESTUDIANTE_CARRERA
-```
-
-### Estructura de Tablas
-
-**ESTUDIANTE**
-- estudiante_id (PK)
-- nombre, apellido, edad, genero
-- dni (único), numero_lu (único)
-- ciudad_residencia
-
-**CARRERA**  
-- carrera_id (PK)
-- nombre (único)
-- duracion
-
-**ESTUDIANTE_CARRERA**
-- estudiante_id (PK, FK)
-- carrera_id (PK, FK) 
-- fecha_inscripcion
-- fecha_graduacion
-- graduado (boolean)
-
-**Relaciones:**
-- Un estudiante puede estar en varias carreras
-- Una carrera puede tener varios estudiantes
-- Clave compuesta maneja la relación muchos a muchos
+- **Integrador 3**: Spring Boot con REST endpoints, DNI como PK
 
 ---
