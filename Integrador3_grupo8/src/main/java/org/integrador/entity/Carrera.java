@@ -1,20 +1,12 @@
 package org.integrador.entity;
 
 import jakarta.persistence.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "carrera")
 public class Carrera {
-    public Carrera(Long carreraId, String nombre, Integer duracion) {
-        this.carreraId = carreraId;
-        this.nombre = nombre;
-        this.duracion = duracion;
-        this.estudiantes = new ArrayList<>();
-    }
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "carrera_id")

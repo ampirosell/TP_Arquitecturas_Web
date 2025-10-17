@@ -1,51 +1,81 @@
 package org.integrador.service;
 
-
-import org.integrador.DTO.EstudianteDTO;
 import org.integrador.entity.Estudiante;
 import org.integrador.repository.EstudianteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityManager;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
+@Service
+@Transactional
 public class EstudianteService {
 
-    private EntityManager em;
-    private EstudianteRepository er;
+    @Autowired
+    private EstudianteRepository estudianteRepository;
 
-    public EstudianteService(EntityManager em){
-        this.em = em;
-        this.er = new EstudianteRepository(em);
+    // a) Dar de alta un estudiante
+    public Estudiante crearEstudiante(Estudiante estudiante) {
+        // Validaciones
+        if (estudianteRepository.existsByDni(estudiante.getDni())) {
+            throw new RuntimeException("Ya existe un estudiante con el DNI: " + estudiante.getDni());
+        }
+        if (estudianteRepository.existsByNumeroLU(estudiante.getNumeroLU())) {
+            throw new RuntimeException("Ya existe un estudiante con el número de libreta: " + estudiante.getNumeroLU());
+        }
+        
+        return estudianteRepository.save(estudiante);
     }
 
-    // a) Agregar estudiante
-    public void agregarEstudiante(Estudiante estudiante){
-        em.getTransaction().begin();
-        er.create(estudiante);
-        em.getTransaction().commit();
+    // c) Recuperar todos los estudiantes ordenados
+    public List<Estudiante> obtenerTodosLosEstudiantes() {
+        return estudianteRepository.findAllOrderedByApellidoAndNombre();
     }
 
-    // c) Obtener todos los estudiantes
-    public List<EstudianteDTO> obtenerEstudiantes(){
-        List<Estudiante> estudiantes = er.findAll();
-        return estudiantes.stream().map(EstudianteDTO::new).collect(Collectors.toList());
+    // d) Recuperar estudiante por número de libreta universitaria
+    public Optional<Estudiante> obtenerEstudiantePorNumeroLU(String numeroLU) {
+        return estudianteRepository.findByNumeroLU(numeroLU);
     }
 
-    // d) Obtener estudiante por LU
-    public EstudianteDTO obtenerEstudiantePorLU(String LU){
-        return new EstudianteDTO(er.findByLU(LU));
+    // e) Recuperar estudiantes por género
+    public List<Estudiante> obtenerEstudiantesPorGenero(String genero) {
+        return estudianteRepository.findByGenero(genero);
     }
 
-    // e) Obtener estudiantes por género
-    public List<EstudianteDTO> obtenerEstudiantesPorGenero(String genero){
-        List<Estudiante> estudiantes = er.findByGenero(genero);
-        return estudiantes.stream().map(EstudianteDTO::new).collect(Collectors.toList());
+    // g) Recuperar estudiantes de una carrera filtrados por ciudad
+    public List<Estudiante> obtenerEstudiantesPorCarreraYCiudad(String nombreCarrera, String ciudad) {
+        return estudianteRepository.findByCarreraAndCiudad(nombreCarrera, ciudad);
     }
 
-    // g) Obtener estudiantes por carrera y ciudad
-    public List<EstudianteDTO> obtenerEstudiantesPorCarreraCiudad(int idCarrera, String ciudad){
-        List<Estudiante> estudiantes = er.findByCarreraAndCiudad(idCarrera, ciudad);
-        return estudiantes.stream().map(EstudianteDTO::new).collect(Collectors.toList());
+    // Consulta adicional: estudiantes por carrera
+    public List<Estudiante> obtenerEstudiantesPorCarrera(String nombreCarrera) {
+        return estudianteRepository.findByCarrera(nombreCarrera);
+    }
+
+    // Obtener estudiante por ID
+    public Optional<Estudiante> obtenerEstudiantePorId(Long id) {
+        return estudianteRepository.findById(id);
+    }
+
+    // Actualizar estudiante
+    public Estudiante actualizarEstudiante(Estudiante estudiante) {
+        return estudianteRepository.save(estudiante);
+    }
+
+    // Eliminar estudiante
+    public void eliminarEstudiante(Long id) {
+        estudianteRepository.deleteById(id);
+    }
+
+    // Verificar si existe estudiante por DNI
+    public boolean existeEstudiantePorDni(String dni) {
+        return estudianteRepository.existsByDni(dni);
+    }
+
+    // Verificar si existe estudiante por número LU
+    public boolean existeEstudiantePorNumeroLU(String numeroLU) {
+        return estudianteRepository.existsByNumeroLU(numeroLU);
     }
 }

@@ -1,29 +1,12 @@
 package org.integrador.entity;
 
 import jakarta.persistence.*;
-
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "estudiante")
 public class Estudiante {
-    public Estudiante(Long estudianteId, String nombre, String apellido, Integer edad, String genero, String dni, String ciudadDeResidencia, String numeroLU) {
-        this.estudianteId = estudianteId;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.edad = edad;
-        this.genero = genero;
-        this.dni = dni;
-        this.ciudadDeResidencia = ciudadDeResidencia;
-        this.numeroLU = numeroLU;
-        this.carreras = new ArrayList<>();
-    }
 
-    public Estudiante(){
-        this.carreras = new ArrayList<>();
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "estudiante_id")
@@ -52,8 +35,6 @@ public class Estudiante {
     
     @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<EstudianteDeCarrera> carreras;
-
-
 
     public Long getId() {
         return estudianteId;
