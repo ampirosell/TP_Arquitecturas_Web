@@ -11,9 +11,8 @@ import org.integrador.repository.EstudianteRepository;
 import org.integrador.repository.EstudianteDeCarreraRepository;
 
 import jakarta.persistence.EntityManager;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+
+import java.io.*;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -31,17 +30,19 @@ public class CSVReader {
     }
 
     private Iterable<CSVRecord> getData(String archivo) throws IOException {
-        String path = "inte/src/main/resources/" + archivo;
-        Reader in = new FileReader(path);
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(archivo);
+        if (inputStream == null) {
+            throw new FileNotFoundException("No se encontró el archivo: " + archivo);
+        }
 
+        Reader in = new InputStreamReader(inputStream);
         CSVParser csvParser = CSVFormat.EXCEL
-                .withFirstRecordAsHeader() // usa la primera fila como encabezado
+                .withFirstRecordAsHeader()
                 .withIgnoreSurroundingSpaces()
                 .parse(in);
 
         return csvParser.getRecords();
     }
-
     public void populateDB() throws Exception {
         try {
             // Verificar si ya hay datos en la base de datos
