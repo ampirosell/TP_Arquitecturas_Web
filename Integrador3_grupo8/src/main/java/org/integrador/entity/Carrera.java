@@ -1,14 +1,18 @@
 package org.integrador.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "carrera")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Carrera {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Column(name = "carrera_id")
     private Long carreraId;
     
@@ -19,6 +23,7 @@ public class Carrera {
     private Integer duracion; // en años
     
     @OneToMany(mappedBy = "carrera", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference
     private List<EstudianteDeCarrera> estudiantes;
 
     // Constructores

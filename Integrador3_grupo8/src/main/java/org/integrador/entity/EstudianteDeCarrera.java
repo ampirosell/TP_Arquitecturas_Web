@@ -1,5 +1,7 @@
 package org.integrador.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.Date;
 
@@ -13,8 +15,9 @@ public class EstudianteDeCarrera {
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("dni")
     @JoinColumn(name = "dni", nullable = false)
+    @JsonBackReference
     private Estudiante estudiante;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("carreraId")
     @JoinColumn(name = "carrera_id", nullable = false)

@@ -11,9 +11,8 @@ import org.integrador.repository.EstudianteRepository;
 import org.integrador.repository.EstudianteDeCarreraRepository;
 
 import jakarta.persistence.EntityManager;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+
+import java.io.*;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -30,28 +29,56 @@ public class CSVReader {
     }
 
     private Iterable<CSVRecord> getData(String archivo) throws IOException {
-        String path = "inte/src/main/resources/" + archivo;
-        Reader in = new FileReader(path);
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(archivo);
+        if (inputStream == null) {
+            throw new FileNotFoundException("No se encontró el archivo: " + archivo);
+        }
 
+        Reader in = new InputStreamReader(inputStream);
         CSVParser csvParser = CSVFormat.EXCEL
-                .withFirstRecordAsHeader() // usa la primera fila como encabezado
+                .withFirstRecordAsHeader()
                 .withIgnoreSurroundingSpaces()
                 .parse(in);
 
         return csvParser.getRecords();
     }
-
     public void populateDB() throws Exception {
         try {
-            em.getTransaction().begin();
-            insertEstudiantes();
-            insertCarreras();
-            insertMatriculas();
-            em.getTransaction().commit();
+            // Verificar si ya hay datos en la base de datos
+            boolean hayCarreras = cr.findAll().size() > 0;
+            boolean hayEstudiantes = er.findAll().size() > 0;
+            boolean hayMatriculas = ecr.findAll().size() > 0;
+
+
+            // Cargar carreras solo si no existen
+            if (!hayCarreras) {
+                em.getTransaction().begin();
+                insertCarreras();
+                em.getTransaction().commit();
+            }
+
+            // Cargar estudiantes solo si no existen
+
+            if (!hayEstudiantes) {
+                em.getTransaction().begin();
+                insertEstudiantes();
+                em.getTransaction().commit();
+            }
+
+            // Cargar matrículas solo si no existen
+            if (!hayMatriculas) {
+                em.getTransaction().begin();
+                insertMatriculas();
+                em.getTransaction().commit();
+            }
         } catch (Exception e) {
             e.printStackTrace();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
         }
     }
+
 
     private void insertEstudiantes() throws IOException {
         for(CSVRecord row : getData("estudiantes.csv")) {

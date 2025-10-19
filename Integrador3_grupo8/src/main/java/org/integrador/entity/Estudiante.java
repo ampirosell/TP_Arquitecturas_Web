@@ -1,5 +1,6 @@
 package org.integrador.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class Estudiante {
     private String numeroLU;
     
     @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<EstudianteDeCarrera> carreras;
 
 

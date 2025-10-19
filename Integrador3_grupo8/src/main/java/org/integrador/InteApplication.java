@@ -7,7 +7,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class InteApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(InteApplication.class, args);
+
+        try {
+            SpringApplication.run(InteApplication.class, args);
+
+        } catch (Exception exception){
+
+        }
+
     }
 
 }
