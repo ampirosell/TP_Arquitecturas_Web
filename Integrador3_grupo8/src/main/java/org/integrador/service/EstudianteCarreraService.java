@@ -26,7 +26,7 @@ public class EstudianteCarreraService {
             throw new RuntimeException("El estudiante ya está inscripto en esta carrera");
         }
 
-        EstudianteDeCarrera matricula = new EstudianteDeCarrera(estudiante, carrera, anioInscripcion);
+        EstudianteDeCarrera matricula = new EstudianteDeCarrera(estudiante, carrera, anioInscripcion, null, 0);
         return ecr.save(matricula);
     }
 }

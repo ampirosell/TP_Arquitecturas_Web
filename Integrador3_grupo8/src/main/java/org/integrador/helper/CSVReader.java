@@ -1,5 +1,6 @@
 package org.integrador.helper;
 
+import jakarta.transaction.Transactional;
 import org.integrador.entity.Carrera;
 import org.integrador.entity.Estudiante;
 import org.integrador.entity.EstudianteDeCarrera;
@@ -11,11 +12,13 @@ import org.integrador.repository.EstudianteRepository;
 import org.integrador.repository.EstudianteDeCarreraRepository;
 
 import jakarta.persistence.EntityManager;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+@Component
 public class CSVReader {
     private EntityManager em;
     private CarreraRepository cr;
@@ -42,40 +45,39 @@ public class CSVReader {
 
         return csvParser.getRecords();
     }
+
+    @Transactional
     public void populateDB() throws Exception {
+        System.out.println("Iniciando el programa, cargando datos.");
         try {
             // Verificar si ya hay datos en la base de datos
-            boolean hayCarreras = cr.findAll().size() > 0;
-            boolean hayEstudiantes = er.findAll().size() > 0;
-            boolean hayMatriculas = ecr.findAll().size() > 0;
+            boolean hayCarreras = !cr.findAll().isEmpty();
+            boolean hayEstudiantes = !er.findAll().isEmpty();
+            boolean hayMatriculas = !ecr.findAll().isEmpty();
 
 
             // Cargar carreras solo si no existen
-            if (!hayCarreras) {
-                em.getTransaction().begin();
+            if (!hayCarreras)
                 insertCarreras();
-                em.getTransaction().commit();
-            }
+            else
+                System.out.println("Hay Carreras, no se creará ninguna.");
+
 
             // Cargar estudiantes solo si no existen
 
-            if (!hayEstudiantes) {
-                em.getTransaction().begin();
+            if (!hayEstudiantes)
                 insertEstudiantes();
-                em.getTransaction().commit();
-            }
+            else
+                System.out.println("Hay estudiantes, no se creará ninguno.");
 
             // Cargar matrículas solo si no existen
-            if (!hayMatriculas) {
-                em.getTransaction().begin();
+            if (!hayMatriculas)
                 insertMatriculas();
-                em.getTransaction().commit();
-            }
+            else
+                System.out.println("Hay matriculaciones, no se creará ninguna.");
         } catch (Exception e) {
             e.printStackTrace();
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
+            throw e;
         }
     }
 
@@ -116,12 +118,15 @@ public class CSVReader {
         for(CSVRecord row : getData("carreras.csv")) {
             //nombre,duracion
             if(row.size() >= 2) {
-                String nombre = row.get(0);
-                String duracionString = row.get(1);
+                String idString = row.get(0);
+                String nombre = row.get(1);
+                String duracionString = row.get(2);
                 if(!nombre.isEmpty() && !duracionString.isEmpty()) {
                     try {
+                        Long id = Long.parseLong(idString);
                         Integer duracion = Integer.parseInt(duracionString);
                         Carrera carrera = new Carrera();
+                        carrera.setId(id);
                         carrera.setNombre(nombre);
                         carrera.setDuracion(duracion);
                         cr.save(carrera);
@@ -136,19 +141,24 @@ public class CSVReader {
         for (CSVRecord row : getData("estudianteCarrera.csv")) {
             if (row.size() >= 3) { // dni,carrera_id,anio_inicio
                 try {
-                    Integer dni = Integer.parseInt(row.get(0));
-                    Long idCarrera = Long.parseLong(row.get(1));
-                    Integer anioInicio = Integer.parseInt(row.get(2));
+                    Long id = Long.parseLong(row.get(0));
+                    Integer dni = Integer.parseInt(row.get(1));
+                    Long idCarrera = Long.parseLong(row.get(2));
+                    Integer anioInicio = Integer.parseInt(row.get(3));
+                    Integer anioFin = Integer.parseInt(row.get(4));
+                    Integer antiguedad = Integer.parseInt(row.get(5));
 
                     // Convertir año a Date
                     Date fechaInscripcion = new GregorianCalendar(anioInicio, 0, 1).getTime();
+                    Date fechaFinalizacion  = new GregorianCalendar(anioFin, 0, 1).getTime();
+
 
                     Estudiante estudiante = er.findByDni(dni).orElse(null);
                     Carrera carrera = cr.findById(idCarrera).orElse(null);
 
                     if (estudiante != null && carrera != null) {
                         // Crear matrícula
-                        EstudianteDeCarrera matricula = new EstudianteDeCarrera(estudiante, carrera, fechaInscripcion);
+                        EstudianteDeCarrera matricula = new EstudianteDeCarrera(estudiante, carrera, fechaInscripcion, fechaFinalizacion, antiguedad);
                         ecr.save(matricula);
                     }
 

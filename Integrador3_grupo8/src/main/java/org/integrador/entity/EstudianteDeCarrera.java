@@ -34,14 +34,19 @@ public class EstudianteDeCarrera {
     @Column(name = "graduado", nullable = false)
     private boolean graduado;
 
+    @Column(name="antiguedad")
+    private Integer antiguedad;
+
     // Constructores
     public EstudianteDeCarrera() {}
 
-    public EstudianteDeCarrera(Estudiante estudiante, Carrera carrera, Date fechaInscripcion) {
+    public EstudianteDeCarrera(Estudiante estudiante, Carrera carrera, Date fechaInscripcion, Date fechaGraduacion, Integer antiguedad) {
         this.id = new EstudianteCarreraId(estudiante.getDni(), carrera.getId());
         this.estudiante = estudiante;
         this.carrera = carrera;
         this.fechaInscripcion = fechaInscripcion;
+        this.fechaGraduacion = fechaGraduacion;
+        this.antiguedad = antiguedad;
         this.graduado = false;
     }
 
@@ -90,17 +95,13 @@ public class EstudianteDeCarrera {
     public void setGraduado(boolean graduado) {
         this.graduado = graduado;
     }
-
-    // Método para calcular antigüedad
-    public long getAntiguedadEnDias() {
-        if (fechaInscripcion == null) {
-            return 0;
-        }
-        Date fechaActual = graduado && fechaGraduacion != null ? fechaGraduacion : new Date();
-        return (fechaActual.getTime() - fechaInscripcion.getTime()) / (1000 * 60 * 60 * 24);
+    public void setAntiguedad(Integer antiguedad) {
+        this.antiguedad = antiguedad;
     }
 
     public int getAntiguedadEnAnios() {
-        return (int) (getAntiguedadEnDias() / 365);
+        return (int) (this.antiguedad);
     }
+
+
 }

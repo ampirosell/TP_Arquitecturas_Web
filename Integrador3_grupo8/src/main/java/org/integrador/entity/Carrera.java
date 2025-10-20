@@ -9,10 +9,8 @@ import java.util.List;
 @Table(name = "carrera")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Carrera {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
+    @Id
     @Column(name = "carrera_id")
     private Long carreraId;
     

@@ -52,7 +52,9 @@ public class CarreraService {
         EstudianteDeCarrera inscripcion = new EstudianteDeCarrera(
             estudianteOpt.get(), 
             carreraOpt.get(), 
-            fechaInscripcion != null ? fechaInscripcion : new Date()
+            fechaInscripcion != null ? fechaInscripcion : new Date(),
+                null,
+                0
         );
         
         return estudianteDeCarreraRepository.save(inscripcion);
@@ -68,7 +70,7 @@ public class CarreraService {
         }
 
         EstudianteDeCarrera inscripcion = new EstudianteDeCarrera(estudiante, carrera, 
-                                                                 fechaInscripcion != null ? fechaInscripcion : new Date());
+                                                                 fechaInscripcion != null ? fechaInscripcion : new Date(), null,0);
         return estudianteDeCarreraRepository.save(inscripcion);
     }
 
