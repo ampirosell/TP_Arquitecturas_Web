@@ -25,3 +25,18 @@ POST http://localhost:8081/api/carreras/3/matricular/45821369
 
 ### c) Recuperar todos los estudiantes (con ordenamiento simple)
 GET http://localhost:8081/api/estudiantes?sort=apellido,asc
+
+### d) Recuperar un estudiante por LU
+GET http://localhost:8081/api/estudiantes/libreta/12345
+
+### e) Recuperar todos los estudiantes por género
+GET http://localhost:8081/api/estudiantes/genero/Masculino
+
+### f) Recuperar carreras con estudiantes inscriptos, ordenadas por cantidad de inscriptos
+GET http://localhost:8081/api/carreras/con-estudiantes?sort=count,desc
+
+### g) Recuperar estudiantes de una carrera filtrado por ciudad
+GET http://localhost:8081/api/estudiantes/carrera/Medicina/ciudad/Santiago
+
+### h) Generar reporte de carreras (inscriptos y egresados por año)
+GET http://localhost:8081/api/reportes/carreras-por-ano
