@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7eb3c95-4ded-48f4-bc99-22d5d275d48d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Integrador2_grupo8/DER_Integrador2.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Integrador3_grupo8/DER_Integrador3.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Integrador3_grupo8/requests.http" beforeDir="false" afterPath="$PROJECT_DIR$/Integrador3_grupo8/requests.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Integrador3_grupo8/requests.http" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,9 +35,6 @@
   <component name="HttpClientOnboardingState">{
   &quot;isOnboardingCommentShown&quot;: true
 }</component>
-  <component name="HttpClientSelectedEnvironments">
-    <file url="file://$PROJECT_DIR$/Integrador3_grupo8/requests.http" />
-  </component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -73,10 +72,10 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.InteApplication.executor": "Run",
-    "git-widget-placeholder": "integrador3__v1",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Iván/OneDrive/Escritorio/integradorArqui/TP_Arquitecturas_Web/Integrador2_grupo8/inte/src/main/resources",
+    "last_opened_file_path": "C:/Users/Iván/OneDrive/Escritorio/integradorArqui/TP_Arquitecturas_Web/Integrador2_grupo8",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -178,6 +177,7 @@
       <workItem from="1760928367018" duration="670000" />
       <workItem from="1760932394026" duration="144000" />
       <workItem from="1760932554650" duration="908000" />
+      <workItem from="1761002082327" duration="665000" />
     </task>
     <servers />
   </component>
