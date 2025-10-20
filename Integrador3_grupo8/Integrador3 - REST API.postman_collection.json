@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "integrador3-rest-api",
+		"_postman_id": "320438d3-14fb-4d86-8cc0-f4e09598a979",
 		"name": "Integrador3 - REST API",
 		"description": "Colección de endpoints para el sistema de estudiantes y carreras - Solo endpoints requeridos",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27633193"
 	},
 	"item": [
 		{
@@ -22,19 +23,32 @@
 				},
 				"url": {
 					"raw": "{{baseUrl}}/estudiantes",
-					"host": ["{{baseUrl}}"],
-					"path": ["estudiantes"]
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"estudiantes"
+					]
 				}
-			}
+			},
+			"response": []
 		},
 		{
 			"name": "b) Matricular estudiante en carrera",
 			"request": {
 				"method": "POST",
+				"header": [],
 				"url": {
 					"raw": "{{baseUrl}}/carreras/1/matricular/12345678?fechaInscripcion=2024-01-15",
-					"host": ["{{baseUrl}}"],
-					"path": ["carreras", "1", "matricular", "12345678"],
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"carreras",
+						"1",
+						"matricular",
+						"12345678"
+					],
 					"query": [
 						{
 							"key": "fechaInscripcion",
@@ -42,73 +56,120 @@
 						}
 					]
 				}
-			}
+			},
+			"response": []
 		},
 		{
 			"name": "c) Recuperar todos los estudiantes",
 			"request": {
 				"method": "GET",
+				"header": [],
 				"url": {
 					"raw": "{{baseUrl}}/estudiantes",
-					"host": ["{{baseUrl}}"],
-					"path": ["estudiantes"]
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"estudiantes"
+					]
 				}
-			}
+			},
+			"response": []
 		},
 		{
 			"name": "d) Recuperar estudiante por número LU",
 			"request": {
 				"method": "GET",
+				"header": [],
 				"url": {
 					"raw": "{{baseUrl}}/estudiantes/libreta/LU123456",
-					"host": ["{{baseUrl}}"],
-					"path": ["estudiantes", "libreta", "LU123456"]
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"estudiantes",
+						"libreta",
+						"LU123456"
+					]
 				}
-			}
+			},
+			"response": []
 		},
 		{
 			"name": "e) Recuperar estudiantes por género",
 			"request": {
 				"method": "GET",
+				"header": [],
 				"url": {
 					"raw": "{{baseUrl}}/estudiantes/genero/M",
-					"host": ["{{baseUrl}}"],
-					"path": ["estudiantes", "genero", "M"]
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"estudiantes",
+						"genero",
+						"M"
+					]
 				}
-			}
+			},
+			"response": []
 		},
 		{
 			"name": "f) Recuperar carreras con estudiantes ordenadas",
 			"request": {
 				"method": "GET",
+				"header": [],
 				"url": {
 					"raw": "{{baseUrl}}/carreras/con-estudiantes",
-					"host": ["{{baseUrl}}"],
-					"path": ["carreras", "con-estudiantes"]
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"carreras",
+						"con-estudiantes"
+					]
 				}
-			}
+			},
+			"response": []
 		},
 		{
 			"name": "g) Recuperar estudiantes por carrera y ciudad",
 			"request": {
 				"method": "GET",
+				"header": [],
 				"url": {
 					"raw": "{{baseUrl}}/estudiantes/carrera/Ingeniería en Sistemas/ciudad/Buenos Aires",
-					"host": ["{{baseUrl}}"],
-					"path": ["estudiantes", "carrera", "Ingeniería en Sistemas", "ciudad", "Buenos Aires"]
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"estudiantes",
+						"carrera",
+						"Ingeniería en Sistemas",
+						"ciudad",
+						"Buenos Aires"
+					]
 				}
-			}
+			},
+			"response": []
 		},
 		{
 			"name": "h) Reporte de carreras por año",
 			"request": {
 				"method": "GET",
+				"header": [],
 				"url": {
 					"raw": "{{baseUrl}}/reportes/carreras-por-ano",
-					"host": ["{{baseUrl}}"],
-					"path": ["reportes", "carreras-por-ano"]
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"reportes",
+						"carreras-por-ano"
+					]
 				}
-			}
+			},
+			"response": []
 		}
 	],
 	"variable": [
