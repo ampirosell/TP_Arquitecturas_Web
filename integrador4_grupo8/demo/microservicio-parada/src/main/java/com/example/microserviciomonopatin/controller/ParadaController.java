@@ -1,7 +1,7 @@
-package com.example.microservicioparada.controller;
+package com.example.microserviciomonopatin.controller;
 
 
-import com.example.microservicioparada.entity.Parada;
+import com.example.microserviciomonopatin.entity.Parada;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ import java.util.Optional;
 public class ParadaController {
 
     @Autowired
-    com.example.microservicioparada.service.ParadaService paradaService;
+    com.example.microserviciomonopatin.service.ParadaService paradaService;
 
     @GetMapping()
     public ResponseEntity<List<Parada>> getAllParadas() throws Exception {

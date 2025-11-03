@@ -1,6 +1,6 @@
-package com.example.microservicioparada.repository;
+package com.example.microserviciomonopatin.repository;
 
-import com.example.microservicioparada.entity.Parada;
+import com.example.microserviciomonopatin.entity.Parada;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

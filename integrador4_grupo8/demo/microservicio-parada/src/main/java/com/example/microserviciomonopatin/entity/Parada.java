@@ -1,4 +1,4 @@
-package com.example.microservicioparada.entity;
+package com.example.microserviciomonopatin.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

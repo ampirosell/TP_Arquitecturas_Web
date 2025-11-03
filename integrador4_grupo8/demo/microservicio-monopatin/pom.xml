@@ -8,9 +8,9 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>microservicio-parada</artifactId>
+	<artifactId>microservicio-monopatin</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>microservicio-parada</name>
+	<name>microservicio-monopatin</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>21</java.version>

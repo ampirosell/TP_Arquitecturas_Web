@@ -1,7 +1,7 @@
-package com.example.microservicioparada.service;
+package com.example.microserviciomonopatin.service;
 
-import com.example.microservicioparada.entity.Parada;
-import com.example.microservicioparada.repository.ParadaRepository;
+import com.example.microserviciomonopatin.entity.Parada;
+import com.example.microserviciomonopatin.repository.ParadaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
