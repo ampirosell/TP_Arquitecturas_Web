@@ -1,11 +1,10 @@
 services:
-  # Base de datos MySQL para Integrador 3 (Servicios REST y SpringBoot)
   mysql:
     image: mysql:8.0
-    container_name: inte3_mysql
+    container_name: inte4_mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: mibase
+      MYSQL_DATABASE: user
       MYSQL_USER: integrador
       MYSQL_PASSWORD: integrador123
     ports:

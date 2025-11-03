@@ -24,10 +24,10 @@ public class UserService {
     RestTemplate restTemplate;
 
     @Autowired
-    MonopatinFeignClient carFeignClient;
+    MonopatinFeignClient monopatinFeignClient;
 
     @Autowired
-    ParadaFeignClient bikeFeignClient;
+    ParadaFeignClient paradaFeignClient;
 
     public List<User> getAll(){
         return userRepository.findAll();
