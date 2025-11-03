@@ -16,3 +16,4 @@ echo ""
 echo "Para detener: docker-compose down"
 echo "Para ver logs: docker-compose logs -f"
 echo "Para reiniciar: docker-compose restart"
+

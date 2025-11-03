@@ -24,3 +24,4 @@ EXPOSE 8080
 
 # Comando para ejecutar la aplicación
 CMD ["java", "-jar", "target/inte-0.0.1-SNAPSHOT.jar"]
+

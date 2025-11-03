@@ -1,16 +1,15 @@
 services:
   mongo:
     image: mongo:6.0
-    container_name: inte4_mongo
+    container_name: inte4_monopatin
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
       MONGO_INITDB_DATABASE: monopatin
     ports:
-      - "3306:3306"
+      - "27017:27017"
     volumes:
       - mongo_data:/data/db
-      - ./mongo_init.js:/docker-entrypoint-initdb.d/init.js:ro
     restart: unless-stopped
 
 volumes:

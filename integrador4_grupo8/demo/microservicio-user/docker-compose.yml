@@ -1,7 +1,7 @@
 services:
   mysql:
     image: mysql:8.0
-    container_name: inte4_mysql
+    container_name: inte4_user
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: user
