@@ -8,9 +8,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Car {
+public class Parada {
 
-    private String brand;
-    private String  model;
-    private Long userId;
+    private String direccion;
+    private String  nombre;
+    private Double latitud;
+    private Double longitud;
 }
