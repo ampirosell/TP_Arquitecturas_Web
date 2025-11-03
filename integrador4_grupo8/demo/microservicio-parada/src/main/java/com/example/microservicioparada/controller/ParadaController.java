@@ -18,7 +18,7 @@ public class ParadaController {
     @Autowired
     com.example.microservicioparada.service.ParadaService paradaService;
 
-    @GetMapping("")
+    @GetMapping()
     public ResponseEntity<List<Parada>> getAllParadas() throws Exception {
         try{
             List<Parada> paradas = paradaService.getAll();
@@ -36,7 +36,7 @@ public class ParadaController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("")
+    @PostMapping()
     public ResponseEntity<Parada> save(@RequestBody Parada parada) {
         Parada userNew = paradaService.save(parada);
         return ResponseEntity.ok(userNew);
