@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -20,6 +22,11 @@ public class Parada {
     private Long idParada;
     private String direccion;
     private String nombre;
-    private Double latitud;
+    // Coordenadas geográficas de la parada, x corresponde a longitud e y a latitud
     private Double longitud;
+    private Double latitud;
+
+
+    //  Lista de IDs de monopatines asociados a esta parada
+    private List<Long> monopatinIds;
 }

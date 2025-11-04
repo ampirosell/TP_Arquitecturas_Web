@@ -11,7 +11,8 @@ import java.util.List;
 @Repository
 public interface ParadaRepository extends JpaRepository<Parada, Long> {
 
-    @Query("SELECT p FROM Parada p WHERE SQRT(POWER(p.latitud - :latitud, 2) + POWER(p.longitud - :longitud, 2)) < :distancia")
+    @Query("SELECT p FROM Parada p " +
+            "WHERE SQRT(POWER(p.latitud - :latitud, 2) + POWER(p.longitud - :longitud, 2)) < :distancia")
     List<Parada> getParadasCercanas(
             @Param("latitud") Double latitud,
             @Param("longitud") Double longitud,

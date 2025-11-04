@@ -12,7 +12,7 @@ import java.util.List;
 public class ParadaService {
 
     @Autowired
-    ParadaRepository paradaRepository;
+    private ParadaRepository paradaRepository;
 
     @Transactional
     public List<Parada> getAll() {
@@ -43,8 +43,7 @@ public class ParadaService {
     }
 
     @Transactional
-    public List<Parada> getMonopatinesCercanos(double x, double y, double distanciaCercana) {
-
-        return paradaRepository.getParadasCercanas(x, y, distanciaCercana);
+    public List<Parada> getMonopatinesCercanos(double latitud, double longitud, double distanciaCercana) {
+        return paradaRepository.getParadasCercanas(latitud, longitud, distanciaCercana);
     }
 }

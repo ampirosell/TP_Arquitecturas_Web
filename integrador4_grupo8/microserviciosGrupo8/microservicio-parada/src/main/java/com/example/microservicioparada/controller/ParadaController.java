@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/paradas")
@@ -30,9 +30,12 @@ public class ParadaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Parada> getParadaById(@PathVariable Long id) throws Exception {
-        Optional<Parada> parada = Optional.ofNullable(paradaService.findById(id));
-        return parada.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        Parada parada = paradaService.findById(id);
+        if (parada != null) {
+            return ResponseEntity.ok(parada);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @PostMapping()
@@ -41,12 +44,15 @@ public class ParadaController {
         return ResponseEntity.ok(userNew);
     }
 
-    @GetMapping("/monopatinesCercanos/{x}/{y}")
-    public ResponseEntity<?> getMonopatinesCercanos(@PathVariable double x, @PathVariable double y, @RequestParam double distanciaCercana) {
+    @GetMapping("/monopatinesCercanos")
+    public ResponseEntity<?> getMonopatinesCercanos(@RequestParam double latitud, @RequestParam double longitud, @RequestParam double distanciaCercana) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(paradaService.getMonopatinesCercanos(x, y, distanciaCercana));
+            return ResponseEntity.ok(
+                    paradaService.getMonopatinesCercanos(latitud, longitud, distanciaCercana)
+            );
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Error. Por favor intente más tarde.\"}");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\":\"Error. Por favor intente más tarde.\"}");
         }
     }
 

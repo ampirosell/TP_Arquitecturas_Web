@@ -5,46 +5,64 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7eb3c95-4ded-48f4-bc99-22d5d275d48d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/src/main/java/com/example/microservicioparada/MicroservicioParadaApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/src/main/java/com/example/microservicioparada/controller/ParadaController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/src/main/java/com/example/microservicioparada/entity/Parada.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/src/main/java/com/example/microservicioparada/repository/ParadaRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/src/main/java/com/example/microservicioparada/service/ParadaService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/src/test/java/com/example/microserviciocar/MicroservicioCarApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/MicroservicioUserApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/config/RestTemplateConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/entity/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/feignClients/BikeFeignClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/feignClients/CarFeignClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/models/Bike.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/models/Car.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/repository/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/test/java/com/example/microserviciouser/MicroservicioUserApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/demo/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-monopatin/src/main/java/com/example/microserviciomonopatin/dto/MonopatinDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-parada/src/main/java/com/example/microservicioparada/dto/ParadaDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/TESTING.md" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/TESTING.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-monopatin/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-monopatin/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-monopatin/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-monopatin/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-monopatin/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-monopatin/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-monopatin/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-monopatin/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-monopatin/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-monopatin/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-monopatin/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-monopatin/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-monopatin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-monopatin/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-monopatin/src/main/java/com/example/microserviciomonopatin/MicroservicioMonopatinApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-monopatin/src/main/java/com/example/microserviciomonopatin/MicroservicioMonopatinApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-monopatin/src/main/java/com/example/microserviciomonopatin/controller/MonopatinController.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-monopatin/src/main/java/com/example/microserviciomonopatin/controller/MonopatinController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-monopatin/src/main/java/com/example/microserviciomonopatin/entity/EstadoMonopatin.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-monopatin/src/main/java/com/example/microserviciomonopatin/entity/EstadoMonopatin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-monopatin/src/main/java/com/example/microserviciomonopatin/entity/Monopatin.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-monopatin/src/main/java/com/example/microserviciomonopatin/entity/Monopatin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-monopatin/src/main/java/com/example/microserviciomonopatin/repository/MonopatinRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-monopatin/src/main/java/com/example/microserviciomonopatin/repository/MonopatinRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-monopatin/src/main/java/com/example/microserviciomonopatin/service/MonopatinService.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-monopatin/src/main/java/com/example/microserviciomonopatin/service/MonopatinService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-monopatin/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-monopatin/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-parada/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-parada/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-parada/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-parada/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-parada/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-parada/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-parada/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/src/main/java/com/example/microservicioparada/MicroservicioParadaApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-parada/src/main/java/com/example/microservicioparada/MicroservicioParadaApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/src/main/java/com/example/microservicioparada/controller/ParadaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-parada/src/main/java/com/example/microservicioparada/controller/ParadaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/src/main/java/com/example/microservicioparada/entity/Parada.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-parada/src/main/java/com/example/microservicioparada/entity/Parada.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/src/main/java/com/example/microservicioparada/repository/ParadaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-parada/src/main/java/com/example/microservicioparada/repository/ParadaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/src/main/java/com/example/microservicioparada/service/ParadaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-parada/src/main/java/com/example/microservicioparada/service/ParadaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-parada/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-parada/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/MicroservicioUserApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/MicroservicioUserApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/config/RestTemplateConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/config/RestTemplateConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/entity/Rol.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/entity/Rol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/feignClients/MonopatinFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/feignClients/MonopatinFeignClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/feignClients/ParadaFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/feignClients/ParadaFeignClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/models/Monopatin.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/models/Monopatin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/models/Parada.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/models/Parada.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/java/com/example/microserviciouser/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/microservicio-user/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/demo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,6 +138,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
@@ -139,6 +158,14 @@
     </key>
   </component>
   <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="KtorApplicationConfigurationType" />
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
     <option name="configurationStatuses">
       <map>
         <entry key="HttpClient.HttpRequestRunConfigurationType">
@@ -173,7 +200,7 @@
     </configuration>
     <configuration name="InteApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="inte (1)" />
+      <module name="Integrador3_grupo8" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="org.integrador.InteApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -181,8 +208,32 @@
     </configuration>
     <configuration name="MicroservicioCarApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="microservicio-car" />
+      <module name="microservicio-parada" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.microserviciocar.MicroservicioCarApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MicroservicioMonopatinApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="microservicio-monopatin" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.microserviciomonopatin.MicroservicioMonopatinApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MicroservicioParadaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="microservicio-parada" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.microservicioparada.MicroservicioParadaApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MicroservicioUserApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="microservicio-user" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.microserviciouser.MicroservicioUserApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -193,6 +244,9 @@
       <item itemvalue="HTTP Request.requests | f) Recuperar carreras con estudiantes inscriptos, ordenadas por cantidad de inscriptos" />
       <item itemvalue="HTTP Request.requests | g) Recuperar estudiantes de una carrera filtrado por ciudad" />
       <item itemvalue="HTTP Request.requests | h) Generar reporte de carreras (inscriptos y egresados por año)" />
+      <item itemvalue="Spring Boot.MicroservicioMonopatinApplication" />
+      <item itemvalue="Spring Boot.MicroservicioParadaApplication" />
+      <item itemvalue="Spring Boot.MicroservicioUserApplication" />
       <item itemvalue="Spring Boot.MicroservicioCarApplication" />
       <item itemvalue="Spring Boot.InteApplication" />
     </list>
@@ -231,6 +285,7 @@
       <workItem from="1760932394026" duration="144000" />
       <workItem from="1760932554650" duration="908000" />
       <workItem from="1761002082327" duration="665000" />
+      <workItem from="1762269958648" duration="4176000" />
     </task>
     <servers />
   </component>
