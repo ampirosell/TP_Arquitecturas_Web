@@ -34,8 +34,8 @@ public class MonopatinService {
     public Monopatin findById(String id) throws Exception {
         return monopatinRepository.findById(id).orElse(null);
     }
-    
-    public List<Monopatin> getMonopatinesCercanos(double x, double y, double distanciaCercana) {
-        return monopatinRepository.getMonopatinesCercanos(x, y, distanciaCercana);
+
+    public List<Monopatin> getMonopatinesCercanos(double latitud, double longitud, double distanciaCercana) {
+        return monopatinRepository.getMonopatinesCercanos(latitud, longitud, distanciaCercana);
     }
 }

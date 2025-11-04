@@ -42,12 +42,18 @@ public class MonopatinController {
         Monopatin userNew = monopatinService.save(monopatin);
         return ResponseEntity.ok(userNew);
     }
-    @GetMapping("/monopatinesCercanos/{x}/{y}")
-    public ResponseEntity<?> getMonopatinesCercanos(@PathVariable double x, @PathVariable double y, @RequestParam double distanciaCercana){
+    @GetMapping("/monopatines/cercanos")
+    public ResponseEntity<?> getMonopatinesCercanos(
+            @RequestParam double latitud,
+            @RequestParam double longitud,
+            @RequestParam double distanciaCercana
+    ) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(monopatinService.getMonopatinesCercanos(x,y, distanciaCercana));
-        }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Error. Por favor intente más tarde.\"}");
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(monopatinService.getMonopatinesCercanos(latitud, longitud, distanciaCercana));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"error\":\"Error. Por favor intente más tarde.\"}");
         }
     }
 
