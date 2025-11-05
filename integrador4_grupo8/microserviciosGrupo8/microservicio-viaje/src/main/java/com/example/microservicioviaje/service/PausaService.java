@@ -14,26 +14,26 @@ import java.util.stream.Collectors;
 
 @Service
 public class PausaService{
-    private PausaRepository pr;
+    private PausaRepository pausaRepository;
 
     @Autowired
     public PausaService(PausaRepository pr){
-        this.pr=pr;
+        this.pausaRepository=pr;
     }
 
     @Transactional
     public PausaDTO findById(Long id) {
-        return pr.findById(id).map(PausaDTO::new).orElse(null);
+        return pausaRepository.findById(id).map(PausaDTO::new).orElse(null);
     }
 
     @Transactional
     public List<PausaDTO> findAll() throws Exception {
-        return pr.findAll().stream().map(PausaDTO::new).collect(Collectors.toList());
+        return pausaRepository.findAll().stream().map(PausaDTO::new).collect(Collectors.toList());
     }
 
     @Transactional
     public PausaDTO save(Pausa entity) throws Exception {
-        pr.save(entity);
+        pausaRepository.save(entity);
         return this.findById(entity.getId());
     }
 
@@ -41,10 +41,10 @@ public class PausaService{
     public PausaDTO update(Long id, Pausa updatedPausa) throws Exception {
         return this.save(updatedPausa);
     }
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional
     public ResponseEntity<String> delete(Long id) throws Exception {
-        if (pr.existsById(id)) {
-            pr.deleteById(id);
+        if (pausaRepository.existsById(id)) {
+            pausaRepository.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body("Eliminación exitosa");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La entidad con ID " + id + " no existe");

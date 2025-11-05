@@ -3,30 +3,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-
 @Setter
+@Getter
 @Entity
 public class Pausa {
-    @Getter
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Getter
     @Column
     private LocalDate fechaInicio;
-
-    //this.setCantidadPausa();
-    @Getter
     @Column
     private LocalDate fechaFin;
-
-    @Getter
-    @Column Long pausaTotal;
+    @Column
+    Long pausaTotal;
 
     @JsonIgnore
     @ManyToOne

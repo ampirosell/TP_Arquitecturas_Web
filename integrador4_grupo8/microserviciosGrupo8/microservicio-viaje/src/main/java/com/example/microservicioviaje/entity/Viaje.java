@@ -12,23 +12,15 @@ import java.util.List;
 @Entity
 @Getter @Setter
 public class Viaje {
-
-    @Setter
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idViaje;
     @Column
     private LocalDate fecha;
-    @Setter
-    @Getter
     @Column
     private LocalTime horaInicio;
-    @Setter
-    @Getter
     @Column
     private LocalTime horaFin;
-    @Setter
     @Column
     private double kmRecorridos;
     @Column
@@ -52,7 +44,7 @@ public class Viaje {
 */
 
     public Viaje(Viaje viaje) {
-        this.id = viaje.id;
+        this.idViaje = viaje.idViaje;
         this.idMonopatin = viaje.idMonopatin;
         this.horaInicio = viaje.horaInicio;
         this.horaFin = viaje.horaFin;
@@ -65,8 +57,8 @@ public class Viaje {
 
     }
 
-    public Viaje(Long id, Long idmonopatin, LocalTime fechaInicio, LocalTime fechaFin, double kilometrosRecorridos) {
-        this.id = id;
+    public Viaje(Long idViaje, Long idmonopatin, LocalTime fechaInicio, LocalTime fechaFin, double kilometrosRecorridos) {
+        this.idViaje = idViaje;
         this.idMonopatin = idmonopatin;
         this.horaInicio = fechaInicio;
         this.horaFin = fechaFin;
