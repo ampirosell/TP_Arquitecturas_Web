@@ -1,9 +1,11 @@
 package com.example.microserviciomonopatin.controller;
 
 
+import com.example.microserviciomonopatin.dto.MonopatinKmDTO;
 import com.example.microserviciomonopatin.entity.Monopatin;
 
 import com.example.microserviciomonopatin.service.MonopatinService;
+import com.example.microserviciouser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,10 @@ public class MonopatinController {
 
     @Autowired
     MonopatinService monopatinService;
+
+    UserService userService;
+
+    ViajeService viajeService;
 
     @GetMapping()
     public ResponseEntity<List<Monopatin>> getAllMonopatines() throws Exception {
@@ -56,5 +62,20 @@ public class MonopatinController {
                     .body("{\"error\":\"Error. Por favor intente más tarde.\"}");
         }
     }
+
+    // Reporte de km recorridos (solo para ADMIN)  ejercicio 4 a)
+
+    @GetMapping("/reporte/km/{userId}")
+    public ResponseEntity<?> getReporteKm(@PathVariable Long userId) {
+        if (!userService.esAdmin(userId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("No tiene permisos para acceder al reporte");
+        }
+
+        List<MonopatinKmDTO> reporte = monopatinService.generarReporteKm();
+        return ResponseEntity.ok(reporte);
+    }
+
+    //@GetMapping("/cantViajesPorAnio/{idAdmin}/{cantViajes}/{anio}")
 
 }

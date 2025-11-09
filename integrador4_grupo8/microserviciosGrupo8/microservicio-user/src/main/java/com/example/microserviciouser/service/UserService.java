@@ -1,5 +1,6 @@
 package com.example.microserviciouser.service;
 
+import com.example.microserviciouser.entity.Rol;
 import com.example.microserviciouser.entity.User;
 import com.example.microserviciouser.feignClients.ParadaFeignClient;
 import com.example.microserviciouser.feignClients.MonopatinFeignClient;
@@ -51,4 +52,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    //ejercicio a
+    public boolean esAdmin(Long id) {
+        Rol rol = userRepository.findRolById(id);
+        return rol == Rol.ADMIN;
+    }
 }

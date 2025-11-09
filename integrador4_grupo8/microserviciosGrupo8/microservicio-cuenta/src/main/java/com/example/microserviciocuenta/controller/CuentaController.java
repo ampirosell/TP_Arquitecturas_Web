@@ -4,6 +4,7 @@ package com.example.microserviciocuenta.controller;
 import com.example.microserviciocuenta.entity.Cuenta;
 
 import com.example.microserviciocuenta.service.CuentaService;
+import com.example.microserviciouser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,8 @@ public class CuentaController {
     @Autowired
     CuentaService cuentaService;
 
+    UserService userService;
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Cuenta> getCuentaById(@PathVariable String id) throws Exception {
@@ -32,6 +35,21 @@ public class CuentaController {
         Cuenta userNew = cuentaService.save(cuenta);
         return ResponseEntity.ok(userNew);
     }
+    //ejercicio B
+    @PutMapping("/deshabilitar/{idAdmin}/{idUsuario}")
+    public ResponseEntity<?> deshabilitarCuenta(@PathVariable Long idAdmin, @PathVariable Long idUsuario) {
+        if (!userService.esAdmin(idAdmin)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("No tiene permisos para deshabilitar cuentas");
+        }
 
+        Cuenta cuentaActualizada = cuentaService.actualizarEstadoCuenta(idUsuario, false);
+        if (cuentaActualizada == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Cuenta no encontrada para el usuario con ID: " + idUsuario);
+        }
+
+        return ResponseEntity.ok(cuentaActualizada);
+    }
 
 }

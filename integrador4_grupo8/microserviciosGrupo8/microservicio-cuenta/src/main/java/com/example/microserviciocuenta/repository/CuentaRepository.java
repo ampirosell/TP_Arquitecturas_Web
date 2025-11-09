@@ -14,6 +14,7 @@ import java.util.List;
 @Repository
 public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
 
-
-
+    //ejercicio B
+    @Query("update Cuenta c set c.cuentaActiva = :estado  where c.idUsuario = :id")
+    Cuenta actualizarEstadoCuenta(@Param("id") Long id, @Param("cuentaActiva") Boolean cuentaActiva);
 }

@@ -10,14 +10,24 @@ import lombok.*;
 @NoArgsConstructor
 public class Monopatin {
     @Id
-    private String idMonopatin;
+    private Long idMonopatin;
     private EstadoMonopatin estadoMonopatin;
     private Long kmRecorridos;
     private Long viajeId; //el que esta en curso
     private Double latitud;
     private Double longitud;
 
+
     public Monopatin(EstadoMonopatin estadoMonopatin) {
         this.estadoMonopatin = estadoMonopatin;
+    }
+
+    public Monopatin(Long idMonopatin, EstadoMonopatin estadoMonopatin, Long kmRecorridos, Long viajeId, Double latitud, Double longitud) {
+        this.idMonopatin = idMonopatin;
+        this.estadoMonopatin = estadoMonopatin;
+        this.kmRecorridos = kmRecorridos;
+        this.viajeId = viajeId;
+        this.latitud = latitud;
+        this.longitud = longitud;
     }
 }

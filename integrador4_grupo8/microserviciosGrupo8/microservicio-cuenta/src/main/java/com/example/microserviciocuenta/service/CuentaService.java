@@ -37,5 +37,10 @@ public class CuentaService {
         return cuentaRepository.findById(Long.valueOf(id)).orElse(null);
     }
 
+    //ejercicio B
+    @Transactional
+    public Cuenta actualizarEstadoCuenta(Long idUsuario, Boolean cuentaActiva) {
+        return cuentaRepository.actualizarEstadoCuenta(idUsuario, cuentaActiva);
+    }
 
 }
