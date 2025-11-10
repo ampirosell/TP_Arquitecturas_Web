@@ -1,0 +1,103 @@
+version: "3.8"
+
+services:
+  # --- BASES DE DATOS ---
+  mysql_user:
+    image: mysql:8.0
+    container_name: inte4_user_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: user
+      MYSQL_USER: integrador
+      MYSQL_PASSWORD: integrador123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_user_data:/var/lib/mysql
+      - ./microservicio-user/src/main/resources/database_setup.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    networks:
+      - inte4_net
+
+  mysql_viaje:
+    image: mysql:8.0
+    container_name: inte4_viaje_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: viaje
+      MYSQL_USER: integrador
+      MYSQL_PASSWORD: integrador123
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_viaje_data:/var/lib/mysql
+      - ./microservicio-viaje/src/main/resources/database_setup.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    networks:
+      - inte4_net
+
+  mysql_parada:
+    image: mysql:8.0
+    container_name: inte4_parada_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: parada
+      MYSQL_USER: integrador
+      MYSQL_PASSWORD: integrador123
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_parada_data:/var/lib/mysql
+      - ./microservicio-parada/src/main/resources/database_setup.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    networks:
+      - inte4_net
+
+  mysql_cuenta:
+    image: mysql:8.0
+    container_name: inte4_cuenta_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cuenta
+      MYSQL_USER: integrador
+      MYSQL_PASSWORD: integrador123
+    ports:
+      - "3309:3306"
+    volumes:
+      - mysql_cuenta_data:/var/lib/mysql
+      - ./microservicio-cuenta/src/main/resources/database_setup.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    networks:
+      - inte4_net
+
+  mongo_monopatin:
+    image: mongo:6.0
+    container_name: inte4_monopatin_db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: monopatin
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_monopatin_data:/data/db
+    restart: unless-stopped
+    networks:
+      - inte4_net
+
+
+
+# --- VOLUMES Y NETWORKS ---
+volumes:
+  mysql_user_data:
+  mysql_viaje_data:
+  mysql_parada_data:
+  mysql_cuenta_data:
+  mongo_monopatin_data:
+
+networks:
+  inte4_net:

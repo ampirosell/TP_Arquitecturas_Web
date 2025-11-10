@@ -1,16 +1,19 @@
+version: "3.8"
+
 services:
-  mongo:
-    image: mongo:6.0
-    container_name: inte4_monopatin
+  monopatin-service:
+    build: .
+    container_name: monopatin_service
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
-      MONGO_INITDB_DATABASE: monopatin
+      MONGO_URI: mongodb://root:root@inte4_mongo:27017/monopatin?authSource=admin
+    depends_on:
+      - mongo
+    networks:
+      - inte4_net
     ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
+      - "8085:8080"
     restart: unless-stopped
 
-volumes:
-  mongo_data:
+networks:
+  inte4_net:
+    external: true

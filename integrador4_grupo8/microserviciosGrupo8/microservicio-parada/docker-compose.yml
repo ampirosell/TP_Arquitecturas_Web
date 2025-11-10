@@ -1,19 +1,24 @@
-services:
-  mysql:
-    image: mysql:8.0
-    container_name: inte4_parada
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: parada
-      MYSQL_USER: integrador
-      MYSQL_PASSWORD: integrador123
-    ports:
-      - "3307:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-      - ./database_setup.sql:/docker-entrypoint-initdb.d/init.sql
-    restart: unless-stopped
-    command: --default-authentication-plugin=mysql_native_password
+version: "3.8"
 
-volumes:
-  mysql_data:
+services:
+  parada-service:
+    build: .
+    container_name: parada_service
+    environment:
+      DB_HOST: inte4_mysql
+      DB_PORT: 3306
+      DB_NAME: parada
+      DB_USER: integrador
+      DB_PASSWORD: integrador123
+    depends_on:
+      - mysql
+    networks:
+      - inte4_net
+    ports:
+      - "8083:8080"
+    restart: unless-stopped
+
+networks:
+  inte4_net:
+    external: true
+
