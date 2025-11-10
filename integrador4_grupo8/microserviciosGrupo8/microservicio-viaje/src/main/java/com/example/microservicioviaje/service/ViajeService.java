@@ -1,6 +1,6 @@
 package com.example.microservicioviaje.service;
 
-import com.example.microserviciomonopatin.entity.Monopatin;
+//import com.example.microserviciomonopatin.entity.Monopatin;
 import com.example.microservicioviaje.entity.Viaje;
 import com.example.microservicioviaje.repository.ViajeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +42,8 @@ public class ViajeService {
     public Viaje findById(Long id) throws Exception {
         return viajeRepository.findById(id).orElse(null);
     }
-    @Transactional
+   /* @Transactional
     public List<Monopatin> findMonopatinesConMasDeXViajesEnAnio(int anio, long minViajes){
         return viajeRepository.findMonopatinesConMasDeXViajesEnAnio(anio, minViajes);
-    }
+    }*/
 }

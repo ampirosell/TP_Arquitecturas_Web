@@ -1,6 +1,6 @@
 package com.example.microservicioviaje.repository;
 
-import com.example.microserviciomonopatin.entity.Monopatin;
+//import com.example.microserviciomonopatin.entity.Monopatin;
 import com.example.microservicioviaje.entity.Viaje;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface ViajeRepository extends JpaRepository<Viaje, Long> {
-
+/*
     @Query("SELECT v.idMonopatin, COUNT(v) " +
             "FROM Viaje v " +
             "WHERE FUNCTION('YEAR', v.fecha) = :anio " +

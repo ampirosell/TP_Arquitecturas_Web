@@ -4,7 +4,6 @@ package com.example.microserviciocuenta.controller;
 import com.example.microserviciocuenta.entity.Cuenta;
 
 import com.example.microserviciocuenta.service.CuentaService;
-import com.example.microserviciouser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +19,6 @@ public class CuentaController {
     @Autowired
     CuentaService cuentaService;
 
-    UserService userService;
-
-
     @GetMapping("/{id}")
     public ResponseEntity<Cuenta> getCuentaById(@PathVariable String id) throws Exception {
         Optional<Cuenta> cuenta = Optional.ofNullable(cuentaService.findById(id));
@@ -35,7 +31,7 @@ public class CuentaController {
         Cuenta userNew = cuentaService.save(cuenta);
         return ResponseEntity.ok(userNew);
     }
-    //ejercicio B
+/*    //ejercicio B
     @PutMapping("/deshabilitar/{idAdmin}/{idUsuario}")
     public ResponseEntity<?> deshabilitarCuenta(@PathVariable Long idAdmin, @PathVariable Long idUsuario) {
         if (!userService.esAdmin(idAdmin)) {
@@ -51,5 +47,5 @@ public class CuentaController {
 
         return ResponseEntity.ok(cuentaActualizada);
     }
-
+*/
 }
