@@ -14,21 +14,8 @@ services:
       - "8005:8005"
     restart: unless-stopped
 
-  inte4_cuenta_db:
-    image: mysql:8.0
-    container_name: inte4_cuenta_db
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: cuenta
-      MYSQL_USER: integrador
-      MYSQL_PASSWORD: integrador123
-    ports:
-      - "3309:3306"
-    networks:
-      - inte4_net
-    restart: unless-stopped
 
 networks:
   inte4_net:
     name: inte4_net
-    driver: bridge
+
