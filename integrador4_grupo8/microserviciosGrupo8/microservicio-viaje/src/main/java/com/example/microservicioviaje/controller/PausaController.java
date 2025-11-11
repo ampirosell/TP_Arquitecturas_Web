@@ -6,7 +6,6 @@ import com.example.microservicioviaje.entity.Pausa;
 
 import com.example.microservicioviaje.service.PausaService;
 
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/viajes")
+@RequestMapping("/pausas")
 public class PausaController {
 
     @Autowired
@@ -39,7 +38,7 @@ public class PausaController {
         }
     }
 
-    @PostMapping("/agregar")
+    @PostMapping()
     public ResponseEntity<?> save(@RequestBody Pausa p){
         try{
             return ResponseEntity.status(HttpStatus.OK).body(pausaService.save(p));

@@ -6,6 +6,7 @@
 		<groupId>micro.example</groupId>
 		<artifactId>microserviciosGrupo8</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>..</relativePath>
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>microservicio-monopatin</artifactId>
@@ -24,12 +25,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>com.example</groupId>
-            <artifactId>microservicio-user</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 
 	<build>

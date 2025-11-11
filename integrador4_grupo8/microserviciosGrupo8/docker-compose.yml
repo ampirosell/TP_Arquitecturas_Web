@@ -1,9 +1,9 @@
-version: "3.8"
-
 services:
   # 🚌 Microservicio de Paradas
   parada-service:
-    build: ./microservicio-parada
+    build:
+      context: .
+      dockerfile: microservicio-parada/Dockerfile
     container_name: parada_service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -23,20 +23,30 @@ services:
       MYSQL_DATABASE: parada
       MYSQL_USER: integrador
       MYSQL_PASSWORD: integrador123
+      MYSQL_ROOT_HOST: "%"
     ports:
       - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p1234"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
     networks:
       - inte4_net
     restart: unless-stopped
 
   # 👤 Microservicio de Usuarios
   user-service:
-    build: ./microservicio-user
+    build:
+      context: .
+      dockerfile: microservicio-user/Dockerfile
     container_name: user_service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
-      - inte4_user_db
+      inte4_user_db:
+        condition: service_healthy
     ports:
       - "8001:8001"
     networks:
@@ -51,20 +61,30 @@ services:
       MYSQL_DATABASE: user
       MYSQL_USER: integrador
       MYSQL_PASSWORD: integrador123
+      MYSQL_ROOT_HOST: "%"
     ports:
       - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p1234"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
     networks:
       - inte4_net
     restart: unless-stopped
 
   # 🛴 Microservicio de Monopatines
   monopatin-service:
-    build: ./microservicio-monopatin
+    build:
+      context: .
+      dockerfile: microservicio-monopatin/Dockerfile
     container_name: monopatin_service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
-      - inte4_monopatin_db
+      inte4_monopatin_db:
+        condition: service_healthy
     ports:
       - "8003:8003"
     networks:
@@ -74,20 +94,33 @@ services:
   inte4_monopatin_db:
     image: mongo:6.0
     container_name: inte4_monopatin_db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: monopatin
     ports:
       - "27017:27017"
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --quiet -u root -p root --authenticationDatabase admin --eval \"db.adminCommand('ping')\""]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
     networks:
       - inte4_net
     restart: unless-stopped
 
   # 🚗 Microservicio de Viajes
   viaje-service:
-    build: ./microservicio-viaje
+    build:
+      context: .
+      dockerfile: microservicio-viaje/Dockerfile
     container_name: viaje_service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
-      - inte4_viaje_db
+      inte4_viaje_db:
+        condition: service_healthy
     ports:
       - "8004:8004"
     networks:
@@ -102,20 +135,30 @@ services:
       MYSQL_DATABASE: viaje
       MYSQL_USER: integrador
       MYSQL_PASSWORD: integrador123
+      MYSQL_ROOT_HOST: "%"
     ports:
       - "3308:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p1234"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
     networks:
       - inte4_net
     restart: unless-stopped
 
   # 💰 Microservicio de Cuentas
   cuenta-service:
-    build: ./microservicio-cuenta
+    build:
+      context: .
+      dockerfile: microservicio-cuenta/Dockerfile
     container_name: cuenta_service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
-      - inte4_cuenta_db
+      inte4_cuenta_db:
+        condition: service_healthy
     ports:
       - "8005:8005"
     networks:
@@ -130,14 +173,19 @@ services:
       MYSQL_DATABASE: cuenta
       MYSQL_USER: integrador
       MYSQL_PASSWORD: integrador123
+      MYSQL_ROOT_HOST: "%"
     ports:
       - "3309:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p1234"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
     networks:
       - inte4_net
     restart: unless-stopped
 
 networks:
   inte4_net:
-    name: inte4_net
     driver: bridge
-    external: true

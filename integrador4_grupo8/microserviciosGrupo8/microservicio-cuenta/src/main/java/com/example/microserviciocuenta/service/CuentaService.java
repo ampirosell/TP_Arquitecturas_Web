@@ -44,7 +44,8 @@ public class CuentaService {
     //ejercicio B
     @Transactional
     public Cuenta actualizarEstadoCuenta(Long idUsuario, Boolean cuentaActiva) {
-        return cuentaRepository.actualizarEstadoCuenta(idUsuario, cuentaActiva);
+        int updated = cuentaRepository.actualizarEstadoCuenta(idUsuario, cuentaActiva);
+        return updated > 0 ? cuentaRepository.findByIdUsuario(idUsuario).orElse(null) : null;
     }
 
 }
