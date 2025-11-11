@@ -33,13 +33,22 @@ public class PausaService{
 
     @Transactional
     public PausaDTO save(Pausa entity) throws Exception {
-        pausaRepository.save(entity);
-        return this.findById(entity.getId());
+        Pausa saved = pausaRepository.save(entity);
+        return new PausaDTO(saved);
     }
 
     @Transactional
     public PausaDTO update(Long id, Pausa updatedPausa) throws Exception {
-        return this.save(updatedPausa);
+        return pausaRepository.findById(id)
+                .map(existing -> {
+                    existing.setFechaInicio(updatedPausa.getFechaInicio());
+                    existing.setFechaFin(updatedPausa.getFechaFin());
+                    existing.setPausaTotal(updatedPausa.getPausaTotal());
+                    existing.setViaje(updatedPausa.getViaje());
+                    Pausa saved = pausaRepository.save(existing);
+                    return new PausaDTO(saved);
+                })
+                .orElse(null);
     }
     @Transactional
     public ResponseEntity<String> delete(Long id) throws Exception {

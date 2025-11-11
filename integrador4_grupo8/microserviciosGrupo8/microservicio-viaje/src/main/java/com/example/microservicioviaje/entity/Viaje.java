@@ -5,9 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
@@ -16,11 +14,9 @@ public class Viaje {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idViaje;
     @Column
-    private LocalDate fecha;
+    private LocalDateTime fechaInicio;
     @Column
-    private LocalTime horaInicio;
-    @Column
-    private LocalTime horaFin;
+    private LocalDateTime fechaFin;
     @Column
     private double kmRecorridos;
     @Column
@@ -46,8 +42,8 @@ public class Viaje {
     public Viaje(Viaje viaje) {
         this.idViaje = viaje.idViaje;
         this.idMonopatin = viaje.idMonopatin;
-        this.horaInicio = viaje.horaInicio;
-        this.horaFin = viaje.horaFin;
+        this.fechaInicio = viaje.fechaInicio;
+        this.fechaFin = viaje.fechaFin;
         this.kmRecorridos = viaje.kmRecorridos;
         //this.pausas = viaje.pausas;
         //this.precio = viaje.precio;
@@ -57,11 +53,11 @@ public class Viaje {
 
     }
 
-    public Viaje(Long idViaje, Long idmonopatin, LocalTime fechaInicio, LocalTime fechaFin, double kilometrosRecorridos) {
+    public Viaje(Long idViaje, Long idmonopatin, LocalDateTime fechaInicio, LocalDateTime fechaFin, double kilometrosRecorridos) {
         this.idViaje = idViaje;
         this.idMonopatin = idmonopatin;
-        this.horaInicio = fechaInicio;
-        this.horaFin = fechaFin;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
         this.kmRecorridos = kilometrosRecorridos;
        // this.pausas = pausas;
         //this.precio = precio;

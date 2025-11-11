@@ -125,6 +125,20 @@ curl -X POST {{monopatin_base_url}}/monopatines \
 curl {{viaje_base_url}}/viajes
 ```
 
+**Crear viaje**
+```bash
+curl -X POST {{viaje_base_url}}/viajes \
+  -H "Content-Type: application/json" \
+  -d '{"fechaInicio":"2025-11-11T08:30:00","fechaFin":"2025-11-11T09:00:00","kmRecorridos":5.5,"pausa":false,"idMonopatin":1,"idUsuario":1}'
+```
+
+**Crear pausa**
+```bash
+curl -X POST {{viaje_base_url}}/pausas \
+  -H "Content-Type: application/json" \
+  -d '{"fechaInicio":"2025-11-11T09:10:00","fechaFin":"2025-11-11T09:40:00","pausaTotal":30,"viaje":{"idViaje":1}}'
+```
+
 **Cuenta**
 ```bash
 curl {{cuenta_base_url}}/cuenta/1
@@ -156,6 +170,16 @@ curl {{cuenta_base_url}}/cuenta/1
   docker logs -f inte4_monopatin_db
   ```
 
+### Error UNKNOWN al ejecutar
+
+#### Verificar y Configurar el SDK del Proyecto
+
+1. **File** → **Project Structure** (o `Ctrl+Alt+Shift+S`)
+2. En la sección **Project**:
+    - **SDK**: Selecciona Java 17 (o crea uno si no existe)
+    - **Language level**: Selecciona **17 - Sealed classes, always-strict floating-point semantics**
+    - **Project compiler output**: Puede quedar vacío o usar `demo/out`
+3. Haz clic en **Apply** y luego **OK**
 ---
 
-Grupo 8 – Arquitecturas Web – TP Integrador
+Grupo 8 [el más mejor] – Arquitecturas Web – TP Integrador

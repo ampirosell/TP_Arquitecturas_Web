@@ -49,7 +49,11 @@ public class PausaController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id,@RequestBody Pausa entity){
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(pausaService.update(id,entity));
+            PausaDTO updated = pausaService.update(id,entity);
+            if (updated == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"No se encontró la pausa\"}");
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(updated);
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"Error. No se pudo editar, o no se encontró el ID. Revise los campos e intente nuevamente.\"}");
         }

@@ -364,7 +364,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"fecha\": \"2025-11-11\",\n  \"horaInicio\": \"08:30:00\",\n  \"horaFin\": \"09:00:00\",\n  \"kmRecorridos\": 5.5,\n  \"pausa\": false,\n  \"idMonopatin\": 1,\n  \"idUsuario\": 1\n}",
+              "raw": "{\n  \"fechaInicio\": \"2025-11-11T08:30:00\",\n  \"fechaFin\": \"2025-11-11T09:00:00\",\n  \"kmRecorridos\": 5.5,\n  \"pausa\": false,\n  \"idMonopatin\": 1,\n  \"idUsuario\": 1\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -441,7 +441,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"fechaInicio\": \"2025-11-11\",\n  \"fechaFin\": \"2025-11-11\",\n  \"pausaTotal\": 30,\n  \"viaje\": {\n    \"idViaje\": {{viaje_id}}\n  }\n}",
+              "raw": "{\n  \"fechaInicio\": \"2025-11-11T09:10:00\",\n  \"fechaFin\": \"2025-11-11T09:40:00\",\n  \"pausaTotal\": 30,\n  \"viaje\": {\n    \"idViaje\": {{viaje_id}}\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -476,7 +476,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"fechaInicio\": \"2025-11-11\",\n  \"fechaFin\": \"2025-11-12\",\n  \"pausaTotal\": 60,\n  \"viaje\": {\n    \"idViaje\": {{viaje_id}}\n  }\n}",
+              "raw": "{\n  \"fechaInicio\": \"2025-11-11T09:10:00\",\n  \"fechaFin\": \"2025-11-11T09:45:00\",\n  \"pausaTotal\": 60,\n  \"viaje\": {\n    \"idViaje\": {{viaje_id}}\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"

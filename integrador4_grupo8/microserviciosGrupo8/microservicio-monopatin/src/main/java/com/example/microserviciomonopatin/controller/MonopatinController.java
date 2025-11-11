@@ -36,7 +36,7 @@ public class MonopatinController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Monopatin> getMonopatinById(@PathVariable String id) throws Exception {
+    public ResponseEntity<Monopatin> getMonopatinById(@PathVariable Long id) throws Exception {
         Optional<Monopatin> monopatin = Optional.ofNullable(monopatinService.findById(id));
         return monopatin.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));

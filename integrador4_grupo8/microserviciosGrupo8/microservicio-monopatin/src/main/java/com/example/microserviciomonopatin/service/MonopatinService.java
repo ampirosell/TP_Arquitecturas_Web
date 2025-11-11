@@ -35,7 +35,7 @@ public class MonopatinService {
         return monopatinRepository.save(monopatin);
     }
     
-    public Monopatin findById(String id) throws Exception {
+    public Monopatin findById(Long id) throws Exception {
         return monopatinRepository.findById(id).orElse(null);
     }
 

@@ -5,16 +5,16 @@ import com.example.microservicioviaje.entity.Pausa;
 import lombok.Getter;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 public class PausaDTO implements Serializable {
     private Long id;
-    private LocalDate fechaInicio;
-    private LocalDate fechaFin;
+    private LocalDateTime fechaInicio;
+    private LocalDateTime fechaFin;
 
 
-    public PausaDTO(Long id, LocalDate fechaInicio, LocalDate fechaFin) {
+    public PausaDTO(Long id, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
         this.id = id;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -30,11 +30,11 @@ public class PausaDTO implements Serializable {
         return id;
     }
 
-    public LocalDate getFechaInicio() {
+    public LocalDateTime getFechaInicio() {
         return fechaInicio;
     }
 
-    public LocalDate getFechaFin() {
+    public LocalDateTime getFechaFin() {
         return fechaFin;
     }
 

@@ -3,7 +3,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 @Setter
 @Getter
@@ -14,9 +14,9 @@ public class Pausa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
-    private LocalDate fechaInicio;
+    private LocalDateTime fechaInicio;
     @Column
-    private LocalDate fechaFin;
+    private LocalDateTime fechaFin;
     @Column
     Long pausaTotal;
 
@@ -29,13 +29,13 @@ public class Pausa {
 
     public Pausa(Pausa pausa) {
         this.id = pausa.id;
-        this.fechaInicio =pausa.fechaInicio;
+        this.fechaInicio = pausa.fechaInicio;
         this.fechaFin = pausa.fechaFin;
         this.pausaTotal = pausa.pausaTotal;
         this.viaje = pausa.viaje;
     }
 
-    public Pausa(Long id, LocalDate fechaInicio, LocalDate fechaFin, Long pausaTotal, Viaje viaje) {
+    public Pausa(Long id, LocalDateTime fechaInicio, LocalDateTime fechaFin, Long pausaTotal, Viaje viaje) {
         this.id = id;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -43,7 +43,7 @@ public class Pausa {
         this.viaje = viaje;
     }
 
-    public Pausa(Long id, LocalDate fechaInicio, LocalDate fechaFin, Viaje viaje) {
+    public Pausa(Long id, LocalDateTime fechaInicio, LocalDateTime fechaFin, Viaje viaje) {
         this.id = id;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
