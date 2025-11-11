@@ -15,7 +15,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/")
+    @GetMapping()
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAll();
         if (users.isEmpty()) {
@@ -33,7 +33,7 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @PostMapping("")
+    @PostMapping()
     public ResponseEntity<User> save(@RequestBody User user) {
         User userNew = userService.save(user);
         return ResponseEntity.ok(userNew);

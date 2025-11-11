@@ -15,7 +15,7 @@ services:
     networks:
       - inte4_net
     ports:
-      - "8082:8080"
+      - "8001:8001"
     restart: unless-stopped
 
 networks:
