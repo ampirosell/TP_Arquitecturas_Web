@@ -22,6 +22,10 @@ public class CuentaService {
         return cuentaNew;
     }
 
+
+    @Transactional
+    public List<Cuenta> getAll(){return cuentaRepository.findAll();}
+
     @Transactional
     public void delete(Cuenta cuenta){
         cuentaRepository.delete(cuenta);

@@ -140,3 +140,4 @@ networks:
   inte4_net:
     name: inte4_net
     driver: bridge
+    external: true

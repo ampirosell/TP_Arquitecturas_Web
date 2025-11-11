@@ -19,6 +19,17 @@ public class CuentaController {
     @Autowired
     CuentaService cuentaService;
 
+
+    @GetMapping()
+    public ResponseEntity<List<Cuenta>> getAllCuentas() throws Exception {
+        try {
+            List<Cuenta> cuentas = cuentaService.getAll();
+            return new ResponseEntity<>(cuentas, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Cuenta> getCuentaById(@PathVariable String id) throws Exception {
         Optional<Cuenta> cuenta = Optional.ofNullable(cuentaService.findById(id));
