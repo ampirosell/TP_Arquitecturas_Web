@@ -1,103 +1,142 @@
 version: "3.8"
 
 services:
-  # --- BASES DE DATOS ---
-  mysql_user:
-    image: mysql:8.0
-    container_name: inte4_user_db
+  # 🚌 Microservicio de Paradas
+  parada-service:
+    build: ./microservicio-parada
+    container_name: parada_service
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: user
-      MYSQL_USER: integrador
-      MYSQL_PASSWORD: integrador123
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - inte4_parada_db
     ports:
-      - "3306:3306"
-    volumes:
-      - mysql_user_data:/var/lib/mysql
-      - ./microservicio-user/src/main/resources/database_setup.sql:/docker-entrypoint-initdb.d/init.sql
-    command: --default-authentication-plugin=mysql_native_password
-    restart: unless-stopped
+      - "8002:8002"
     networks:
       - inte4_net
-
-  mysql_viaje:
-    image: mysql:8.0
-    container_name: inte4_viaje_db
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: viaje
-      MYSQL_USER: integrador
-      MYSQL_PASSWORD: integrador123
-    ports:
-      - "3308:3306"
-    volumes:
-      - mysql_viaje_data:/var/lib/mysql
-      - ./microservicio-viaje/src/main/resources/database_setup.sql:/docker-entrypoint-initdb.d/init.sql
-    command: --default-authentication-plugin=mysql_native_password
     restart: unless-stopped
-    networks:
-      - inte4_net
 
-  mysql_parada:
+  inte4_parada_db:
     image: mysql:8.0
     container_name: inte4_parada_db
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: 1234
       MYSQL_DATABASE: parada
       MYSQL_USER: integrador
       MYSQL_PASSWORD: integrador123
     ports:
       - "3307:3306"
-    volumes:
-      - mysql_parada_data:/var/lib/mysql
-      - ./microservicio-parada/src/main/resources/database_setup.sql:/docker-entrypoint-initdb.d/init.sql
-    command: --default-authentication-plugin=mysql_native_password
-    restart: unless-stopped
     networks:
       - inte4_net
+    restart: unless-stopped
 
-  mysql_cuenta:
+  # 👤 Microservicio de Usuarios
+  user-service:
+    build: ./microservicio-user
+    container_name: user_service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - inte4_user_db
+    ports:
+      - "8001:8001"
+    networks:
+      - inte4_net
+    restart: unless-stopped
+
+  inte4_user_db:
+    image: mysql:8.0
+    container_name: inte4_user_db
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: usuario
+      MYSQL_USER: integrador
+      MYSQL_PASSWORD: integrador123
+    ports:
+      - "3306:3306"
+    networks:
+      - inte4_net
+    restart: unless-stopped
+
+  # 🛴 Microservicio de Monopatines
+  monopatin-service:
+    build: ./microservicio-monopatin
+    container_name: monopatin_service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - inte4_monopatin_db
+    ports:
+      - "8003:8003"
+    networks:
+      - inte4_net
+    restart: unless-stopped
+
+  inte4_monopatin_db:
+    image: mongo:6.0
+    container_name: inte4_monopatin_db
+    ports:
+      - "27017:27017"
+    networks:
+      - inte4_net
+    restart: unless-stopped
+
+  # 🚗 Microservicio de Viajes
+  viaje-service:
+    build: ./microservicio-viaje
+    container_name: viaje_service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - inte4_viaje_db
+    ports:
+      - "8004:8004"
+    networks:
+      - inte4_net
+    restart: unless-stopped
+
+  inte4_viaje_db:
+    image: mysql:8.0
+    container_name: inte4_viaje_db
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: viaje
+      MYSQL_USER: integrador
+      MYSQL_PASSWORD: integrador123
+    ports:
+      - "3308:3306"
+    networks:
+      - inte4_net
+    restart: unless-stopped
+
+  # 💰 Microservicio de Cuentas
+  cuenta-service:
+    build: ./microservicio-cuenta
+    container_name: cuenta_service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - inte4_cuenta_db
+    ports:
+      - "8005:8005"
+    networks:
+      - inte4_net
+    restart: unless-stopped
+
+  inte4_cuenta_db:
     image: mysql:8.0
     container_name: inte4_cuenta_db
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: 1234
       MYSQL_DATABASE: cuenta
       MYSQL_USER: integrador
       MYSQL_PASSWORD: integrador123
     ports:
       - "3309:3306"
-    volumes:
-      - mysql_cuenta_data:/var/lib/mysql
-      - ./microservicio-cuenta/src/main/resources/database_setup.sql:/docker-entrypoint-initdb.d/init.sql
-    command: --default-authentication-plugin=mysql_native_password
-    restart: unless-stopped
     networks:
       - inte4_net
-
-  mongo_monopatin:
-    image: mongo:6.0
-    container_name: inte4_monopatin_db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
-      MONGO_INITDB_DATABASE: monopatin
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_monopatin_data:/data/db
     restart: unless-stopped
-    networks:
-      - inte4_net
-
-
-
-# --- VOLUMES Y NETWORKS ---
-volumes:
-  mysql_user_data:
-  mysql_viaje_data:
-  mysql_parada_data:
-  mysql_cuenta_data:
-  mongo_monopatin_data:
 
 networks:
   inte4_net:
+    name: inte4_net
+    driver: bridge

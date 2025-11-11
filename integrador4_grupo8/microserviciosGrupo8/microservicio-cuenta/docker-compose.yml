@@ -5,19 +5,30 @@ services:
     build: .
     container_name: cuenta_service
     environment:
-      DB_HOST: inte4_mysql
-      DB_PORT: 3306
-      DB_NAME: cuenta
-      DB_USER: integrador
-      DB_PASSWORD: integrador123
+      - SPRING_PROFILES_ACTIVE=docker
     depends_on:
-      - mysql
+      - inte4_cuenta_db
     networks:
       - inte4_net
     ports:
-      - "8084:8080"
+      - "8005:8005"
+    restart: unless-stopped
+
+  inte4_cuenta_db:
+    image: mysql:8.0
+    container_name: inte4_cuenta_db
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: cuenta
+      MYSQL_USER: integrador
+      MYSQL_PASSWORD: integrador123
+    ports:
+      - "3309:3306"
+    networks:
+      - inte4_net
     restart: unless-stopped
 
 networks:
   inte4_net:
-    external: true
+    name: inte4_net
+    driver: bridge

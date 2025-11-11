@@ -1,5 +1,5 @@
-# Imagen base ligera con Java 21
-FROM eclipse-temurin:21-jdk-alpine
+
+FROM mcr.microsoft.com/openjdk/jdk:17-ubuntu
 
 # Directorio de trabajo dentro del contenedor
 WORKDIR /app

@@ -5,20 +5,15 @@ services:
     build: .
     container_name: parada_service
     environment:
-      DB_HOST: inte4_mysql
-      DB_PORT: 3306
-      DB_NAME: parada
-      DB_USER: integrador
-      DB_PASSWORD: integrador123
+      - SPRING_PROFILES_ACTIVE=docker
     depends_on:
-      - mysql
+      - inte4_parada_db
     networks:
       - inte4_net
     ports:
-      - "8083:8080"
+      - "8002:8002"
     restart: unless-stopped
 
 networks:
   inte4_net:
     external: true
-
