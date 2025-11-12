@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7eb3c95-4ded-48f4-bc99-22d5d275d48d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-facturacion/src/main/java/com/example/microserviciofacturacion/dto/FacturaDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-facturacion/src/main/java/com/example/microserviciofacturacion/dto/FacturaDTO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -370,7 +368,7 @@
       <workItem from="1762822072839" duration="600000" />
       <workItem from="1762822689656" duration="10244000" />
       <workItem from="1762888019576" duration="5458000" />
-      <workItem from="1762912919787" duration="3761000" />
+      <workItem from="1762912919787" duration="4152000" />
     </task>
     <servers />
   </component>
