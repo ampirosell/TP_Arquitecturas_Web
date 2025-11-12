@@ -27,4 +27,11 @@ public class FacturacionController {
     public double total(@RequestParam String desde, @RequestParam String hasta) {
         return service.totalFacturadoEntre(LocalDate.parse(desde), LocalDate.parse(hasta));
     }
+
+    @GetMapping("/total-mensual")
+    public double totalPorMeses(@RequestParam int anio,
+                                @RequestParam int mesInicio,
+                                @RequestParam int mesFin) {
+        return service.totalFacturadoEnMeses(anio, mesInicio, mesFin);
+    }
 }

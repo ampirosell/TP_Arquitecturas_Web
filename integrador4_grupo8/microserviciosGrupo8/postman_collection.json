@@ -29,7 +29,6 @@
             "header": [],
             "url": "{{user_base_url}}/users"
           }
-        },
         {
           "name": "Buscar usuario por ID",
           "event": [
@@ -186,7 +185,7 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": "{{parada_base_url}}/paradas/monopatinesCercanos?latitud=-34.6037&longitud=-58.3816&distanciaCercana=5"
+            "url": "{{parada_base_url}}/paradas/monopatinesCercanos?latitud={{latitud}}&longitud={{longitud}}&distanciaCercana={{radio_km}}"
           }
         }
       ]
@@ -289,7 +288,97 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": "{{monopatin_base_url}}/monopatines/monopatines/cercanos?latitud=-34.6037&longitud=-58.3816&distanciaCercana=5"
+            "url": "{{monopatin_base_url}}/monopatines/cercanos?latitud={{latitud}}&longitud={{longitud}}&distanciaCercana={{radio_km}}"
+          }
+        },
+        {
+          "name": "Actualizar estado de monopatín",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"EN_USO\",\n  \"viajeId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{monopatin_base_url}}/monopatines/{{monopatin_id}}/estado"
+          }
+        },
+        {
+          "name": "Actualizar ubicación de monopatín",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"latitud\": {{latitud}},\n  \"longitud\": {{longitud}},\n  \"paradaId\": {{parada_id}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{monopatin_base_url}}/monopatines/{{monopatin_id}}/ubicacion"
+          }
+        },
+        {
+          "name": "Registrar monopatín en mantenimiento",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "{{monopatin_base_url}}/monopatines/{{monopatin_id}}/mantenimiento"
+          }
+        },
+        {
+          "name": "Finalizar mantenimiento de monopatín",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{monopatin_base_url}}/monopatines/{{monopatin_id}}/mantenimiento"
+          }
+        },
+        {
+          "name": "Actualizar kilómetros acumulados",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"kilometrosRecorridos\": 2.5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{monopatin_base_url}}/monopatines/{{monopatin_id}}/kilometros"
+          }
+        },
+        {
+          "name": "Resumen estados de monopatines",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{monopatin_base_url}}/monopatines/resumen/estado"
           }
         }
       ]
@@ -372,6 +461,66 @@
               }
             },
             "url": "{{viaje_base_url}}/viajes"
+          }
+        },
+        {
+          "name": "Iniciar viaje (validado)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idCuenta\": {{cuenta_id}},\n  \"idUsuario\": {{user_id}},\n  \"idMonopatin\": {{monopatin_id}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{viaje_base_url}}/viajes/start"
+          }
+        },
+        {
+          "name": "Finalizar viaje",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"kilometrosRecorridos\": 2.4,\n  \"paradaId\": {{parada_id}},\n  \"latitud\": {{latitud}},\n  \"longitud\": {{longitud}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{viaje_base_url}}/viajes/{{viaje_id}}/finalizar"
+          }
+        },
+        {
+          "name": "Reporte uso por kilómetros",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{viaje_base_url}}/viajes/reportes/kilometros?desde={{reporte_desde}}&hasta={{reporte_hasta}}&incluirPausas=true"
+          }
+        },
+        {
+          "name": "Monopatines con más viajes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{viaje_base_url}}/viajes/reportes/monopatines-frecuentes?anio={{anio_busqueda}}&minViajes={{min_viajes}}"
           }
         },
         {
@@ -513,7 +662,7 @@
       "name": "Microservicio Cuenta",
       "item": [
         {
-          "name": "Buscar cuenta por ID usuario",
+          "name": "Buscar cuenta por ID",
           "event": [
             {
               "listen": "test",
@@ -530,7 +679,29 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": "{{cuenta_base_url}}/cuenta/{{user_id}}"
+            "url": "{{cuenta_base_url}}/cuenta/{{cuenta_id}}"
+          }
+        },
+        {
+          "name": "Actualizar estado de cuenta",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"activa\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{cuenta_base_url}}/cuenta/{{cuenta_id}}/estado"
           }
         },
         {
@@ -566,6 +737,27 @@
               }
             },
             "url": "{{cuenta_base_url}}/cuenta"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Microservicio Facturación",
+      "item": [
+        {
+          "name": "Generar factura manual",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "{{facturacion_base_url}}/facturacion/generar?idCuenta={{cuenta_id}}&idViaje={{viaje_id}}&km=3.2&minutos=18&pausaExtendida=false"
+          }
+        },
+        {
+          "name": "Total facturado entre meses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{facturacion_base_url}}/facturacion/total-mensual?anio={{anio_busqueda}}&mesInicio={{mes_inicio}}&mesFin={{mes_fin}}"
           }
         }
       ]

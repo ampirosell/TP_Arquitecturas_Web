@@ -23,7 +23,8 @@ public class Viaje {
     private boolean pausa;
     @JsonIgnore
     private Long idMonopatin;
-    private int idUsuario;
+    private Long idUsuario;
+    private Long idCuenta;
 
     /*@Setter
     @Getter

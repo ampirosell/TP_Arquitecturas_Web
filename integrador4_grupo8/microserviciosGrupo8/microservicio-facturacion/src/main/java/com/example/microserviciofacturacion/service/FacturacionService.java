@@ -6,10 +6,11 @@ import com.example.microserviciofacturacion.repository.FacturaRepository;
 import com.example.microserviciofacturacion.repository.TarifaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+import java.time.YearMonth;
 
 @Service
 public class FacturacionService {
@@ -20,16 +21,35 @@ public class FacturacionService {
     @Autowired
     private TarifaRepository tarifaRepository;
 
+    @Transactional
     public Tarifa getTarifaVigente() {
-        return tarifaRepository.findFirstByActivaTrue();
+        activarTarifasVigentes();
+        return tarifaRepository.findTopByFechaInicioLessThanEqualOrderByFechaInicioDesc(LocalDate.now())
+                .orElseThrow(() -> new IllegalStateException("No existe una tarifa vigente"));
     }
 
+    @Transactional
     public Tarifa crearTarifa(Tarifa tarifa) {
-        tarifaRepository.findAll().forEach(t -> t.setActiva(false)); // desactiva las anteriores
-        tarifa.setActiva(true);
-        return tarifaRepository.save(tarifa);
+        if (tarifa.getFechaInicio() == null) {
+            tarifa.setFechaInicio(LocalDate.now());
+        }
+        boolean esVigente = !tarifa.getFechaInicio().isAfter(LocalDate.now());
+        tarifa.setActiva(esVigente);
+        Tarifa guardada = tarifaRepository.save(tarifa);
+        if (esVigente) {
+            tarifaRepository.desactivarOtrasTarifas(guardada.getId());
+        }
+        return guardada;
     }
 
+    private void activarTarifasVigentes() {
+        LocalDate hoy = LocalDate.now();
+        tarifaRepository.activarTarifasVigentes(hoy);
+        tarifaRepository.findTopByFechaInicioLessThanEqualOrderByFechaInicioDesc(hoy)
+                .ifPresent(t -> tarifaRepository.desactivarOtrasTarifas(t.getId()));
+    }
+
+    @Transactional
     public Factura generarFactura(Long idCuenta, Long idViaje, double km, long minutos, boolean pausaExtendida) {
         Tarifa tarifa = getTarifaVigente();
 
@@ -53,5 +73,18 @@ public class FacturacionService {
                 .stream()
                 .mapToDouble(Factura::getMontoTotal)
                 .sum();
+    }
+
+    @Transactional(readOnly = true)
+    public double totalFacturadoEnMeses(int anio, int mesInicio, int mesFin) {
+        if (mesInicio < 1 || mesInicio > 12 || mesFin < 1 || mesFin > 12 || mesInicio > mesFin) {
+            throw new IllegalArgumentException("Rango de meses inválido");
+        }
+        YearMonth inicio = YearMonth.of(anio, mesInicio);
+        YearMonth fin = YearMonth.of(anio, mesFin);
+
+        LocalDate desde = inicio.atDay(1);
+        LocalDate hasta = fin.atEndOfMonth();
+        return totalFacturadoEntre(desde, hasta);
     }
 }

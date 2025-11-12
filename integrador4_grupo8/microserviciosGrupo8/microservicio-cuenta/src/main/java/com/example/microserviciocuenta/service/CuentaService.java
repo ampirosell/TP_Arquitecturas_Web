@@ -37,8 +37,8 @@ public class CuentaService {
     }
 
     @Transactional
-    public Cuenta findById(String id) throws Exception {
-        return cuentaRepository.findById(Long.valueOf(id)).orElse(null);
+    public Cuenta findById(Long id) throws Exception {
+        return cuentaRepository.findById(id).orElse(null);
     }
 
     //ejercicio B
@@ -46,6 +46,12 @@ public class CuentaService {
     public Cuenta actualizarEstadoCuenta(Long idUsuario, Boolean cuentaActiva) {
         int updated = cuentaRepository.actualizarEstadoCuenta(idUsuario, cuentaActiva);
         return updated > 0 ? cuentaRepository.findByIdUsuario(idUsuario).orElse(null) : null;
+    }
+
+    @Transactional
+    public Cuenta actualizarEstadoCuentaPorId(Long idCuenta, Boolean cuentaActiva) {
+        int updated = cuentaRepository.actualizarEstadoCuentaPorId(idCuenta, cuentaActiva);
+        return updated > 0 ? cuentaRepository.findById(idCuenta).orElse(null) : null;
     }
 
 }

@@ -19,5 +19,10 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
     @Query("update Cuenta c set c.cuentaActiva = :estado where c.idUsuario = :id")
     int actualizarEstadoCuenta(@Param("id") Long id, @Param("estado") Boolean estado);
 
+    @Modifying
+    @Transactional
+    @Query("update Cuenta c set c.cuentaActiva = :estado where c.idCuenta = :idCuenta")
+    int actualizarEstadoCuentaPorId(@Param("idCuenta") Long idCuenta, @Param("estado") Boolean estado);
+
     Optional<Cuenta> findByIdUsuario(Long idUsuario);
 }

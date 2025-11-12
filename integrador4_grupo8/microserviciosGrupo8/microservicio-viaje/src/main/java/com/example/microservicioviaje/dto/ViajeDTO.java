@@ -16,6 +16,7 @@ public class ViajeDTO {
     private double kmRecorridos;
     private boolean pausa;
     private Long idMonopatin;
-    private int idUsuario;
+    private Long idUsuario;
+    private Long idCuenta;
 
 }

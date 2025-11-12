@@ -12,22 +12,28 @@ public class Monopatin {
     @Id
     private Long idMonopatin;
     private EstadoMonopatin estadoMonopatin;
-    private Long kmRecorridos;
+    private Double kmRecorridos;
     private Long viajeId; //el que esta en curso
     private Double latitud;
     private Double longitud;
+    private Long paradaId;
 
 
     public Monopatin(EstadoMonopatin estadoMonopatin) {
         this.estadoMonopatin = estadoMonopatin;
     }
 
-    public Monopatin(Long idMonopatin, EstadoMonopatin estadoMonopatin, Long kmRecorridos, Long viajeId, Double latitud, Double longitud) {
+    public Monopatin(Long idMonopatin, EstadoMonopatin estadoMonopatin, Double kmRecorridos, Long viajeId, Double latitud, Double longitud) {
         this.idMonopatin = idMonopatin;
         this.estadoMonopatin = estadoMonopatin;
         this.kmRecorridos = kmRecorridos;
         this.viajeId = viajeId;
         this.latitud = latitud;
         this.longitud = longitud;
+    }
+
+    public Monopatin(Long idMonopatin, EstadoMonopatin estadoMonopatin, Double kmRecorridos, Long viajeId, Double latitud, Double longitud, Long paradaId) {
+        this(idMonopatin, estadoMonopatin, kmRecorridos, viajeId, latitud, longitud);
+        this.paradaId = paradaId;
     }
 }

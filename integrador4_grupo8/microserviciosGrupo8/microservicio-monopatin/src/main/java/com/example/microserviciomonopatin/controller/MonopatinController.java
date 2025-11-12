@@ -1,7 +1,11 @@
 package com.example.microserviciomonopatin.controller;
 
 
+import com.example.microserviciomonopatin.dto.ActualizarEstadoMonopatinRequest;
+import com.example.microserviciomonopatin.dto.ActualizarKilometrosMonopatinRequest;
+import com.example.microserviciomonopatin.dto.ActualizarUbicacionMonopatinRequest;
 import com.example.microserviciomonopatin.dto.MonopatinKmDTO;
+import com.example.microserviciomonopatin.dto.ResumenEstadoMonopatinesDTO;
 import com.example.microserviciomonopatin.entity.Monopatin;
 
 import com.example.microserviciomonopatin.service.MonopatinService;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/monopatines")
@@ -47,7 +52,7 @@ public class MonopatinController {
         Monopatin userNew = monopatinService.save(monopatin);
         return ResponseEntity.ok(userNew);
     }
-    @GetMapping("/monopatines/cercanos")
+    @GetMapping("/cercanos")
     public ResponseEntity<?> getMonopatinesCercanos(
             @RequestParam double latitud,
             @RequestParam double longitud,
@@ -60,6 +65,68 @@ public class MonopatinController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("{\"error\":\"Error. Por favor intente más tarde.\"}");
         }
+    }
+
+    @PatchMapping("/{id}/estado")
+    public ResponseEntity<?> actualizarEstado(@PathVariable Long id,
+                                              @RequestBody @Valid ActualizarEstadoMonopatinRequest request) {
+        if (request.getEstado() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("{\"error\":\"Debe indicar un estado válido\"}");
+        }
+        Monopatin actualizado = monopatinService.actualizarEstado(id, request.getEstado(), request.getViajeId());
+        if (actualizado == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"error\":\"Monopatín no encontrado\"}");
+        }
+        return ResponseEntity.ok(actualizado);
+    }
+
+    @PatchMapping("/{id}/ubicacion")
+    public ResponseEntity<?> actualizarUbicacion(@PathVariable Long id,
+                                                 @RequestBody @Valid ActualizarUbicacionMonopatinRequest request) {
+        Monopatin actualizado = monopatinService.actualizarUbicacion(id, request.getLatitud(), request.getLongitud(), request.getParadaId());
+        if (actualizado == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"error\":\"Monopatín no encontrado\"}");
+        }
+        return ResponseEntity.ok(actualizado);
+    }
+
+    @PostMapping("/{id}/mantenimiento")
+    public ResponseEntity<?> registrarMantenimiento(@PathVariable Long id) {
+        Monopatin actualizado = monopatinService.registrarMantenimiento(id);
+        if (actualizado == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"error\":\"Monopatín no encontrado\"}");
+        }
+        return ResponseEntity.ok(actualizado);
+    }
+
+    @DeleteMapping("/{id}/mantenimiento")
+    public ResponseEntity<?> finalizarMantenimiento(@PathVariable Long id) {
+        Monopatin actualizado = monopatinService.finalizarMantenimiento(id);
+        if (actualizado == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"error\":\"Monopatín no encontrado\"}");
+        }
+        return ResponseEntity.ok(actualizado);
+    }
+
+    @GetMapping("/resumen/estado")
+    public ResponseEntity<ResumenEstadoMonopatinesDTO> obtenerResumenEstados() {
+        return ResponseEntity.ok(monopatinService.obtenerResumenEstados());
+    }
+
+    @PatchMapping("/{id}/kilometros")
+    public ResponseEntity<?> actualizarKilometros(@PathVariable Long id,
+                                                  @RequestBody @Valid ActualizarKilometrosMonopatinRequest request) {
+        Monopatin actualizado = monopatinService.actualizarKilometros(id, request.getKilometrosRecorridos());
+        if (actualizado == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"error\":\"Monopatín no encontrado\"}");
+        }
+        return ResponseEntity.ok(actualizado);
     }
 
     // Reporte de km recorridos (solo para ADMIN)  ejercicio 4 a)

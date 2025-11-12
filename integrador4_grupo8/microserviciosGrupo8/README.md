@@ -20,6 +20,58 @@ Cada microservicio incluye `Dockerfile`, configuración local (`application.prop
 
 ---
 
+## Modelo de Datos y Subdominios
+
+Cada microservicio encapsula su modelo y persistencia según los subdominios detectados:
+
+- **Identidades (`microservicio-user`)**  
+  `User` y `Rol`, orquestación básica hacia cuentas/monopatines.
+- **Cuentas y créditos (`microservicio-cuenta`)**  
+  `Cuenta` con saldo (`monto`), tipo, fecha de alta y flag `cuentaActiva`; expone `PATCH /cuenta/{id}/estado`.
+- **Paradas (`microservicio-parada`)**  
+  `Parada` con geolocalización y listado de monopatines asociados.
+- **Flota (`microservicio-monopatin`)**  
+  Documento MongoDB con estado (`LIBRE`, `EN_USO`, `MANTENIMIENTO`), posición GPS, `paradaId`, `viajeId` y kilómetros acumulados.
+- **Viajes y pausas (`microservicio-viaje`)**  
+  `Viaje` mantiene `idCuenta`, `idUsuario`, `idMonopatin`, tiempos y pausas (`Pausa`). Nuevos endpoints `POST /viajes/start` y `POST /viajes/{id}/finalizar` validan estados y disparan facturación.
+- **Facturación y tarifas (`microservicio-facturacion`)**  
+  `Tarifa` con vigencia (`fechaInicio`, `activa`) y `Factura` generada automáticamente al finalizar un viaje.
+
+Las URLs de los servicios externos son configurables (`services.*.base-url`) para perfiles local y Docker.
+
+---
+
+## Funcionalidades Implementadas
+
+| Requerimiento | Servicio / Endpoint |
+|---------------|--------------------|
+| a) Reporte de km (con/sin pausas) | `GET /viajes/reportes/kilometros?desde&hasta&incluirPausas` |
+| b) Anular cuenta | `PATCH /cuenta/{id}/estado` |
+| c) Monopatines con más de X viajes | `GET /viajes/reportes/monopatines-frecuentes?anio&minViajes` |
+| d) Total facturado en rango de meses | `GET /facturacion/total-mensual?anio&mesInicio&mesFin` |
+| e) Operación vs mantenimiento | `GET /monopatines/resumen/estado` |
+| f) Ajuste de precios con vigencia futura | `POST /tarifas` (setea `fechaInicio`; activación automática) |
+| g) Monopatines cercanos | `GET /monopatines/cercanos?latitud&longitud&distanciaCercana` |
+| Gestión de mantenimiento | `POST /monopatines/{id}/mantenimiento` / `DELETE .../mantenimiento` |
+| Inicio / fin de viaje con validaciones + facturación | `POST /viajes/start`, `POST /viajes/{id}/finalizar` |
+
+---
+
+## Swagger / OpenAPI
+
+Todos los microservicios exponen documentación interactiva mediante **springdoc-openapi**:
+
+- `http://localhost:8001/swagger-ui/index.html`
+- `http://localhost:8002/swagger-ui/index.html`
+- `http://localhost:8003/swagger-ui/index.html`
+- `http://localhost:8004/swagger-ui/index.html`
+- `http://localhost:8005/swagger-ui/index.html`
+- `http://localhost:8010/swagger-ui/index.html`
+
+Cada UI publica su contrato en `/v3/api-docs` para generar clientes o validar integraciones.
+
+---
+
 ## Puertos y Bases de Datos
 
 | Servicio                | Puerto | Base                   | Motor   |
@@ -77,14 +129,14 @@ Debés tener las bases corriendo localmente con los puertos indicados en `applic
 
 ## Postman
 
-En la carpeta raíz:
-- `postman_collection.json`
-- `postman_environment.json`
+- Colección: `postman_collection.json`
+- Environment: `postman_environment.json` (incluye hosts, IDs, fechas y parámetros para reportes)
 
-Pasos:
-1. Importá ambos archivos en Postman.
-2. Seleccioná el environment “Microservicios Grupo8 - Local”.
-3. Ejecutá los requests carpeta por carpeta. Ajustá payloads/IDs desde el environment si es necesario.
+Pasos sugeridos:
+1. Importar ambos archivos y seleccionar el environment “Microservicios Grupo8 - Local”.
+2. Crear datos base (usuarios, paradas, cuentas, monopatines).
+3. Ejecutar `POST /viajes/start`, opcionalmente registrar pausas y finalizar con `POST /viajes/{id}/finalizar`.
+4. Consultar reportes (kilómetros, monopatines frecuentes, facturación mensual) y resúmenes de flota/mantenimiento.
 
 ---
 

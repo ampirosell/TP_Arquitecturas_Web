@@ -1,6 +1,7 @@
 package com.example.microserviciocuenta.controller;
 
 
+import com.example.microserviciocuenta.dto.ActualizarEstadoCuentaRequest;
 import com.example.microserviciocuenta.entity.Cuenta;
 
 import com.example.microserviciocuenta.service.CuentaService;
@@ -31,7 +32,7 @@ public class CuentaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cuenta> getCuentaById(@PathVariable String id) throws Exception {
+    public ResponseEntity<Cuenta> getCuentaById(@PathVariable Long id) throws Exception {
         Optional<Cuenta> cuenta = Optional.ofNullable(cuentaService.findById(id));
         return cuenta.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -42,21 +43,18 @@ public class CuentaController {
         Cuenta userNew = cuentaService.save(cuenta);
         return ResponseEntity.ok(userNew);
     }
-/*    //ejercicio B
-    @PutMapping("/deshabilitar/{idAdmin}/{idUsuario}")
-    public ResponseEntity<?> deshabilitarCuenta(@PathVariable Long idAdmin, @PathVariable Long idUsuario) {
-        if (!userService.esAdmin(idAdmin)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body("No tiene permisos para deshabilitar cuentas");
+    @PatchMapping("/{id}/estado")
+    public ResponseEntity<?> actualizarEstado(@PathVariable Long id,
+                                              @RequestBody ActualizarEstadoCuentaRequest request) {
+        if (request == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("{\"error\":\"Debe indicar el nuevo estado\"}");
         }
-
-        Cuenta cuentaActualizada = cuentaService.actualizarEstadoCuenta(idUsuario, false);
+        Cuenta cuentaActualizada = cuentaService.actualizarEstadoCuentaPorId(id, request.isActiva());
         if (cuentaActualizada == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Cuenta no encontrada para el usuario con ID: " + idUsuario);
+                    .body("{\"error\":\"Cuenta no encontrada\"}");
         }
-
         return ResponseEntity.ok(cuentaActualizada);
     }
-*/
 }
