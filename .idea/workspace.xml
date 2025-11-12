@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7eb3c95-4ded-48f4-bc99-22d5d275d48d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microserviciocuenta/src/main/java/com/example/microserviciocuenta/dto/ActualizarEstadoCuentaRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-cuenta/src/main/java/com/example/microserviciocuenta/dto/ActualizarEstadoCuentaRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/postman_collection.json" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/postman_collection.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -380,6 +378,7 @@
       <workItem from="1762888019576" duration="5458000" />
       <workItem from="1762912919787" duration="4466000" />
       <workItem from="1762971384271" duration="4658000" />
+      <workItem from="1762976304642" duration="135000" />
     </task>
     <servers />
   </component>
