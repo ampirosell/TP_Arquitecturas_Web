@@ -29,6 +29,7 @@
             "header": [],
             "url": "{{user_base_url}}/users"
           }
+        },
         {
           "name": "Buscar usuario por ID",
           "event": [
@@ -453,7 +454,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"fechaInicio\": \"2025-11-11T08:30:00\",\n  \"fechaFin\": \"2025-11-11T09:00:00\",\n  \"kmRecorridos\": 5.5,\n  \"pausa\": false,\n  \"idMonopatin\": 1,\n  \"idUsuario\": 1\n}",
+              "raw": "{\n  \"fechaInicio\": \"2025-11-11T08:30:00\",\n  \"fechaFin\": \"2025-11-11T09:00:00\",\n  \"kmRecorridos\": 5.5,\n  \"pausa\": false,\n  \"idMonopatin\": 1,\n  \"idUsuario\": 1,\n \"idCuenta\": 1}",
               "options": {
                 "raw": {
                   "language": "json"

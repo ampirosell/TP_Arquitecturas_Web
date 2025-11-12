@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f7eb3c95-4ded-48f4-bc99-22d5d275d48d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-facturacion/src/main/java/com/example/microserviciofacturacion/dto/FacturaDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-facturacion/src/main/java/com/example/microserviciofacturacion/dto/FacturaDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microserviciocuenta/src/main/java/com/example/microserviciocuenta/dto/ActualizarEstadoCuentaRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-cuenta/src/main/java/com/example/microserviciocuenta/dto/ActualizarEstadoCuentaRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/postman_collection.json" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/postman_collection.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,55 +58,55 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.InteApplication.executor": "Run",
-    "Application.main.executor": "Run",
-    "HTTP Request.All in generated-requests.executor": "Run",
-    "HTTP Request.generated-requests | #1.executor": "Run",
-    "HTTP Request.requests | Crear Usuario.executor": "Run",
-    "HTTP Request.requests | Crear usuario.executor": "Run",
-    "HTTP Request.requests | Listar usuarios.executor": "Run",
-    "HTTP Request.requests | Matricular estudiante.executor": "Run",
-    "HTTP Request.requests | c) Recuperar todos los estudiantes (con ordenamiento simple).executor": "Run",
-    "HTTP Request.requests | d) Recuperar un estudiante por LU.executor": "Run",
-    "HTTP Request.requests | e) Recuperar todos los estudiantes por género.executor": "Run",
-    "HTTP Request.requests | f) Recuperar carreras con estudiantes inscriptos, ordenadas por cantidad de inscriptos.executor": "Run",
-    "HTTP Request.requests | g) Recuperar estudiantes de una carrera filtrado por ciudad.executor": "Run",
-    "HTTP Request.requests | h) Generar reporte de carreras (inscriptos y egresados por año).executor": "Run",
-    "Maven.microserviciosGrupo8 [clean,compile].executor": "Run",
-    "Maven.microserviciosGrupo8 [clean,install...].executor": "Run",
-    "Maven.microserviciosGrupo8 [clean,install].executor": "Run",
-    "Maven.microserviciosGrupo8 [clean,package...].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.InteApplication.executor": "Run",
-    "Spring Boot.MicroservicioCuentaApplication (1).executor": "Run",
-    "Spring Boot.MicroservicioParadaApplication.executor": "Run",
-    "Spring Boot.MicroservicioUserApplication.executor": "Run",
-    "git-widget-placeholder": "integrador4-v2",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Iván/OneDrive/Escritorio/integradorArqui/TP_Arquitecturas_Web/integrador4_grupo8/microserviciosGrupo8",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "MavenSettings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.InteApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.main.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.All in generated-requests.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #1.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.requests | Crear Usuario.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.requests | Crear usuario.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.requests | Listar usuarios.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.requests | Matricular estudiante.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.requests | c) Recuperar todos los estudiantes (con ordenamiento simple).executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.requests | d) Recuperar un estudiante por LU.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.requests | e) Recuperar todos los estudiantes por género.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.requests | f) Recuperar carreras con estudiantes inscriptos, ordenadas por cantidad de inscriptos.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.requests | g) Recuperar estudiantes de una carrera filtrado por ciudad.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.requests | h) Generar reporte de carreras (inscriptos y egresados por año).executor&quot;: &quot;Run&quot;,
+    &quot;Maven.microserviciosGrupo8 [clean,compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.microserviciosGrupo8 [clean,install...].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.microserviciosGrupo8 [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.microserviciosGrupo8 [clean,package...].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.InteApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.MicroservicioCuentaApplication (1).executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.MicroservicioParadaApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.MicroservicioUserApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;integrador4-v2&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Iván/OneDrive/Escritorio/integradorArqui/TP_Arquitecturas_Web/integrador4_grupo8/microserviciosGrupo8&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Iván\OneDrive\Escritorio\integradorArqui\TP_Arquitecturas_Web\integrador4_grupo8\microserviciosGrupo8" />
@@ -115,6 +116,7 @@
       <recent name="C:\Users\Iván\OneDrive\Escritorio\integradorArqui\TP_Arquitecturas_Web\Integrador2_grupo8\inte\src\main\resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Iván\OneDrive\Escritorio\integradorArqui\TP_Arquitecturas_Web\integrador4_grupo8\microserviciosGrupo8\microservicio-cuenta\src\main\java\com\example\microserviciocuenta\dto" />
       <recent name="C:\Users\Iván\OneDrive\Escritorio\integradorArqui\TP_Arquitecturas_Web\integrador4_grupo8\demo" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -192,7 +194,7 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
-    <configuration name="microserviciosGrupo8 [clean,package...]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+    <configuration name="microserviciosGrupo8 [clean,install]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
       <MavenSettings>
         <option name="myGeneralSettings" />
         <option name="myRunnerSettings" />
@@ -205,8 +207,7 @@
             <option name="goals">
               <list>
                 <option value="clean" />
-                <option value="package" />
-                <option value="-DskipTests" />
+                <option value="install" />
               </list>
             </option>
             <option name="multimoduleDir" />
@@ -225,6 +226,14 @@
         </option>
       </MavenSettings>
       <method v="2" />
+    </configuration>
+    <configuration name="FacturacionApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="microservicio-facturacion" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.microserviciofacturacion.FacturacionApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="InteApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
@@ -268,7 +277,7 @@
     </configuration>
     <configuration name="MicroservicioParadaApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="microservicio-facturacion" />
+      <module name="microservicio-parada" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.microservicioparada.MicroservicioParadaApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -313,7 +322,8 @@
       <item itemvalue="HTTP Request.requests | g) Recuperar estudiantes de una carrera filtrado por ciudad" />
       <item itemvalue="HTTP Request.requests | h) Generar reporte de carreras (inscriptos y egresados por año)" />
       <item itemvalue="Maven.microserviciosGrupo8 [clean,compile]" />
-      <item itemvalue="Maven.microserviciosGrupo8 [clean,package...]" />
+      <item itemvalue="Maven.microserviciosGrupo8 [clean,install]" />
+      <item itemvalue="Spring Boot.FacturacionApplication" />
       <item itemvalue="Spring Boot.MicroservicioParadaApplication (1)" />
       <item itemvalue="Spring Boot.MicroservicioViajeApplication (1)" />
       <item itemvalue="Spring Boot.MicroservicioCuentaApplication (1)" />
@@ -368,7 +378,8 @@
       <workItem from="1762822072839" duration="600000" />
       <workItem from="1762822689656" duration="10244000" />
       <workItem from="1762888019576" duration="5458000" />
-      <workItem from="1762912919787" duration="4152000" />
+      <workItem from="1762912919787" duration="4466000" />
+      <workItem from="1762971384271" duration="4658000" />
     </task>
     <servers />
   </component>
