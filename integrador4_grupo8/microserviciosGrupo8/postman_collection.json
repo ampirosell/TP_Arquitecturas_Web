@@ -2,70 +2,16 @@
   "info": {
     "_postman_id": "f9931c68-6c0b-4f67-9ad3-5bde748076fb",
     "name": "Microservicios Grupo8",
-    "description": "Colección de requests para probar los cinco microservicios ejecutándose en Docker.\nUsá el environment \"Microservicios Grupo8 - Local\" para cambiar rápidamente host o puertos.",
+    "description": "Colección reorganizada para ejecutar el flujo principal end-to-end y consultar los CRUD de cada microservicio por separado.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
-      "name": "Microservicio User",
+      "name": "Flujo Principal",
+      "description": "Ejecución recomendada paso a paso: crear datos base, iniciar viaje, registrar pausa opcional, finalizar viaje y consultar reportes.",
       "item": [
         {
-          "name": "Listar usuarios",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 204\", function () {",
-                  "    pm.expect([200, 204]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{user_base_url}}/users"
-          }
-        },
-        {
-          "name": "Buscar usuario por ID",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 404\", function () {",
-                  "    pm.expect([200, 404]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{user_base_url}}/users/{{user_id}}"
-          }
-        },
-        {
-          "name": "Crear usuario",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 201\", function () {",
-                  "    pm.expect([200, 201]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
+          "name": "01 - Crear usuario base",
           "request": {
             "method": "POST",
             "header": [
@@ -76,7 +22,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nombre\": \"Juan Pérez\",\n  \"mail\": \"juan.perez@example.com\",\n  \"rol\": \"USER\"\n}",
+              "raw": "{\n  \"nombre\": \"Hugo\",\n  \"apellido\": \"Ferrari\",\n  \"mail\": \"hugo@example.com\",\n  \"telefono\": \"+54 9 11 5555 5555\",\n  \"rol\": \"ADMIN\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -85,69 +31,9 @@
             },
             "url": "{{user_base_url}}/users"
           }
-        }
-      ]
-    },
-    {
-      "name": "Microservicio Parada",
-      "item": [
-        {
-          "name": "Listar paradas",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 204\", function () {",
-                  "    pm.expect([200, 204]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{parada_base_url}}/paradas"
-          }
         },
         {
-          "name": "Buscar parada por ID",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 404\", function () {",
-                  "    pm.expect([200, 404]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{parada_base_url}}/paradas/{{parada_id}}"
-          }
-        },
-        {
-          "name": "Crear parada",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 201\", function () {",
-                  "    pm.expect([200, 201]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
+          "name": "02 - Crear cuenta para el usuario",
           "request": {
             "method": "POST",
             "header": [
@@ -158,7 +44,51 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"direccion\": \"Av. Siempreviva 742\",\n  \"nombre\": \"Parada Centro\",\n  \"longitud\": -58.3816,\n  \"latitud\": -34.6037,\n  \"monopatinIds\": [101, 102]\n}",
+              "raw": "{\n  \"idUsuario\": {{user_id}},\n  \"monto\": 1200.0,\n  \"tipo\": \"BASICA\",\n  \"fecha_alta\": \"2025-11-12T00:00:00\",\n  \"cuentaActiva\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{cuenta_base_url}}/cuenta"
+          }
+        },
+        {
+          "name": "03 - Asegurar cuenta activa",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"activa\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{cuenta_base_url}}/cuenta/{{cuenta_id}}/estado"
+          }
+        },
+        {
+          "name": "04 - Crear parada",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"direccion\": \"Av. Siempreviva 742\",\n  \"nombre\": \"Parada Centro\",\n  \"latitud\": {{latitud}},\n  \"longitud\": {{longitud}},\n  \"monopatinIds\": []\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -169,88 +99,7 @@
           }
         },
         {
-          "name": "Monopatines cercanos",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 404\", function () {",
-                  "    pm.expect([200, 404]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{parada_base_url}}/paradas/monopatinesCercanos?latitud={{latitud}}&longitud={{longitud}}&distanciaCercana={{radio_km}}"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Microservicio Monopatín",
-      "item": [
-        {
-          "name": "Listar monopatines",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 204\", function () {",
-                  "    pm.expect([200, 204]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{monopatin_base_url}}/monopatines"
-          }
-        },
-        {
-          "name": "Buscar monopatín por ID",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 404\", function () {",
-                  "    pm.expect([200, 404]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{monopatin_base_url}}/monopatines/{{monopatin_id}}"
-          }
-        },
-        {
-          "name": "Crear monopatín",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 201\", function () {",
-                  "    pm.expect([200, 201]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
+          "name": "05 - Crear monopatín (LIBRE)",
           "request": {
             "method": "POST",
             "header": [
@@ -261,7 +110,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"idMonopatin\": 1,\n  \"estadoMonopatin\": \"LIBRE\",\n  \"kmRecorridos\": 0,\n  \"viajeId\": null,\n  \"latitud\": -34.6037,\n  \"longitud\": -58.3816\n}",
+              "raw": "{\n  \"idMonopatin\": {{monopatin_id}},\n  \"estadoMonopatin\": \"LIBRE\",\n  \"kmRecorridos\": 0,\n  \"viajeId\": null,\n  \"latitud\": {{latitud}},\n  \"longitud\": {{longitud}},\n  \"paradaId\": {{parada_id}}\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -272,178 +121,7 @@
           }
         },
         {
-          "name": "Monopatines cercanos (desde servicio monopatín)",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 404\", function () {",
-                  "    pm.expect([200, 404]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{monopatin_base_url}}/monopatines/cercanos?latitud={{latitud}}&longitud={{longitud}}&distanciaCercana={{radio_km}}"
-          }
-        },
-        {
-          "name": "Actualizar estado de monopatín",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"estado\": \"EN_USO\",\n  \"viajeId\": 1\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "{{monopatin_base_url}}/monopatines/{{monopatin_id}}/estado"
-          }
-        },
-        {
-          "name": "Actualizar ubicación de monopatín",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"latitud\": {{latitud}},\n  \"longitud\": {{longitud}},\n  \"paradaId\": {{parada_id}}\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "{{monopatin_base_url}}/monopatines/{{monopatin_id}}/ubicacion"
-          }
-        },
-        {
-          "name": "Registrar monopatín en mantenimiento",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": "{{monopatin_base_url}}/monopatines/{{monopatin_id}}/mantenimiento"
-          }
-        },
-        {
-          "name": "Finalizar mantenimiento de monopatín",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": "{{monopatin_base_url}}/monopatines/{{monopatin_id}}/mantenimiento"
-          }
-        },
-        {
-          "name": "Actualizar kilómetros acumulados",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"kilometrosRecorridos\": 2.5\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "{{monopatin_base_url}}/monopatines/{{monopatin_id}}/kilometros"
-          }
-        },
-        {
-          "name": "Resumen estados de monopatines",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{monopatin_base_url}}/monopatines/resumen/estado"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Microservicio Viaje",
-      "item": [
-        {
-          "name": "Listar viajes",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 204\", function () {",
-                  "    pm.expect([200, 204]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{viaje_base_url}}/viajes"
-          }
-        },
-        {
-          "name": "Buscar viaje por ID",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 404\", function () {",
-                  "    pm.expect([200, 404]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{viaje_base_url}}/viajes/{{viaje_id}}"
-          }
-        },
-        {
-          "name": "Crear viaje",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 201\", function () {",
-                  "    pm.expect([200, 201]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
+          "name": "06 - Crear tarifa vigente",
           "request": {
             "method": "POST",
             "header": [
@@ -454,18 +132,18 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"fechaInicio\": \"2025-11-11T08:30:00\",\n  \"fechaFin\": \"2025-11-11T09:00:00\",\n  \"kmRecorridos\": 5.5,\n  \"pausa\": false,\n  \"idMonopatin\": 1,\n  \"idUsuario\": 1,\n }",
+              "raw": "{\n  \"precioPorKm\": 40.0,\n  \"precioPorMinuto\": 5.0,\n  \"recargoPausa\": 20.0,\n  \"fechaInicio\": \"2025-11-01\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "url": "{{viaje_base_url}}/viajes"
+            "url": "{{facturacion_base_url}}/tarifas"
           }
         },
         {
-          "name": "Iniciar viaje (validado)",
+          "name": "07 - Iniciar viaje (valida cuenta y monopatín)",
           "request": {
             "method": "POST",
             "header": [
@@ -487,7 +165,7 @@
           }
         },
         {
-          "name": "Finalizar viaje",
+          "name": "08 - Registrar pausa (opcional)",
           "request": {
             "method": "POST",
             "header": [
@@ -498,7 +176,29 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"kilometrosRecorridos\": 2.4,\n  \"paradaId\": {{parada_id}},\n  \"latitud\": {{latitud}},\n  \"longitud\": {{longitud}}\n}",
+              "raw": "{\n  \"fechaInicio\": \"2025-11-12T17:15:00\",\n  \"fechaFin\": \"2025-11-12T17:25:00\",\n  \"pausaTotal\": 10,\n  \"viaje\": {\n    \"idViaje\": {{viaje_id}}\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{viaje_base_url}}/pausas"
+          }
+        },
+        {
+          "name": "09 - Finalizar viaje (actualiza flota y factura)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"kilometrosRecorridos\": 3.5,\n  \"paradaId\": {{parada_id}},\n  \"latitud\": {{latitud}},\n  \"longitud\": {{longitud}}\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -509,7 +209,15 @@
           }
         },
         {
-          "name": "Reporte uso por kilómetros",
+          "name": "10 - Total facturado en rango de meses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{facturacion_base_url}}/facturacion/total-mensual?anio={{anio_busqueda}}&mesInicio={{mes_inicio}}&mesFin={{mes_fin}}"
+          }
+        },
+        {
+          "name": "11 - Reporte de uso por kilómetros",
           "request": {
             "method": "GET",
             "header": [],
@@ -517,7 +225,7 @@
           }
         },
         {
-          "name": "Monopatines con más viajes",
+          "name": "12 - Monopatines con más viajes",
           "request": {
             "method": "GET",
             "header": [],
@@ -525,244 +233,302 @@
           }
         },
         {
-          "name": "Listar pausas",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 204\", function () {",
-                  "    pm.expect([200, 204]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
+          "name": "13 - Resumen estados de monopatines",
           "request": {
             "method": "GET",
             "header": [],
-            "url": "{{viaje_base_url}}/pausas"
-          }
-        },
-        {
-          "name": "Buscar pausa por ID",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 404\", function () {",
-                  "    pm.expect([200, 404]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{viaje_base_url}}/pausas/{{pausa_id}}"
-          }
-        },
-        {
-          "name": "Crear pausa",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 201\", function () {",
-                  "    pm.expect([200, 201]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"fechaInicio\": \"2025-11-11T09:10:00\",\n  \"fechaFin\": \"2025-11-11T09:40:00\",\n  \"pausaTotal\": 30,\n  \"viaje\": {\n    \"idViaje\": {{viaje_id}}\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "{{viaje_base_url}}/pausas"
-          }
-        },
-        {
-          "name": "Actualizar pausa",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 404\", function () {",
-                  "    pm.expect([200, 404]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"fechaInicio\": \"2025-11-11T09:10:00\",\n  \"fechaFin\": \"2025-11-11T09:45:00\",\n  \"pausaTotal\": 60,\n  \"viaje\": {\n    \"idViaje\": {{viaje_id}}\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": "{{viaje_base_url}}/pausas/{{pausa_id}}"
-          }
-        },
-        {
-          "name": "Eliminar pausa",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 404\", function () {",
-                  "    pm.expect([200, 404]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": "{{viaje_base_url}}/pausas/{{pausa_id}}"
+            "url": "{{monopatin_base_url}}/monopatines/resumen/estado"
           }
         }
       ]
     },
     {
-      "name": "Microservicio Cuenta",
+      "name": "CRUD por Servicio",
+      "description": "Referencia de endpoints de cada microservicio agrupados por dominio.",
       "item": [
         {
-          "name": "Buscar cuenta por ID",
-          "event": [
+          "name": "User",
+          "item": [
             {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 404\", function () {",
-                  "    pm.expect([200, 404]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{cuenta_base_url}}/cuenta/{{cuenta_id}}"
-          }
-        },
-        {
-          "name": "Actualizar estado de cuenta",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"activa\": false\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
+              "name": "Listar usuarios",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{user_base_url}}/users"
               }
             },
-            "url": "{{cuenta_base_url}}/cuenta/{{cuenta_id}}/estado"
-          }
-        },
-        {
-          "name": "Crear cuenta",
-          "event": [
             {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test(\"Status code 200 o 201\", function () {",
-                  "    pm.expect([200, 201]).to.include(pm.response.code);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"idUsuario\": 1,\n  \"monto\": 1000.0,\n  \"tipo\": \"BASICA\",\n  \"fecha_alta\": \"2025-11-11T00:00:00\",\n  \"cuentaActiva\": true\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
+              "name": "Buscar usuario por ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{user_base_url}}/users/{{user_id}}"
               }
             },
-            "url": "{{cuenta_base_url}}/cuenta"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Microservicio Facturación",
-      "item": [
-        {
-          "name": "Generar factura manual",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": "{{facturacion_base_url}}/facturacion/generar?idCuenta={{cuenta_id}}&idViaje={{viaje_id}}&km=3.2&minutos=18&pausaExtendida=false"
-          }
+            {
+              "name": "Crear usuario",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Pérez\",\n  \"mail\": \"juan@example.com\",\n  \"telefono\": \"1234-5678\",\n  \"rol\": \"USER\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{user_base_url}}/users"
+              }
+            }
+          ]
         },
         {
-          "name": "Total facturado entre meses",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "{{facturacion_base_url}}/facturacion/total-mensual?anio={{anio_busqueda}}&mesInicio={{mes_inicio}}&mesFin={{mes_fin}}"
-          }
+          "name": "Parada",
+          "item": [
+            {
+              "name": "Listar paradas",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{parada_base_url}}/paradas"
+              }
+            },
+            {
+              "name": "Buscar parada por ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{parada_base_url}}/paradas/{{parada_id}}"
+              }
+            },
+            {
+              "name": "Crear parada",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"direccion\": \"Av. Santa Fe 123\",\n  \"nombre\": \"Parada Norte\",\n  \"latitud\": -34.58,\n  \"longitud\": -58.40,\n  \"monopatinIds\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{parada_base_url}}/paradas"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Monopatín",
+          "item": [
+            {
+              "name": "Listar monopatines",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{monopatin_base_url}}/monopatines"
+              }
+            },
+            {
+              "name": "Buscar monopatín por ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{monopatin_base_url}}/monopatines/{{monopatin_id}}"
+              }
+            },
+            {
+              "name": "Actualizar estado (manual)",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"estado\": \"LIBRE\",\n  \"viajeId\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{monopatin_base_url}}/monopatines/{{monopatin_id}}/estado"
+              }
+            },
+            {
+              "name": "Registrar mantenimiento",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": "{{monopatin_base_url}}/monopatines/{{monopatin_id}}/mantenimiento"
+              }
+            },
+            {
+              "name": "Finalizar mantenimiento",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": "{{monopatin_base_url}}/monopatines/{{monopatin_id}}/mantenimiento"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Viaje",
+          "item": [
+            {
+              "name": "Listar viajes",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{viaje_base_url}}/viajes"
+              }
+            },
+            {
+              "name": "Buscar viaje por ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{viaje_base_url}}/viajes/{{viaje_id}}"
+              }
+            },
+            {
+              "name": "Crear viaje manual (sin validaciones)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fechaInicio\": \"2025-11-12T17:00:00\",\n  \"fechaFin\": \"2025-11-12T17:30:00\",\n  \"kmRecorridos\": 2.0,\n  \"pausa\": false,\n  \"idMonopatin\": {{monopatin_id}},\n  \"idUsuario\": {{user_id}}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{viaje_base_url}}/viajes"
+              }
+            },
+            {
+              "name": "Listar pausas",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{viaje_base_url}}/pausas"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Cuenta",
+          "item": [
+            {
+              "name": "Listar cuentas",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{cuenta_base_url}}/cuenta"
+              }
+            },
+            {
+              "name": "Buscar cuenta por ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{cuenta_base_url}}/cuenta/{{cuenta_id}}"
+              }
+            },
+            {
+              "name": "Crear cuenta",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idUsuario\": {{user_id}},\n  \"monto\": 800.0,\n  \"tipo\": \"PREMIUM\",\n  \"fecha_alta\": \"2025-11-12T00:00:00\",\n  \"cuentaActiva\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{cuenta_base_url}}/cuenta"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Facturación y Tarifas",
+          "item": [
+            {
+              "name": "Obtener tarifa vigente",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{facturacion_base_url}}/tarifas/vigente"
+              }
+            },
+            {
+              "name": "Crear tarifa",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"precioPorKm\": 30.0,\n  \"precioPorMinuto\": 4.0,\n  \"recargoPausa\": 15.0,\n  \"fechaInicio\": \"2025-10-01\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "{{facturacion_base_url}}/tarifas"
+              }
+            },
+            {
+              "name": "Total facturado (fecha a fecha)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "{{facturacion_base_url}}/facturacion/total?desde={{reporte_desde}}&hasta={{reporte_hasta}}"
+              }
+            }
+          ]
         }
       ]
     }
   ]
 }
-
