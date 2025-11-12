@@ -5,6 +5,10 @@ import org.springframework.cloud.openfeign.FeignClient;
 @FeignClient(name="microservicio-monopatin", url="http://localhost:8003/monopatin")
 public interface MonopatinFeignClient {
 
-
+/* c)
+@GetMapping("/monopatines/{id}")
+    MonopatinDTO obtenerMonopatinByIs(@PathVariable("id") Long id);
+    *\
+ */
 
 }

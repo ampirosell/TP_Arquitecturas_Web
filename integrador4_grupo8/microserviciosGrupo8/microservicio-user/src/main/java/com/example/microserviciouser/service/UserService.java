@@ -4,6 +4,8 @@ import com.example.microserviciouser.entity.Rol;
 import com.example.microserviciouser.entity.User;
 import com.example.microserviciouser.feignClients.ParadaFeignClient;
 import com.example.microserviciouser.feignClients.MonopatinFeignClient;
+import com.example.microserviciouser.feignClients.ViajeFeingClient;
+import com.example.microserviciouser.feignClients.CuentaFeingClient;
 import com.example.microserviciouser.models.Monopatin;
 import com.example.microserviciouser.models.Parada;
 import com.example.microserviciouser.repository.UserRepository;
@@ -29,6 +31,12 @@ public class UserService {
 
     @Autowired
     ParadaFeignClient paradaFeignClient;
+
+    @Autowired
+    ViajeFeingClient viajeFeingClient;
+
+    @Autowired
+    CuentaFeingClient cuentaFeingClient;
 
     public List<User> getAll(){
         return userRepository.findAll();
@@ -57,4 +65,23 @@ public class UserService {
         Rol rol = userRepository.findRolById(id);
         return rol == Rol.ADMIN;
     }
+    /*c. Como administrador quiero consultar los monopatines con más de X viajes en un cierto año
+ public List<MonopatinDTO> obtenerMonopatinesConMasViajes(Long idUser, int anio, int minViajes) {
+        User user = userRepository.findById(idUser)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        if (!"ADMIN".equalsIgnoreCase(user.getRol())) {
+            throw new RuntimeException("No tiene permisos para realizar esta consulta");
+        }
+
+        List<Long> idsMonopatines = viajeFeignClient.obtenerMonopatinesConMasViajes(anio, minViajes);
+
+        return idsMonopatines.stream()
+                .map(monopatinFeignClient::obtenerMonopatinPorId)
+                .collect(Collectors.toList());
+    }    *\
+     */
+
+
+
 }

@@ -40,4 +40,16 @@ public class UserController {
     }
 
 
+    /* c)
+         @GetMapping("/{idUser}/monopatines-mas-viajes/{anio}/{minViajes}")
+    public List<MonopatinDTO> obtenerMonopatinesConMasViajes(
+            @PathVariable Long idUser,
+            @PathVariable int anio,
+            @PathVariable int minViajes) {
+        return userService.obtenerMonopatinesConMasViajes(idUser, anio, minViajes);
+    }
+
+    *\
+     */
+
 }

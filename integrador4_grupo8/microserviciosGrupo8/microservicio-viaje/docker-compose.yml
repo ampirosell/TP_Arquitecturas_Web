@@ -5,17 +5,13 @@ services:
     build: .
     container_name: viaje_service
     environment:
-      DB_HOST: inte4_mysql
-      DB_PORT: 3306
-      DB_NAME: viaje
-      DB_USER: integrador
-      DB_PASSWORD: integrador123
+      - SPRING_PROFILES_ACTIVE=docker
     depends_on:
-      - mysql
+      - inte4_viaje_db
     networks:
       - inte4_net
     ports:
-      - "8081:8080"
+      - "8004:8004"
     restart: unless-stopped
 
 networks:

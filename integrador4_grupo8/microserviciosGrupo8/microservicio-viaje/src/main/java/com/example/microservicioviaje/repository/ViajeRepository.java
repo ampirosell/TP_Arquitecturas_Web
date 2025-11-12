@@ -11,7 +11,8 @@ import java.util.List;
 
 @Repository
 public interface ViajeRepository extends JpaRepository<Viaje, Long> {
-/*
+/* c. Como administrador quiero consultar los monopatines con más de X viajes en un cierto año.
+
     @Query("SELECT v.idMonopatin, COUNT(v) " +
             "FROM Viaje v " +
             "WHERE FUNCTION('YEAR', v.fecha) = :anio " +

@@ -42,7 +42,10 @@ public class ViajeService {
     public Viaje findById(Long id) throws Exception {
         return viajeRepository.findById(id).orElse(null);
     }
-   /* @Transactional
+
+   /* c. Como administrador quiero consultar los monopatines con más de X viajes en un cierto año.
+
+   @Transactional
     public List<Monopatin> findMonopatinesConMasDeXViajesEnAnio(int anio, long minViajes){
         return viajeRepository.findMonopatinesConMasDeXViajesEnAnio(anio, minViajes);
     }*/

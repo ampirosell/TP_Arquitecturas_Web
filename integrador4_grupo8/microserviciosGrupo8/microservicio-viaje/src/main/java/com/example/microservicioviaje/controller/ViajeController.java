@@ -42,5 +42,18 @@ public class ViajeController {
     }
 
 
+    /* c. Como administrador quiero consultar los monopatines con más de X viajes en un cierto año.
+
+         @GetMapping("/monopatines-mas-viajes/{anio}/{minViajes}")
+    public List<Long> obtenerMonopatinesConMasViajes(
+            @PathVariable int anio,
+            @PathVariable int minViajes) {
+        return viajeService.obtenerMonopatinesConMasViajes(anio, minViajes);
+    }
+    *\
+     */
+
+
+
 
 }
