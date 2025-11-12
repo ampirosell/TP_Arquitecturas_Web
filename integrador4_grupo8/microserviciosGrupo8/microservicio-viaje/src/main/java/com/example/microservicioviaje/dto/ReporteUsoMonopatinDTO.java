@@ -10,8 +10,8 @@ import lombok.Getter;
 public class ReporteUsoMonopatinDTO {
     private Long idMonopatin;
     private double kilometros;
-    private long minutosTotales;
+    private long minutosConPausa;
     private long minutosPausa;
-    private long minutosEfectivos;
+    private long minutosSinPausa;
 }
 

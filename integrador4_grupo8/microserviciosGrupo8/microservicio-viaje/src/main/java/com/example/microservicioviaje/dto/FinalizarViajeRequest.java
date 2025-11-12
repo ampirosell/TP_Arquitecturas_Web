@@ -14,7 +14,9 @@ public class FinalizarViajeRequest {
     @NotNull
     private Long paradaId;
 
+    @NotNull
     private Double latitud;
+    @NotNull
     private Double longitud;
 }
 

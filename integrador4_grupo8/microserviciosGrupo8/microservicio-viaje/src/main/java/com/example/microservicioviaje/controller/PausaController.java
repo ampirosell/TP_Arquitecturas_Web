@@ -5,6 +5,8 @@ import com.example.microservicioviaje.dto.PausaDTO;
 import com.example.microservicioviaje.entity.Pausa;
 
 import com.example.microservicioviaje.service.PausaService;
+import com.example.microservicioviaje.security.RoleValidator;
+import com.example.microservicioviaje.security.UserRole;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,8 +21,12 @@ public class PausaController {
     @Autowired
     PausaService pausaService;
 
+    @Autowired
+    private RoleValidator roleValidator;
+
     @GetMapping()
-    public ResponseEntity<?> getAll(){
+    public ResponseEntity<?> getAll(@RequestHeader(value = "X-User-Role", required = false) String roleHeader){
+        roleValidator.require(roleHeader, UserRole.ADMIN);
         try{
             return ResponseEntity.status(HttpStatus.OK).body(pausaService.findAll());
         }catch (Exception e){
@@ -29,7 +35,10 @@ public class PausaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getPausaById(@PathVariable Long id) throws Exception {
+    public ResponseEntity<?> getPausaById(
+            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
+            @PathVariable Long id) throws Exception {
+        roleValidator.require(roleHeader, UserRole.ADMIN);
         PausaDTO pausa = pausaService.findById(id);
         if (pausa != null) {
             return ResponseEntity.ok(pausa);
@@ -39,7 +48,10 @@ public class PausaController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> save(@RequestBody Pausa p){
+    public ResponseEntity<?> save(
+            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
+            @RequestBody Pausa p){
+        roleValidator.require(roleHeader, UserRole.USER, UserRole.ADMIN);
         try{
             return ResponseEntity.status(HttpStatus.OK).body(pausaService.save(p));
         }catch (Exception e){
@@ -47,7 +59,10 @@ public class PausaController {
         }
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id,@RequestBody Pausa entity){
+    public ResponseEntity<?> update(
+            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
+            @PathVariable Long id,@RequestBody Pausa entity){
+        roleValidator.require(roleHeader, UserRole.USER, UserRole.ADMIN);
         try{
             PausaDTO updated = pausaService.update(id,entity);
             if (updated == null) {
@@ -59,7 +74,10 @@ public class PausaController {
         }
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    public ResponseEntity<?> delete(
+            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
+            @PathVariable Long id){
+        roleValidator.require(roleHeader, UserRole.USER, UserRole.ADMIN);
         try{
             return ResponseEntity.status(HttpStatus.OK).body(pausaService.delete(id));
         }catch (Exception e){

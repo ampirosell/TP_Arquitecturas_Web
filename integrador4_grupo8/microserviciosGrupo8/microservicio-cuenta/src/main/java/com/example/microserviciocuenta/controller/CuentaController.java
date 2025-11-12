@@ -4,6 +4,8 @@ package com.example.microserviciocuenta.controller;
 import com.example.microserviciocuenta.dto.ActualizarEstadoCuentaRequest;
 import com.example.microserviciocuenta.entity.Cuenta;
 
+import com.example.microserviciocuenta.security.RoleValidator;
+import com.example.microserviciocuenta.security.UserRole;
 import com.example.microserviciocuenta.service.CuentaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,9 +22,14 @@ public class CuentaController {
     @Autowired
     CuentaService cuentaService;
 
+    @Autowired
+    private RoleValidator roleValidator;
+
 
     @GetMapping()
-    public ResponseEntity<List<Cuenta>> getAllCuentas() throws Exception {
+    public ResponseEntity<List<Cuenta>> getAllCuentas(
+            @RequestHeader(value = "X-User-Role", required = false) String roleHeader) throws Exception {
+        roleValidator.require(roleHeader, UserRole.ADMIN);
         try {
             List<Cuenta> cuentas = cuentaService.getAll();
             return new ResponseEntity<>(cuentas, HttpStatus.OK);
@@ -32,20 +39,28 @@ public class CuentaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cuenta> getCuentaById(@PathVariable Long id) throws Exception {
+    public ResponseEntity<Cuenta> getCuentaById(
+            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
+            @PathVariable Long id) throws Exception {
+        roleValidator.require(roleHeader, UserRole.ADMIN);
         Optional<Cuenta> cuenta = Optional.ofNullable(cuentaService.findById(id));
         return cuenta.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping()
-    public ResponseEntity<Cuenta> save(@RequestBody Cuenta cuenta) {
+    public ResponseEntity<Cuenta> save(
+            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
+            @RequestBody Cuenta cuenta) {
+        roleValidator.require(roleHeader, UserRole.ADMIN);
         Cuenta userNew = cuentaService.save(cuenta);
         return ResponseEntity.ok(userNew);
     }
     @PatchMapping("/{id}/estado")
     public ResponseEntity<?> actualizarEstado(@PathVariable Long id,
+                                              @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
                                               @RequestBody ActualizarEstadoCuentaRequest request) {
+        roleValidator.require(roleHeader, UserRole.ADMIN);
         if (request == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("{\"error\":\"Debe indicar el nuevo estado\"}");

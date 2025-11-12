@@ -20,6 +20,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -52,6 +54,9 @@ public class ViajeService {
 
     @Value("${services.facturacion.base-url}")
     private String facturacionServiceBaseUrl;
+
+    @Value("${viaje.parada.radio-validacion-metros:50}")
+    private double radioValidacionParadaMetros;
 
     @Transactional
     public List<Viaje> getAll() {
@@ -94,7 +99,7 @@ public class ViajeService {
     }
 
     @Transactional(readOnly = true)
-    public List<ReporteUsoMonopatinDTO> generarReporteUso(LocalDate desde, LocalDate hasta, boolean incluirPausas) {
+    public List<ReporteUsoMonopatinDTO> generarReporteUso(LocalDate desde, LocalDate hasta) {
         LocalDate inicio = desde != null ? desde : LocalDate.of(1970, 1, 1);
         LocalDate fin = hasta != null ? hasta : LocalDate.now();
 
@@ -127,16 +132,15 @@ public class ViajeService {
         return acumulado.entrySet().stream()
                 .map(entry -> {
                     ResumenUsoMonopatin resumen = entry.getValue();
-                    long minutosEfectivos = incluirPausas
-                            ? resumen.minutosTotales
-                            : Math.max(0, resumen.minutosTotales - resumen.minutosPausa);
+                    long minutosConPausa = resumen.minutosTotales;
+                    long minutosSinPausa = Math.max(0, resumen.minutosTotales - resumen.minutosPausa);
 
                     return ReporteUsoMonopatinDTO.builder()
                             .idMonopatin(entry.getKey())
                             .kilometros(resumen.kilometros)
-                            .minutosTotales(resumen.minutosTotales)
+                            .minutosConPausa(minutosConPausa)
                             .minutosPausa(resumen.minutosPausa)
-                            .minutosEfectivos(minutosEfectivos)
+                            .minutosSinPausa(minutosSinPausa)
                             .build();
                 })
                 .collect(Collectors.toList());
@@ -199,6 +203,8 @@ public class ViajeService {
         if (parada == null) {
             throw new IllegalStateException("La parada indicada no existe");
         }
+
+        validarUbicacionEnParada(parada, request.getLatitud(), request.getLongitud());
 
         LocalDateTime fechaFin = LocalDateTime.now();
         viaje.setFechaFin(fechaFin);
@@ -285,5 +291,39 @@ public class ViajeService {
         } catch (RestClientException e) {
             throw new IllegalStateException("No se pudo actualizar el estado remoto", e);
         }
+    }
+
+    private void validarUbicacionEnParada(ParadaRemote parada, Double latitud, Double longitud) {
+        if (parada.getLatitud() == null || parada.getLongitud() == null) {
+            throw new IllegalStateException("La parada indicada no tiene coordenadas registradas");
+        }
+        if (latitud == null || longitud == null) {
+            throw new IllegalStateException("Debe informar la ubicación actual del monopatín");
+        }
+        double distancia = calcularDistanciaMetros(parada.getLatitud(), parada.getLongitud(), latitud, longitud);
+        if (distancia > radioValidacionParadaMetros) {
+            throw new IllegalStateException(String.format(
+                    Locale.US,
+                    "El monopatín se encuentra a %.2f metros de la parada seleccionada. Debe estar dentro de %.0f metros para finalizar el viaje",
+                    distancia, radioValidacionParadaMetros));
+        }
+    }
+
+    private double calcularDistanciaMetros(double lat1, double lon1, double lat2, double lon2) {
+        double radioTierra = 6371000; // metros
+        double latRad1 = Math.toRadians(lat1);
+        double latRad2 = Math.toRadians(lat2);
+        double deltaLat = Math.toRadians(lat2 - lat1);
+        double deltaLon = Math.toRadians(lon2 - lon1);
+
+        double a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+                Math.cos(latRad1) * Math.cos(latRad2) *
+                        Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return BigDecimal.valueOf(radioTierra * c)
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
     }
 }

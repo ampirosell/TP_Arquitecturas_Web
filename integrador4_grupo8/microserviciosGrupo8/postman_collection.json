@@ -5,6 +5,36 @@
     "description": "Colección reorganizada para ejecutar el flujo principal end-to-end y consultar los CRUD de cada microservicio por separado.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
+  "variable": [
+    {
+      "key": "anio_busqueda",
+      "value": "2025"
+    },
+    {
+      "key": "mes_inicio_actual",
+      "value": "10"
+    },
+    {
+      "key": "mes_fin_actual",
+      "value": "12"
+    },
+    {
+      "key": "minutos_viaje",
+      "value": "60"
+    },
+    {
+      "key": "kilometros_recorridos",
+      "value": "3.5"
+    },
+    {
+      "key": "pausa_extendida",
+      "value": "false"
+    },
+    {
+      "key": "min_viajes",
+      "value": "1"
+    }
+  ],
   "item": [
     {
       "name": "Flujo Principal",
@@ -18,6 +48,10 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-User-Role",
+                "value": "{{rol_admin}}"
               }
             ],
             "body": {
@@ -40,6 +74,10 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-User-Role",
+                "value": "{{rol_admin}}"
               }
             ],
             "body": {
@@ -62,6 +100,10 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-User-Role",
+                "value": "{{rol_admin}}"
               }
             ],
             "body": {
@@ -84,6 +126,10 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-User-Role",
+                "value": "{{rol_admin}}"
               }
             ],
             "body": {
@@ -106,6 +152,10 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-User-Role",
+                "value": "{{rol_admin}}"
               }
             ],
             "body": {
@@ -128,6 +178,10 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-User-Role",
+                "value": "{{rol_admin}}"
               }
             ],
             "body": {
@@ -150,6 +204,10 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-User-Role",
+                "value": "{{rol_user}}"
               }
             ],
             "body": {
@@ -172,6 +230,10 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-User-Role",
+                "value": "{{rol_user}}"
               }
             ],
             "body": {
@@ -187,13 +249,43 @@
           }
         },
         {
-          "name": "09 - Finalizar viaje (actualiza flota y factura)",
+          "name": "09 - Finalizar pausa (opcional)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-User-Role",
+                "value": "{{rol_user}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fechaInicio\": \"2025-11-12T17:15:00\",\n  \"fechaFin\": \"2025-11-12T17:30:00\",\n  \"pausaTotal\": 15,\n  \"viaje\": {\n    \"idViaje\": {{viaje_id}}\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{viaje_base_url}}/pausas/{{pausa_id}}"
+          }
+        },
+        {
+          "name": "10 - Finalizar viaje (actualiza flota y factura)",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-User-Role",
+                "value": "{{rol_user}}"
               }
             ],
             "body": {
@@ -209,34 +301,54 @@
           }
         },
         {
-          "name": "10 - Total facturado en rango de meses",
+          "name": "11 - Total facturado en rango de meses",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": "{{facturacion_base_url}}/facturacion/total-mensual?anio={{anio_busqueda}}&mesInicio={{mes_inicio}}&mesFin={{mes_fin}}"
+            "header": [
+              {
+                "key": "X-User-Role",
+                "value": "{{rol_admin}}"
+              }
+            ],
+            "url": "{{facturacion_base_url}}/facturacion/total-mensual?anio={{anio_busqueda}}&mesInicio={{mes_inicio_actual}}&mesFin={{mes_fin_actual}}"
           }
         },
         {
-          "name": "11 - Reporte de uso por kilómetros",
+          "name": "12 - Reporte de uso por kilómetros",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "X-User-Role",
+                "value": "{{rol_admin}}"
+              }
+            ],
             "url": "{{viaje_base_url}}/viajes/reportes/kilometros?desde={{reporte_desde}}&hasta={{reporte_hasta}}&incluirPausas=true"
           }
         },
         {
-          "name": "12 - Monopatines con más viajes",
+          "name": "13 - Monopatines con más viajes",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "X-User-Role",
+                "value": "{{rol_admin}}"
+              }
+            ],
             "url": "{{viaje_base_url}}/viajes/reportes/monopatines-frecuentes?anio={{anio_busqueda}}&minViajes={{min_viajes}}"
           }
         },
         {
-          "name": "13 - Resumen estados de monopatines",
+          "name": "14 - Resumen estados de monopatines",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "X-User-Role",
+                "value": "{{rol_admin}}"
+              }
+            ],
             "url": "{{monopatin_base_url}}/monopatines/resumen/estado"
           }
         }
@@ -253,7 +365,12 @@
               "name": "Listar usuarios",
               "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_admin}}"
+                  }
+                ],
                 "url": "{{user_base_url}}/users"
               }
             },
@@ -261,7 +378,12 @@
               "name": "Buscar usuario por ID",
               "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_admin}}"
+                  }
+                ],
                 "url": "{{user_base_url}}/users/{{user_id}}"
               }
             },
@@ -273,6 +395,10 @@
                   {
                     "key": "Content-Type",
                     "value": "application/json"
+                  },
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_admin}}"
                   }
                 ],
                 "body": {
@@ -296,7 +422,12 @@
               "name": "Listar paradas",
               "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_user}}"
+                  }
+                ],
                 "url": "{{parada_base_url}}/paradas"
               }
             },
@@ -304,7 +435,12 @@
               "name": "Buscar parada por ID",
               "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_user}}"
+                  }
+                ],
                 "url": "{{parada_base_url}}/paradas/{{parada_id}}"
               }
             },
@@ -316,6 +452,10 @@
                   {
                     "key": "Content-Type",
                     "value": "application/json"
+                  },
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_admin}}"
                   }
                 ],
                 "body": {
@@ -339,7 +479,12 @@
               "name": "Listar monopatines",
               "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_admin}}"
+                  }
+                ],
                 "url": "{{monopatin_base_url}}/monopatines"
               }
             },
@@ -347,7 +492,12 @@
               "name": "Buscar monopatín por ID",
               "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_admin}}"
+                  }
+                ],
                 "url": "{{monopatin_base_url}}/monopatines/{{monopatin_id}}"
               }
             },
@@ -359,6 +509,10 @@
                   {
                     "key": "Content-Type",
                     "value": "application/json"
+                  },
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_mantenimiento}}"
                   }
                 ],
                 "body": {
@@ -377,7 +531,12 @@
               "name": "Registrar mantenimiento",
               "request": {
                 "method": "POST",
-                "header": [],
+                "header": [
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_mantenimiento}}"
+                  }
+                ],
                 "url": "{{monopatin_base_url}}/monopatines/{{monopatin_id}}/mantenimiento"
               }
             },
@@ -385,7 +544,12 @@
               "name": "Finalizar mantenimiento",
               "request": {
                 "method": "DELETE",
-                "header": [],
+                "header": [
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_mantenimiento}}"
+                  }
+                ],
                 "url": "{{monopatin_base_url}}/monopatines/{{monopatin_id}}/mantenimiento"
               }
             }
@@ -398,7 +562,12 @@
               "name": "Listar viajes",
               "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_admin}}"
+                  }
+                ],
                 "url": "{{viaje_base_url}}/viajes"
               }
             },
@@ -406,7 +575,12 @@
               "name": "Buscar viaje por ID",
               "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_admin}}"
+                  }
+                ],
                 "url": "{{viaje_base_url}}/viajes/{{viaje_id}}"
               }
             },
@@ -418,6 +592,10 @@
                   {
                     "key": "Content-Type",
                     "value": "application/json"
+                  },
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_admin}}"
                   }
                 ],
                 "body": {
@@ -436,7 +614,12 @@
               "name": "Listar pausas",
               "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_admin}}"
+                  }
+                ],
                 "url": "{{viaje_base_url}}/pausas"
               }
             }
@@ -449,7 +632,12 @@
               "name": "Listar cuentas",
               "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_admin}}"
+                  }
+                ],
                 "url": "{{cuenta_base_url}}/cuenta"
               }
             },
@@ -457,7 +645,12 @@
               "name": "Buscar cuenta por ID",
               "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_admin}}"
+                  }
+                ],
                 "url": "{{cuenta_base_url}}/cuenta/{{cuenta_id}}"
               }
             },
@@ -469,6 +662,10 @@
                   {
                     "key": "Content-Type",
                     "value": "application/json"
+                  },
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_admin}}"
                   }
                 ],
                 "body": {
@@ -489,10 +686,28 @@
           "name": "Facturación y Tarifas",
           "item": [
             {
+              "name": "Generar factura manual",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_admin}}"
+                  }
+                ],
+                "url": "{{facturacion_base_url}}/facturacion/generar?idCuenta={{cuenta_id}}&idViaje={{viaje_id}}&km={{kilometros_recorridos}}&minutos={{minutos_viaje}}&pausaExtendida={{pausa_extendida}}"
+              }
+            },
+            {
               "name": "Obtener tarifa vigente",
               "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_admin}}"
+                  }
+                ],
                 "url": "{{facturacion_base_url}}/tarifas/vigente"
               }
             },
@@ -504,6 +719,10 @@
                   {
                     "key": "Content-Type",
                     "value": "application/json"
+                  },
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_admin}}"
                   }
                 ],
                 "body": {
@@ -522,7 +741,12 @@
               "name": "Total facturado (fecha a fecha)",
               "request": {
                 "method": "GET",
-                "header": [],
+                "header": [
+                  {
+                    "key": "X-User-Role",
+                    "value": "{{rol_admin}}"
+                  }
+                ],
                 "url": "{{facturacion_base_url}}/facturacion/total?desde={{reporte_desde}}&hasta={{reporte_hasta}}"
               }
             }

@@ -5,6 +5,8 @@ import com.example.microservicioviaje.dto.IniciarViajeRequest;
 import com.example.microservicioviaje.dto.MonopatinViajesDTO;
 import com.example.microservicioviaje.dto.ReporteUsoMonopatinDTO;
 import com.example.microservicioviaje.entity.Viaje;
+import com.example.microservicioviaje.security.RoleValidator;
+import com.example.microservicioviaje.security.UserRole;
 import com.example.microservicioviaje.service.ViajeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,8 +25,13 @@ public class ViajeController {
     @Autowired
     ViajeService viajeService;
 
+    @Autowired
+    private RoleValidator roleValidator;
+
     @GetMapping()
-    public ResponseEntity<List<Viaje>> getAllViajes() throws Exception {
+    public ResponseEntity<List<Viaje>> getAllViajes(
+            @RequestHeader(value = "X-User-Role", required = false) String roleHeader) throws Exception {
+        roleValidator.require(roleHeader, UserRole.ADMIN);
         try {
             List<Viaje> viajes = viajeService.getAll();
             return new ResponseEntity<>(viajes, HttpStatus.OK);
@@ -34,7 +41,10 @@ public class ViajeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Viaje> getViajeById(@PathVariable Long id) throws Exception {
+    public ResponseEntity<Viaje> getViajeById(
+            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
+            @PathVariable Long id) throws Exception {
+        roleValidator.require(roleHeader, UserRole.ADMIN);
         Viaje viaje = viajeService.findById(id);
         if (viaje != null) {
             return ResponseEntity.ok(viaje);
@@ -44,13 +54,19 @@ public class ViajeController {
     }
 
     @PostMapping()
-    public ResponseEntity<Viaje> save(@RequestBody Viaje viaje) {
+    public ResponseEntity<Viaje> save(
+            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
+            @RequestBody Viaje viaje) {
+        roleValidator.require(roleHeader, UserRole.ADMIN);
         Viaje userNew = viajeService.save(viaje);
         return ResponseEntity.ok(userNew);
     }
 
     @PostMapping("/start")
-    public ResponseEntity<?> iniciarViaje(@RequestBody @Valid IniciarViajeRequest request) {
+    public ResponseEntity<?> iniciarViaje(
+            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
+            @RequestBody @Valid IniciarViajeRequest request) {
+        roleValidator.require(roleHeader, UserRole.USER, UserRole.ADMIN);
         try {
             Viaje viaje = viajeService.iniciarViaje(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(viaje);
@@ -62,7 +78,9 @@ public class ViajeController {
 
     @PostMapping("/{id}/finalizar")
     public ResponseEntity<?> finalizarViaje(@PathVariable Long id,
+                                            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
                                             @RequestBody @Valid FinalizarViajeRequest request) {
+        roleValidator.require(roleHeader, UserRole.USER, UserRole.ADMIN);
         try {
             Viaje viaje = viajeService.finalizarViaje(id, request);
             return ResponseEntity.ok(viaje);
@@ -74,11 +92,12 @@ public class ViajeController {
 
     @GetMapping("/reportes/kilometros")
     public ResponseEntity<List<ReporteUsoMonopatinDTO>> obtenerReporteKilometros(
+            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate desde,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate hasta,
-            @RequestParam(defaultValue = "true") boolean incluirPausas
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate hasta
     ) {
-        List<ReporteUsoMonopatinDTO> reporte = viajeService.generarReporteUso(desde, hasta, incluirPausas);
+        roleValidator.require(roleHeader, UserRole.ADMIN);
+        List<ReporteUsoMonopatinDTO> reporte = viajeService.generarReporteUso(desde, hasta);
         if (reporte.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -87,9 +106,11 @@ public class ViajeController {
 
     @GetMapping("/reportes/monopatines-frecuentes")
     public ResponseEntity<List<MonopatinViajesDTO>> obtenerMonopatinesConMasViajes(
+            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
             @RequestParam int anio,
             @RequestParam long minViajes
     ) {
+        roleValidator.require(roleHeader, UserRole.ADMIN);
         List<MonopatinViajesDTO> resultado = viajeService.obtenerMonopatinesConMasViajes(anio, minViajes);
         if (resultado.isEmpty()) {
             return ResponseEntity.noContent().build();
