@@ -1,4 +1,42 @@
 services:
+  # 🚌 Microservicio de Facturacion
+  facturacion-service:
+    build:
+      context: .
+      dockerfile: microservicio-facturacion/Dockerfile
+    container_name: facturacion_service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - inte4_facturacion_db
+    ports:
+      - "8010:8010"
+    networks:
+      - inte4_net
+    restart: unless-stopped
+
+  inte4_facturacion_db:
+    image: mysql:8.0
+    container_name: inte4_facturacion_db
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: facturacion
+      MYSQL_USER: integrador
+      MYSQL_PASSWORD: integrador123
+      MYSQL_ROOT_HOST: "%"
+    ports:
+      - "3310:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p1234" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    networks:
+      - inte4_net
+    restart: unless-stopped
+
+
   # 🚌 Microservicio de Paradas
   parada-service:
     build:
@@ -189,3 +227,4 @@ services:
 networks:
   inte4_net:
     driver: bridge
+

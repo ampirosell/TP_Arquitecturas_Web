@@ -22,6 +22,7 @@
         <module>microservicio-parada</module>
         <module>microservicio-user</module>
         <module>microservicio-viaje</module>
+        <module>microservicio-facturacion</module>
     </modules>
     <properties>
         <java.version>17</java.version>

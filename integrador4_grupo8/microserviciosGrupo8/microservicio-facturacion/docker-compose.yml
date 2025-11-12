@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  factura-service:
+    build: .
+    container_name: facturacion_service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - inte4_facturacion_db
+    networks:
+      - inte4_net
+    ports:
+      - "8010:8010"
+    restart: unless-stopped
+
+networks:
+  inte4_net:
+    external: true
