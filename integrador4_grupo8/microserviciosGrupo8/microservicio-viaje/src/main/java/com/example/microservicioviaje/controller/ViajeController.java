@@ -89,7 +89,7 @@ public class ViajeController {
                     .body(String.format("{\"error\":\"%s\"}", ex.getMessage()));
         }
     }
-
+    //ejercicio A
     @GetMapping("/reportes/kilometros")
     public ResponseEntity<List<ReporteUsoMonopatinDTO>> obtenerReporteKilometros(
             @RequestHeader(value = "X-User-Role", required = false) String roleHeader,

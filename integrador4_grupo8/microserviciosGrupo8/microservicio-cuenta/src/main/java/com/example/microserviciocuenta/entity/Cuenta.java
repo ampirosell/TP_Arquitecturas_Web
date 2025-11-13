@@ -17,7 +17,7 @@ import java.util.Date;
 public class Cuenta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCuenta; //verificar si se necesita string en id
+    private Long idCuenta;
     private Long idUsuario;
     private Double monto;
     private TipoCuenta tipo;

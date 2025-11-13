@@ -27,7 +27,7 @@ public class FacturacionService {
         return tarifaRepository.findTopByFechaInicioLessThanEqualOrderByFechaInicioDesc(LocalDate.now())
                 .orElseThrow(() -> new IllegalStateException("No existe una tarifa vigente"));
     }
-
+    //ejercicio F
     @Transactional
     public Tarifa crearTarifa(Tarifa tarifa) {
         if (tarifa.getFechaInicio() == null) {
@@ -41,7 +41,7 @@ public class FacturacionService {
         }
         return guardada;
     }
-
+    //EJERCICIO F
     private void activarTarifasVigentes() {
         LocalDate hoy = LocalDate.now();
         tarifaRepository.activarTarifasVigentes(hoy);
@@ -66,7 +66,7 @@ public class FacturacionService {
         f.setFechaEmision(LocalDateTime.now());
         return facturaRepository.save(f);
     }
-
+    //parte del ejercicio D
     public double totalFacturadoEntre(LocalDate desde, LocalDate hasta) {
         return facturaRepository
                 .findByFechaEmisionBetween(desde.atStartOfDay(), hasta.atTime(23,59))
@@ -74,7 +74,7 @@ public class FacturacionService {
                 .mapToDouble(Factura::getMontoTotal)
                 .sum();
     }
-
+    //ejercicio D
     @Transactional(readOnly = true)
     public double totalFacturadoEnMeses(int anio, int mesInicio, int mesFin) {
         if (mesInicio < 1 || mesInicio > 12 || mesFin < 1 || mesFin > 12 || mesInicio > mesFin) {

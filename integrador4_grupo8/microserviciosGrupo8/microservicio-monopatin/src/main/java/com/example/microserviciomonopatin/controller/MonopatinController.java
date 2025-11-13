@@ -158,15 +158,10 @@ public class MonopatinController {
         return ResponseEntity.ok(actualizado);
     }
 
-    // Reporte de km recorridos (solo para ADMIN)  ejercicio 4 a)
-
-   /* @GetMapping("/reporte/km/{userId}")
+    // Reporte de km recorridos (solo para ADMIN)  ejercicio 4 a) ESTO NO VA SI LO PONEMOS EN EL VIAJE
+/*
+    @GetMapping("/reporte/km/{userId}")
     public ResponseEntity<?> getReporteKm(@PathVariable Long userId) {
-        if (!userService.esAdmin(userId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body("No tiene permisos para acceder al reporte");
-        }
-
         List<MonopatinKmDTO> reporte = monopatinService.generarReporteKm();
         return ResponseEntity.ok(reporte);
     }

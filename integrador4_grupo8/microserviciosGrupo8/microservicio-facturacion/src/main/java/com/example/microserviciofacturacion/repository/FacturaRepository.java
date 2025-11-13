@@ -7,5 +7,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface FacturaRepository extends JpaRepository<Factura, Long> {
+    //ejercicio D
     List<Factura> findByFechaEmisionBetween(LocalDateTime desde, LocalDateTime hasta);
 }

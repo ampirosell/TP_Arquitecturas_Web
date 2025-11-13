@@ -101,7 +101,7 @@ public class MonopatinService {
                 })
                 .orElse(null);
     }
-
+/*  ESTO NO VA SI LO PONEMOS EN EL VIAJE
     //ejercicio a
     public List<MonopatinKmDTO> generarReporteKm() {
         return monopatinRepository.findAll().stream()
@@ -109,6 +109,6 @@ public class MonopatinService {
                 .collect(Collectors.toList());
     }
 
-
+*/
 
 }

@@ -56,6 +56,7 @@ public class CuentaController {
         Cuenta userNew = cuentaService.save(cuenta);
         return ResponseEntity.ok(userNew);
     }
+    //ejercicio B
     @PatchMapping("/{id}/estado")
     public ResponseEntity<?> actualizarEstado(@PathVariable Long id,
                                               @RequestHeader(value = "X-User-Role", required = false) String roleHeader,

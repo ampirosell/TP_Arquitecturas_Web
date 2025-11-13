@@ -23,7 +23,7 @@ public class TarifaController {
         roleValidator.require(roleHeader, UserRole.ADMIN);
         return service.getTarifaVigente();
     }
-
+    //ejercicio F
     @PostMapping
     public Tarifa nuevaTarifa(
             @RequestHeader(value = "X-User-Role", required = false) String roleHeader,

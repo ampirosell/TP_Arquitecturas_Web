@@ -37,7 +37,7 @@ public class FacturacionController {
         roleValidator.require(roleHeader, UserRole.ADMIN);
         return service.totalFacturadoEntre(LocalDate.parse(desde), LocalDate.parse(hasta));
     }
-
+    //ejercicio D
     @GetMapping("/total-mensual")
     public double totalPorMeses(@RequestParam int anio,
                                 @RequestParam int mesInicio,
