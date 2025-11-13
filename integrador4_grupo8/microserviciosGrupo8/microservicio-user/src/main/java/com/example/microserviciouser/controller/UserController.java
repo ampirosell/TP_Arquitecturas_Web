@@ -1,5 +1,6 @@
 package com.example.microserviciouser.controller;
 
+import com.example.microserviciouser.dto.ActualizarEstadoCuentaRequest;
 import com.example.microserviciouser.entity.User;
 import com.example.microserviciouser.security.RoleValidator;
 import com.example.microserviciouser.security.UserRole;
@@ -9,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -53,7 +55,21 @@ public class UserController {
         User userNew = userService.save(user);
         return ResponseEntity.ok(userNew);
     }
-
+    //ejercicio a)
+    @GetMapping("/reportes/kilometros")
+    public Object reporteUsoMonopatines(
+            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate desde,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate hasta
+    ) {
+        roleValidator.require(roleHeader, UserRole.ADMIN);
+        return userService.obtenerReporteKilometros(desde, hasta);
+    }
+    //ejercicio B
+    @PatchMapping("/{id}/estado")
+    public Object actualizarEstado(@RequestHeader(value = "X-User-Role", required = false) String roleHeader,@RequestParam Long id, @RequestParam ActualizarEstadoCuentaRequest request){
+        return userService.actualizarEstado(id, request);
+    }
 
 
     /* c)
@@ -66,7 +82,18 @@ public class UserController {
             @PathVariable Long minViajes) {
         return userService.obtenerMonopatinesConMasViajes(idUser, anio, minViajes);
     }
-
+    // Ejercicio D - Consultar total facturado en un rango de meses de cierto año
+    @GetMapping("/{idAdmin}/total-mensual")
+    public double obtenerTotalFacturadoEnMeses(
+            @PathVariable Long idAdmin,
+            @RequestParam int anio,
+            @RequestParam int mesInicio,
+            @RequestParam int mesFin,
+            @RequestHeader(value = "X-User-Role", required = false) String roleHeader
+    ) {
+        roleValidator.require(roleHeader, UserRole.ADMIN);
+        return userService.obtenerTotalFacturadoEnMeses(idAdmin, anio, mesInicio, mesFin);
+    }
 // e)
     @GetMapping("/usuarios-mas-viajes")
     public ResponseEntity<List<Long>> getUsuariosMasViajesPorTipo(
@@ -79,7 +106,15 @@ public class UserController {
         return ResponseEntity.ok(usuarios);
     }
 
-
+    // Ejercicio F - Crear nueva tarifa
+    @PostMapping("/{idAdmin}/tarifas")
+    public Object crearTarifa(
+            @PathVariable Long idAdmin,
+            @RequestBody Object tarifa,
+            @RequestHeader(value = "X-User-Role", required = false) String roleHeader
+    ) {
+        return userService.crearNuevaTarifa(idAdmin, tarifa);
+    }
     // g)
     @GetMapping("/monopatines-cercanos")
     public ResponseEntity<List<Long>> obtenerMonopatinesCercanos(

@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7eb3c95-4ded-48f4-bc99-22d5d275d48d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/feignClients/ViajeFeignClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/feignClients/MonopatinFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/feignClients/MonopatinFeignClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/feignClients/ViajeFeingClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/feignClients/CuentaFeingClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/feignClients/CuentaFeignClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/feignClients/ParadaFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/feignClients/ParadaFeignClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/feignClients/ViajeFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/feignClients/ViajeFeignClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-user/src/main/java/com/example/microserviciouser/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,8 +24,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTTP Public Environment File" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
