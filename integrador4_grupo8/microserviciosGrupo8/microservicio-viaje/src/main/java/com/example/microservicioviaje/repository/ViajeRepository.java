@@ -35,7 +35,7 @@ public interface ViajeRepository extends JpaRepository<Viaje, Long> {
             "GROUP BY v.idUsuario " +
             "ORDER BY COUNT(v) DESC")
     List<Viaje> findByFechaInicioBetween(LocalDateTime desde, LocalDateTime hasta);
-
+    //ejercicio E
     @Query("SELECT v.idUsuario " +
             "FROM Viaje v " +
             "WHERE v.fechaInicio BETWEEN :desde AND :hasta " +
@@ -44,4 +44,9 @@ public interface ViajeRepository extends JpaRepository<Viaje, Long> {
     List<Long> findUsuariosConMasViajesPorPeriodo(
             @Param("desde") LocalDateTime desde,
             @Param("hasta") LocalDateTime hasta);
+
+    //ejercicioH
+    List<Viaje> findByUsuarioAndFechaInicioBetween(Long idUsuario, LocalDateTime desde, LocalDateTime hasta);
+
+    List<Viaje> findByCuentaAndFechaInicioBetween(Long idCuenta, LocalDateTime desde, LocalDateTime hasta);
 }

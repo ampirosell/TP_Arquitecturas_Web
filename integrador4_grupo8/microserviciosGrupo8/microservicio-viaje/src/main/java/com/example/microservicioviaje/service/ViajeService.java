@@ -330,4 +330,30 @@ período y por tipo de usuario.
                 .setScale(2, RoundingMode.HALF_UP)
                 .doubleValue();
     }
+    //EJERCICIO H
+    @Transactional(readOnly = true)
+    public ReporteUsoMonopatinDTO obtenerUsoPorUsuario(Long idUsuario, Long idCuenta, LocalDate desde, LocalDate hasta) {
+        LocalDateTime fechaDesde = desde.atStartOfDay();
+        LocalDateTime fechaHasta = hasta.atTime(23, 59, 59);
+
+        List<Viaje> viajes;
+
+        if (idCuenta != null) {
+            // Busca todos los viajes de los usuarios de esa cuenta
+            viajes = viajeRepository.findByCuentaAndFechaInicioBetween(idCuenta, fechaDesde, fechaHasta);
+        } else {
+            // Solo los del usuario indicado
+            viajes = viajeRepository.findByUsuarioAndFechaInicioBetween(idUsuario, fechaDesde, fechaHasta);
+        }
+
+        if (viajes.isEmpty()) return null;
+
+        double km = viajes.stream().mapToDouble(Viaje::getKmRecorridos).sum();
+        long minutos = viajes.stream()
+                .mapToLong(v -> Duration.between(v.getFechaInicio(), v.getFechaFin()).toMinutes())
+                .sum();
+
+        return new ReporteUsoMonopatinDTO(null, km, minutos, 0, minutos); // o podés crear otro DTO más específico
+    }
+
 }

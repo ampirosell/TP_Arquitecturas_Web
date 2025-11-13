@@ -140,4 +140,21 @@ período y por tipo de usuario
         return ResponseEntity.ok(usuarios);
     }
 
+    //  EJERCICIO H
+    @GetMapping("/usado-en-periodo")
+    public ResponseEntity<?> obtenerUsoPorUsuario(
+            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
+            @RequestParam Long idUsuario,
+            @RequestParam(required = false) Long idCuenta,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate desde,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate hasta) {
+
+        roleValidator.require(roleHeader, UserRole.USER, UserRole.ADMIN);
+
+        var reporte = viajeService.obtenerUsoPorUsuario(idUsuario, idCuenta, desde, hasta);
+        if (reporte == null) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(reporte);
+    }
 }
