@@ -83,7 +83,6 @@ Cada UI publica su contrato en `/v3/api-docs` para generar clientes o validar in
 | microservicio-cuenta    | 8005   | cuenta                 | MySQL   |
 
 Docker Compose levanta automáticamente cuatro instancias de MySQL y una de MongoDB con las credenciales configuradas.
-
 ---
 
 ## Ejecutar Todo con Docker
@@ -233,5 +232,10 @@ curl {{cuenta_base_url}}/cuenta/1
     - **Project compiler output**: Puede quedar vacío o usar `demo/out`
 3. Haz clic en **Apply** y luego **OK**
 ---
+
+#### Informativo (diagrama de flujo)
+
+<img width="1191" height="645" alt="diagrama Tp4" src="https://github.com/user-attachments/assets/7667711b-c8da-49cd-9730-6e34fd024ded" />
+
 
 Grupo 8 [el más mejor] – Arquitecturas Web – TP Integrador
