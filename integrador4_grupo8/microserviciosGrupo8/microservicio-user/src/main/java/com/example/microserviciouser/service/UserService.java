@@ -5,7 +5,8 @@ import com.example.microserviciouser.entity.Rol;
 import com.example.microserviciouser.entity.User;
 import com.example.microserviciouser.feignClients.ParadaFeignClient;
 import com.example.microserviciouser.feignClients.MonopatinFeignClient;
-import com.example.microserviciouser.feignClients.ViajeFeingClient;
+import com.example.microserviciouser.feignClients.ViajeFeignClient;
+
 import com.example.microserviciouser.feignClients.CuentaFeingClient;
 import com.example.microserviciouser.models.Monopatin;
 import com.example.microserviciouser.models.Parada;
@@ -38,16 +39,16 @@ public class UserService {
     ParadaFeignClient paradaFeignClient;
 
     @Autowired
-    ViajeFeingClient viajeFeingClient;
+    ViajeFeignClient viajeFeignClient;
 
     @Autowired
     CuentaFeingClient cuentaFeingClient;
 
-    public UserService(UserRepository userRepository, MonopatinFeignClient monopatinFeignClient, ViajeFeingClient viajeFeingClient
+    public UserService(UserRepository userRepository, MonopatinFeignClient monopatinFeignClient, ViajeFeignClient viajeFeignClient
                          , CuentaFeingClient cuentaFeingClient, ParadaFeignClient paradaFeignClient) {
         this.userRepository = userRepository;
         this.monopatinFeignClient = monopatinFeignClient;
-        this.viajeFeingClient = viajeFeingClient;
+        this.viajeFeignClient = viajeFeignClient;
         this.cuentaFeingClient = cuentaFeingClient;
         this.paradaFeignClient = paradaFeignClient;
 
@@ -94,7 +95,7 @@ public class UserService {
             throw new RuntimeException("No tiene permisos para realizar esta consulta");
         }
 
-        List<Long> idsMonopatines = this.viajeFeingClient.obtenerMonopatinesConMasViajes(anio, minViajes);
+        List<Long> idsMonopatines = this.viajeFeignClient.obtenerMonopatinesConMasViajes(anio, minViajes);
 
      return idsMonopatines;
     }
@@ -111,7 +112,7 @@ public class UserService {
         }
 
 
-        List<Long> idsUsuariosMasViajes = this.viajeFeingClient.obtenerUsuariosConMasViajes(desde, hasta);
+        List<Long> idsUsuariosMasViajes = this.viajeFeignClient.obtenerUsuariosConMasViajes(desde, hasta);
 
 
         return idsUsuariosMasViajes;
