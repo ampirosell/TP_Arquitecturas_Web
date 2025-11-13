@@ -1,6 +1,6 @@
 package com.example.microserviciouser.service;
 
-import com.example.microserviciomonopatin.dto.MonopatinDTO;
+
 import com.example.microserviciouser.entity.Rol;
 import com.example.microserviciouser.entity.User;
 import com.example.microserviciouser.feignClients.ParadaFeignClient;
