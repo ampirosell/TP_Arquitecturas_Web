@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -129,7 +130,7 @@ período y por tipo de usuario
             @PathVariable Long minViajes) {
         return viajeService.obtenerMonopatinesConMasViajes(anio, minViajes);}
 
-
+// e)
     @GetMapping("/usuarios-mas-viajes")
     public ResponseEntity<List<Long>> getUsuariosConMasViajes(
             @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,

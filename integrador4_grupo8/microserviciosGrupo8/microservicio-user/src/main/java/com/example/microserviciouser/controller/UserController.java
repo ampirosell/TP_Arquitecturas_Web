@@ -5,9 +5,11 @@ import com.example.microserviciouser.security.RoleValidator;
 import com.example.microserviciouser.security.UserRole;
 import com.example.microserviciouser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -53,16 +55,29 @@ public class UserController {
     }
 
 
+
     /* c)
+
+     */
          @GetMapping("/{idUser}/monopatines-mas-viajes/{anio}/{minViajes}")
-    public List<MonopatinDTO> obtenerMonopatinesConMasViajes(
+    public List<Long> obtenerMonopatinesConMasViajes(
             @PathVariable Long idUser,
             @PathVariable int anio,
-            @PathVariable int minViajes) {
+            @PathVariable Long minViajes) {
         return userService.obtenerMonopatinesConMasViajes(idUser, anio, minViajes);
     }
 
-    *\
-     */
+
+    @GetMapping("/usuarios-mas-viajes")
+    public ResponseEntity<List<Long>> getUsuariosMasViajesPorTipo(
+            @RequestHeader("X-User-Id") Long idAdmin,
+            @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
+            @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta,
+            @RequestParam("tipoUsuario") String tipoUsuario) {
+
+        List<Long> usuarios = userService.obtenerUsuariosConMasViajesPorTipo(idAdmin, desde, hasta, tipoUsuario);
+        return ResponseEntity.ok(usuarios);
+    }
+
 
 }

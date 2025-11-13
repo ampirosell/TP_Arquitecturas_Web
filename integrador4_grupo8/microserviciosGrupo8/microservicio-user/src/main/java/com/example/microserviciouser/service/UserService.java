@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -96,6 +98,28 @@ public class UserService {
 
      return idsMonopatines;
     }
+
+
+
+    public List<Long> obtenerUsuariosConMasViajesPorTipo(Long idAdmin, LocalDateTime desde, LocalDateTime hasta, String tipoUsuario) {
+
+        User admin = userRepository.findById(idAdmin)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        if (!"ADMIN".equalsIgnoreCase(String.valueOf(admin.getRol()))) {
+            throw new RuntimeException("No tiene permisos para realizar esta consulta");
+        }
+
+
+        List<Long> idsUsuariosMasViajes = this.viajeFeingClient.obtenerUsuariosConMasViajes(desde, hasta);
+
+
+        return idsUsuariosMasViajes;
+    }
+
+
+
+
 
 
 

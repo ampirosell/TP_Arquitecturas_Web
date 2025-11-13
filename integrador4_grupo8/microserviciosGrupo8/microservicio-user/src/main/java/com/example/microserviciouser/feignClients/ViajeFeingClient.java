@@ -1,8 +1,11 @@
 package com.example.microserviciouser.feignClients;
 import  org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @FeignClient(name = "microservicio-viaje", url = "http://localhost:8003/viajes")
@@ -15,7 +18,10 @@ public interface ViajeFeingClient{
                                            @PathVariable("minViajes") Long minViajes);
 
 
-
+ @GetMapping("/usuarios-mas-viajes")
+ List<Long> obtenerUsuariosConMasViajes(
+         @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
+         @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta);
 
 
 }
