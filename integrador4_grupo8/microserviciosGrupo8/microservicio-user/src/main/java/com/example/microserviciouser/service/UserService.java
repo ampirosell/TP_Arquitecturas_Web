@@ -1,5 +1,6 @@
 package com.example.microserviciouser.service;
 
+import com.example.microserviciomonopatin.dto.MonopatinDTO;
 import com.example.microserviciouser.entity.Rol;
 import com.example.microserviciouser.entity.User;
 import com.example.microserviciouser.feignClients.ParadaFeignClient;
@@ -16,6 +17,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 
 @Service
 public class UserService {
@@ -37,6 +40,19 @@ public class UserService {
 
     @Autowired
     CuentaFeingClient cuentaFeingClient;
+
+    public UserService(UserRepository userRepository, MonopatinFeignClient monopatinFeignClient, ViajeFeingClient viajeFeingClient
+                         , CuentaFeingClient cuentaFeingClient, ParadaFeignClient paradaFeignClient) {
+        this.userRepository = userRepository;
+        this.monopatinFeignClient = monopatinFeignClient;
+        this.viajeFeingClient = viajeFeingClient;
+        this.cuentaFeingClient = cuentaFeingClient;
+        this.paradaFeignClient = paradaFeignClient;
+
+
+    }
+
+
 
     public List<User> getAll(){
         return userRepository.findAll();
@@ -65,22 +81,21 @@ public class UserService {
         Rol rol = userRepository.findRolById(id);
         return rol == Rol.ADMIN;
     }
-    /*c. Como administrador quiero consultar los monopatines con más de X viajes en un cierto año
- public List<MonopatinDTO> obtenerMonopatinesConMasViajes(Long idUser, int anio, int minViajes) {
+    /*c. Como administrador quiero consultar los monopatines con más de X viajes en un cierto año*/
+
+
+ public List<Long> obtenerMonopatinesConMasViajes(Long idUser, int anio, Long minViajes) {
         User user = userRepository.findById(idUser)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        if (!"ADMIN".equalsIgnoreCase(user.getRol())) {
+        if (!"ADMIN".equalsIgnoreCase(String.valueOf(user.getRol()))) {
             throw new RuntimeException("No tiene permisos para realizar esta consulta");
         }
 
-        List<Long> idsMonopatines = viajeFeignClient.obtenerMonopatinesConMasViajes(anio, minViajes);
+        List<Long> idsMonopatines = this.viajeFeingClient.obtenerMonopatinesConMasViajes(anio, minViajes);
 
-        return idsMonopatines.stream()
-                .map(monopatinFeignClient::obtenerMonopatinPorId)
-                .collect(Collectors.toList());
-    }    *\
-     */
+     return idsMonopatines;
+    }
 
 
 

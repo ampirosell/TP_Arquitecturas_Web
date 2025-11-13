@@ -1,11 +1,7 @@
 package com.example.microserviciomonopatin.controller;
 
 
-import com.example.microserviciomonopatin.dto.ActualizarEstadoMonopatinRequest;
-import com.example.microserviciomonopatin.dto.ActualizarKilometrosMonopatinRequest;
-import com.example.microserviciomonopatin.dto.ActualizarUbicacionMonopatinRequest;
-import com.example.microserviciomonopatin.dto.MonopatinKmDTO;
-import com.example.microserviciomonopatin.dto.ResumenEstadoMonopatinesDTO;
+import com.example.microserviciomonopatin.dto.*;
 import com.example.microserviciomonopatin.entity.Monopatin;
 
 import com.example.microserviciomonopatin.security.RoleValidator;

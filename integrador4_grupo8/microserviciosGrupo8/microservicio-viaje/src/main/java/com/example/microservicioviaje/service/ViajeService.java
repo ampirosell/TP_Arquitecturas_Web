@@ -86,15 +86,19 @@ public class ViajeService {
         return viajeRepository.findById(id).orElse(null);
     }
 
-   /* c. Como administrador quiero consultar los monopatines con más de X viajes en un cierto año.
+    /*
+    *\e. Como administrador quiero ver los usuarios que más utilizan los monopatines, filtrado por
+período y por tipo de usuario.
 
-   @Transactional
-    public List<Monopatin> findMonopatinesConMasDeXViajesEnAnio(int anio, long minViajes){
-        return viajeRepository.findMonopatinesConMasDeXViajesEnAnio(anio, minViajes);
-    }*/
+     */
+    public List<Long> obtenerUsuariosConMasViajesPorPeriodo(LocalDateTime desde, LocalDateTime hasta) {
+        return viajeRepository.findUsuariosConMasViajesPorPeriodo(desde, hasta);
+    }
+
+   /* c. Como administrador quiero consultar los monopatines con más de X viajes en un cierto año.*/
 
     @Transactional(readOnly = true)
-    public List<MonopatinViajesDTO> obtenerMonopatinesConMasViajes(int anio, long minViajes) {
+    public List<Long> obtenerMonopatinesConMasViajes(int anio, long minViajes) {
         return viajeRepository.findMonopatinesConMasViajes(anio, minViajes);
     }
 

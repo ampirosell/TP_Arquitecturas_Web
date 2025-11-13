@@ -103,15 +103,19 @@ public class ViajeController {
         }
         return ResponseEntity.ok(reporte);
     }
+/*
+e. Como administrador quiero ver los usuarios que más utilizan los monopatines, filtrado por
+período y por tipo de usuario
+ */
 
     @GetMapping("/reportes/monopatines-frecuentes")
-    public ResponseEntity<List<MonopatinViajesDTO>> obtenerMonopatinesConMasViajes(
+    public ResponseEntity<List<Long>> obtenerMonopatinesConMasViajes(
             @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
             @RequestParam int anio,
             @RequestParam long minViajes
     ) {
         roleValidator.require(roleHeader, UserRole.ADMIN);
-        List<MonopatinViajesDTO> resultado = viajeService.obtenerMonopatinesConMasViajes(anio, minViajes);
+        List<Long> resultado = viajeService.obtenerMonopatinesConMasViajes(anio, minViajes);
         if (resultado.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -119,18 +123,20 @@ public class ViajeController {
     }
 
 
-    /* c. Como administrador quiero consultar los monopatines con más de X viajes en un cierto año.
-
          @GetMapping("/monopatines-mas-viajes/{anio}/{minViajes}")
     public List<Long> obtenerMonopatinesConMasViajes(
             @PathVariable int anio,
-            @PathVariable int minViajes) {
-        return viajeService.obtenerMonopatinesConMasViajes(anio, minViajes);
+            @PathVariable Long minViajes) {
+        return viajeService.obtenerMonopatinesConMasViajes(anio, minViajes);}
+
+
+    @GetMapping("/usuarios-mas-viajes")
+    public ResponseEntity<List<Long>> getUsuariosConMasViajes(
+            @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
+            @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta) {
+
+        List<Long> usuarios = viajeService.obtenerUsuariosConMasViajesPorPeriodo(desde, hasta);
+        return ResponseEntity.ok(usuarios);
     }
-    *\
-     */
-
-
-
 
 }
