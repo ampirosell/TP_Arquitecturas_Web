@@ -45,7 +45,7 @@ public class MonopatinService {
         return monopatinRepository.findById(id).orElse(null);
     }
 
-    public List<Monopatin> getMonopatinesCercanos(double latitud, double longitud, double distanciaCercana) {
+    public List<Long> getMonopatinesCercanos(double latitud, double longitud, double distanciaCercana) {
         return monopatinRepository.getMonopatinesCercanos(latitud, longitud, distanciaCercana);
     }
 

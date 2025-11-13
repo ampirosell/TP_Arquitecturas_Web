@@ -154,6 +154,16 @@ public class MonopatinController {
         return ResponseEntity.ok(actualizado);
     }
 
+    @GetMapping("/cercanos")
+    public ResponseEntity<List<Long>> obtenerMonopatinesCercanos(
+            @RequestParam double latitud,
+            @RequestParam double longitud,
+            @RequestParam(defaultValue = "3.0") double distanciaKm) {
+
+        List<Long> cercanos = this.monopatinService.getMonopatinesCercanos(latitud, longitud, distanciaKm);
+        return ResponseEntity.ok(cercanos);
+    }
+
     // Reporte de km recorridos (solo para ADMIN)  ejercicio 4 a) ESTO NO VA SI LO PONEMOS EN EL VIAJE
 /*
     @GetMapping("/reporte/km/{userId}")

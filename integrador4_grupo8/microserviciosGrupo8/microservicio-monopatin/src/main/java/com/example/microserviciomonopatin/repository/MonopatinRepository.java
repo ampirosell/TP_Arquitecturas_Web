@@ -12,7 +12,7 @@ import java.util.List;
 public interface MonopatinRepository extends MongoRepository<Monopatin, Long> {
 
     @Query("{ $expr: { $lt: [ { $sqrt: { $add: [ { $pow: [ { $subtract: [ '$latitud', ?0 ] }, 2 ] }, { $pow: [ { $subtract: [ '$longitud', ?1 ] }, 2 ] } ] } }, ?2 ] }, latitud: { $exists: true }, longitud: { $exists: true } }")
-    List<Monopatin> getMonopatinesCercanos(Double latitud, Double longitud, Double distancia);
+    List<Long> getMonopatinesCercanos(Double latitud, Double longitud, Double distancia);
 
     long countByEstadoMonopatin(EstadoMonopatin estadoMonopatin);
 

@@ -118,6 +118,11 @@ public class UserService {
     }
 
 
+    // G)
+    public List<Long> buscarMonopatinesCercanos(double latitud, double longitud, double distanciaKm) {
+        return this.monopatinFeignClient.obtenerMonopatinesCercanos(latitud, longitud, distanciaKm);
+    }
+
 
 
 

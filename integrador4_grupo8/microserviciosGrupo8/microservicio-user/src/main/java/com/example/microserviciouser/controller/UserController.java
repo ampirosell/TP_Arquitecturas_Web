@@ -67,7 +67,7 @@ public class UserController {
         return userService.obtenerMonopatinesConMasViajes(idUser, anio, minViajes);
     }
 
-
+// e)
     @GetMapping("/usuarios-mas-viajes")
     public ResponseEntity<List<Long>> getUsuariosMasViajesPorTipo(
             @RequestHeader("X-User-Id") Long idAdmin,
@@ -77,6 +77,18 @@ public class UserController {
 
         List<Long> usuarios = userService.obtenerUsuariosConMasViajesPorTipo(idAdmin, desde, hasta, tipoUsuario);
         return ResponseEntity.ok(usuarios);
+    }
+
+
+    // g)
+    @GetMapping("/monopatines-cercanos")
+    public ResponseEntity<List<Long>> obtenerMonopatinesCercanos(
+            @RequestParam double latitud,
+            @RequestParam double longitud,
+            @RequestParam(defaultValue = "3.0") double distanciaKm) {
+
+        List<Long> ids = userService.buscarMonopatinesCercanos(latitud, longitud, distanciaKm);
+        return ResponseEntity.ok(ids);
     }
 
 
