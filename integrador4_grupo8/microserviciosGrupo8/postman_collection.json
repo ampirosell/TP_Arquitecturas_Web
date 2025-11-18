@@ -67,6 +67,19 @@
           }
         },
         {
+          "name": "Como admin: Reporte de monopatines con mas km",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{user_base_url}}//{idUser}/monopatines-mas-viajes/{anio}/{minViajes}"
+          }
+        },
+        {
           "name": "02 - Crear cuenta para el usuario",
           "request": {
             "method": "POST",
