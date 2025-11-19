@@ -1,5 +1,7 @@
 package com.example.microserviciouser.controller;
 
+import com.example.microserviciouser.dto.AuthResponse;
+import com.example.microserviciouser.dto.LoginRequest;
 import com.example.microserviciouser.entity.User;
 import com.example.microserviciouser.security.RoleValidator;
 import com.example.microserviciouser.security.UserRole;
@@ -52,6 +54,30 @@ public class UserController {
         roleValidator.require(roleHeader, UserRole.ADMIN, UserRole.USER);
         User userNew = userService.save(user);
         return ResponseEntity.ok(userNew);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
+        try {
+            AuthResponse response = userService.login(request);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(401).body(
+                    new AuthResponse(null, null, null, null, "Error: " + e.getMessage())
+            );
+        }
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<AuthResponse> register(@RequestBody User user) {
+        try {
+            AuthResponse response = userService.register(user);
+            return ResponseEntity.status(201).body(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(400).body(
+                    new AuthResponse(null, null, null, null, "Error: " + e.getMessage())
+            );
+        }
     }
 
 
