@@ -25,9 +25,8 @@ public class UserController {
     private RoleValidator roleValidator;
 
     @GetMapping()
-    public ResponseEntity<List<User>> getAllUsers(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader) {
-        roleValidator.require(roleHeader, UserRole.ADMIN);
+    public ResponseEntity<List<User>> getAllUsers() {
+        roleValidator.require(UserRole.ADMIN);
         List<User> users = userService.getAll();
         if (users.isEmpty()) {
             return  ResponseEntity.noContent().build();
@@ -36,10 +35,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
-            @PathVariable("id") Long id) {
-        roleValidator.require(roleHeader, UserRole.ADMIN);
+    public ResponseEntity<User> getUserById(@PathVariable("id") Long id) {
+        roleValidator.require(UserRole.ADMIN);
         User user = userService.getUserById(id);
         if (user == null) {
             return  ResponseEntity.notFound().build();
@@ -48,10 +45,8 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<User> save(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
-            @RequestBody User user) {
-        roleValidator.require(roleHeader, UserRole.ADMIN, UserRole.USER);
+    public ResponseEntity<User> save(@RequestBody User user) {
+        roleValidator.require(UserRole.ADMIN, UserRole.USER);
         User userNew = userService.save(user);
         return ResponseEntity.ok(userNew);
     }
@@ -96,10 +91,18 @@ public class UserController {
 // e)
     @GetMapping("/usuarios-mas-viajes")
     public ResponseEntity<List<Long>> getUsuariosMasViajesPorTipo(
-            @RequestHeader("X-User-Id") Long idAdmin,
             @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
             @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta,
-            @RequestParam("tipoUsuario") String tipoUsuario) {
+            @RequestParam("tipoUsuario") String tipoUsuario,
+            jakarta.servlet.http.HttpServletRequest request) {
+        
+        roleValidator.require(UserRole.ADMIN);
+        
+        // Obtener userId del JWT (guardado en el filter)
+        Long idAdmin = (Long) request.getAttribute("userId");
+        if (idAdmin == null) {
+            return ResponseEntity.status(403).build();
+        }
 
         List<Long> usuarios = userService.obtenerUsuariosConMasViajesPorTipo(idAdmin, desde, hasta, tipoUsuario);
         return ResponseEntity.ok(usuarios);

@@ -433,9 +433,16 @@
           "description": "🔐 Requiere: ADMIN\n\nReporte e: Ver usuarios que más utilizan los monopatines, filtrado por período y tipo de usuario.\n\n💡 Usa este endpoint cuando:\n- Eres ADMIN y necesitas identificar usuarios más activos\n- Quieres filtrar por tipo de usuario (USER, ADMIN, etc.)\n- Necesitas analizar uso en un período específico",
           "request": {
             "method": "GET",
-                "header": [],
+            "header": [],
             "url": {
-              "raw": "{{user_base_url}}/users/usuarios-mas-viajes?desde=2025-01-01T00:00:00&hasta=2025-12-31T23:59:59&tipoUsuario=USER",
+              "raw": "{{user_base_url}}/users/usuarios-mas-viajes",
+              "host": [
+                "{{user_base_url}}"
+              ],
+              "path": [
+                "users",
+                "usuarios-mas-viajes"
+              ],
               "query": [
                 {
                   "key": "desde",
@@ -458,9 +465,16 @@
           "description": "🔓 ENDPOINT PÚBLICO - No requiere autenticación\n\nReporte g: Busca monopatines cercanos a una ubicación.\n\n💡 Usa este endpoint cuando:\n- Eres USER y quieres encontrar monopatines cerca de ti\n- Puedes especificar la distancia máxima en kilómetros\n- No requiere autenticación (público)",
           "request": {
             "method": "GET",
-                "header": [],
+            "header": [],
             "url": {
-              "raw": "{{user_base_url}}/users/monopatines-cercanos?latitud={{latitud}}&longitud={{longitud}}&distanciaKm={{radio_km}}",
+              "raw": "{{user_base_url}}/users/monopatines-cercanos",
+              "host": [
+                "{{user_base_url}}"
+              ],
+              "path": [
+                "users",
+                "monopatines-cercanos"
+              ],
               "query": [
                 {
                   "key": "latitud",
@@ -483,9 +497,16 @@
           "description": "🔐 Requiere: USER\n\nReporte h: Consulta cuánto has usado los monopatines en un período.\n\n💡 Usa este endpoint cuando:\n- Eres USER y quieres ver tu historial de uso\n- Opcionalmente puedes incluir usuarios relacionados a tu cuenta\n- Necesitas ver tus viajes en un rango de fechas",
           "request": {
             "method": "GET",
-                "header": [],
+            "header": [],
             "url": {
-              "raw": "{{viaje_base_url}}/viajes/usado-en-periodo?idUsuario={{user_id}}&desde={{reporte_desde}}&hasta={{reporte_hasta}}",
+              "raw": "{{viaje_base_url}}/viajes/usado-en-periodo",
+              "host": [
+                "{{viaje_base_url}}"
+              ],
+              "path": [
+                "viajes",
+                "usado-en-periodo"
+              ],
               "query": [
                 {
                   "key": "idUsuario",
@@ -639,7 +660,14 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{user_base_url}}/users/usuarios-mas-viajes?desde=2025-01-01T00:00:00&hasta=2025-12-31T23:59:59&tipoUsuario=USER",
+                  "raw": "{{user_base_url}}/users/usuarios-mas-viajes",
+                  "host": [
+                    "{{user_base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "usuarios-mas-viajes"
+                  ],
                   "query": [
                     {
                       "key": "desde",
@@ -663,7 +691,14 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{user_base_url}}/users/monopatines-cercanos?latitud={{latitud}}&longitud={{longitud}}&distanciaKm={{radio_km}}",
+                  "raw": "{{user_base_url}}/users/monopatines-cercanos",
+                  "host": [
+                    "{{user_base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "monopatines-cercanos"
+                  ],
                   "query": [
                     {
                       "key": "latitud",
@@ -847,10 +882,16 @@
               "name": "Reporte h: Uso por usuario en período",
               "request": {
                 "method": "GET",
-                "header": [
-                ],
+                "header": [],
                 "url": {
-                  "raw": "{{viaje_base_url}}/viajes/usado-en-periodo?idUsuario={{user_id}}&desde={{reporte_desde}}&hasta={{reporte_hasta}}",
+                  "raw": "{{viaje_base_url}}/viajes/usado-en-periodo",
+                  "host": [
+                    "{{viaje_base_url}}"
+                  ],
+                  "path": [
+                    "viajes",
+                    "usado-en-periodo"
+                  ],
                   "query": [
                     {
                       "key": "idUsuario",
