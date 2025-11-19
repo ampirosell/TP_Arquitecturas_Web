@@ -27,9 +27,8 @@ public class CuentaController {
 
 
     @GetMapping()
-    public ResponseEntity<List<Cuenta>> getAllCuentas(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader) throws Exception {
-        roleValidator.require(roleHeader, UserRole.ADMIN);
+    public ResponseEntity<List<Cuenta>> getAllCuentas() throws Exception {
+        roleValidator.require(UserRole.ADMIN);
         try {
             List<Cuenta> cuentas = cuentaService.getAll();
             return new ResponseEntity<>(cuentas, HttpStatus.OK);
@@ -39,29 +38,24 @@ public class CuentaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cuenta> getCuentaById(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
-            @PathVariable Long id) throws Exception {
-        roleValidator.require(roleHeader, UserRole.ADMIN);
+    public ResponseEntity<Cuenta> getCuentaById(@PathVariable Long id) throws Exception {
+        roleValidator.require(UserRole.ADMIN);
         Optional<Cuenta> cuenta = Optional.ofNullable(cuentaService.findById(id));
         return cuenta.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping()
-    public ResponseEntity<Cuenta> save(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
-            @RequestBody Cuenta cuenta) {
-        roleValidator.require(roleHeader, UserRole.ADMIN);
+    public ResponseEntity<Cuenta> save(@RequestBody Cuenta cuenta) {
+        roleValidator.require(UserRole.ADMIN);
         Cuenta userNew = cuentaService.save(cuenta);
         return ResponseEntity.ok(userNew);
     }
     //ejercicio B
     @PatchMapping("/{id}/estado")
     public ResponseEntity<?> actualizarEstado(@PathVariable Long id,
-                                              @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
                                               @RequestBody ActualizarEstadoCuentaRequest request) {
-        roleValidator.require(roleHeader, UserRole.ADMIN);
+        roleValidator.require(UserRole.ADMIN);
         if (request == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("{\"error\":\"Debe indicar el nuevo estado\"}");

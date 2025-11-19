@@ -18,17 +18,14 @@ public class TarifaController {
     private RoleValidator roleValidator;
 
     @GetMapping("/vigente")
-    public Tarifa getTarifaVigente(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader) {
-        roleValidator.require(roleHeader, UserRole.ADMIN);
+    public Tarifa getTarifaVigente() {
+        roleValidator.require(UserRole.ADMIN);
         return service.getTarifaVigente();
     }
     //ejercicio F
     @PostMapping
-    public Tarifa nuevaTarifa(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
-            @RequestBody Tarifa tarifa) {
-        roleValidator.require(roleHeader, UserRole.ADMIN);
+    public Tarifa nuevaTarifa(@RequestBody Tarifa tarifa) {
+        roleValidator.require(UserRole.ADMIN);
         return service.crearTarifa(tarifa);
     }
 }

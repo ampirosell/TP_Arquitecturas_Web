@@ -95,15 +95,24 @@ No encontré ningún mock de servicios externos como:
 
 ### 7. Segurización con JWT
 
-**Estado: PARCIAL**
+**Estado: COMPLETO ✅**
 
-Solo está implementado en `microservicio-user`:
-- JwtUtil
-- JwtAuthenticationFilter
-- SecurityConfig
-- RoleValidator actualizado
+JWT está implementado en **todos los microservicios**:
+- `microservicio-user` ✅
+- `microservicio-viaje` ✅
+- `microservicio-cuenta` ✅
+- `microservicio-parada` ✅
+- `microservicio-monopatin` ✅
+- `microservicio-facturacion` ✅
 
-Los otros 5 microservicios todavía usan headers `X-User-Role` en lugar de JWT. Hay que replicar lo del microservicio-user a los demás.
+Cada microservicio tiene:
+- `JwtUtil` - utilidad para generar, validar y extraer información de tokens
+- `JwtAuthenticationFilter` - filtro que intercepta requests y valida tokens JWT
+- `SecurityConfig` - configuración de Spring Security con JWT
+- `RoleValidator` - actualizado para usar JWT del contexto de seguridad
+- `application.properties` - configurado con `jwt.secret` y `jwt.expiration`
+
+Todos los controladores ahora usan JWT automáticamente. Los tokens se obtienen del endpoint `/users/login` o `/users/register` y se envían en el header `Authorization: Bearer <token>`.
 
 ---
 
@@ -152,17 +161,17 @@ Tenemos `docker-compose.yml` con todos los servicios, bases de datos, y configur
 - Puntos 1, 2, 3: ✅ Completos
 - Punto 4: ⚠️ 7 de 8 reportes completos (falta filtrar por tipo de usuario en el reporte e)
 
-### 2da Entrega: ~50% ⚠️
+### 2da Entrega: ~60% ⚠️
 
 - Punto 5: ❓ Desconocido (no sé qué correcciones se pidieron)
 - Punto 6: ❌ No implementado (mocks de servicios externos)
-- Punto 7: ⚠️ Parcial (JWT solo en user)
+- Punto 7: ✅ Completo (JWT en todos los microservicios)
 - Punto 8: ✅ Completo (Swagger)
 - Punto 9: ✅ Completo (MongoDB)
 - Punto 10: ❌ No implementado (chat con LLM)
 - Punto 11: ✅ Completo (Docker)
 
-**Estado general: ~70% completado**
+**Estado general: ~75% completado**
 
 ---
 
@@ -182,13 +191,7 @@ Tenemos `docker-compose.yml` con todos los servicios, bases de datos, y configur
    - Crear servicio mock para búsquedas en mapas
    - Integrar estos mocks donde se necesiten
 
-3. **Completar JWT en todos los microservicios**
-   - Copiar las clases de seguridad de `microservicio-user` a los otros 5
-   - Agregar Spring Security a los POMs
-   - Actualizar los controladores para usar JWT en lugar de headers
-   - Agregar las propiedades de JWT en `application.properties`
-
-4. **Implementar servicio de chat con LLM**
+3. **Implementar servicio de chat con LLM**
    - Crear microservicio o endpoint para chat
    - Integrar con Groq u otro servicio de LLM
    - Exponer servicios predefinidos como tools
@@ -201,15 +204,15 @@ Tenemos `docker-compose.yml` con todos los servicios, bases de datos, y configur
    - Revisar feedback de la 1ra entrega
    - Aplicar las correcciones solicitadas
 
-Tiempo estimado: ~40-50 horas más de trabajo.
+Tiempo estimado: ~30-40 horas más de trabajo.
 
 ---
 
 ## Conclusión
 
-**Estado general: ~70% completado**
+**Estado general: ~75% completado**
 
 - 1ra entrega: ~94% (falta completar filtro por tipo de usuario en reporte e)
-- 2da entrega: ~50% (faltan mocks, JWT completo, y chat con LLM)
+- 2da entrega: ~60% (faltan mocks de servicios externos y chat con LLM)
 
-El proyecto tiene una buena base, pero faltan varios requisitos importantes de la 2da entrega, especialmente el servicio de chat con LLM que requiere un re-diseño de los microservicios.
+El proyecto tiene una buena base. JWT está completamente implementado en todos los microservicios. Faltan principalmente los mocks de servicios externos y el servicio de chat con LLM, que requiere un re-diseño de los microservicios.

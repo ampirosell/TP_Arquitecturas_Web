@@ -31,9 +31,8 @@ public class MonopatinController {
 
 
     @GetMapping()
-    public ResponseEntity<List<Monopatin>> getAllMonopatines(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader) throws Exception {
-        roleValidator.require(roleHeader, UserRole.ADMIN);
+    public ResponseEntity<List<Monopatin>> getAllMonopatines() throws Exception {
+        roleValidator.require(UserRole.ADMIN);
         try{
             List<Monopatin> monopatines = monopatinService.getAll();
             return new ResponseEntity<>(monopatines, HttpStatus.OK);
@@ -44,31 +43,26 @@ public class MonopatinController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Monopatin> getMonopatinById(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
-            @PathVariable Long id) throws Exception {
-        roleValidator.require(roleHeader, UserRole.ADMIN);
+    public ResponseEntity<Monopatin> getMonopatinById(@PathVariable Long id) throws Exception {
+        roleValidator.require(UserRole.ADMIN);
         Optional<Monopatin> monopatin = Optional.ofNullable(monopatinService.findById(id));
         return monopatin.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping()
-    public ResponseEntity<Monopatin> save(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
-            @RequestBody Monopatin monopatin) {
-        roleValidator.require(roleHeader, UserRole.ADMIN);
+    public ResponseEntity<Monopatin> save(@RequestBody Monopatin monopatin) {
+        roleValidator.require(UserRole.ADMIN);
         Monopatin userNew = monopatinService.save(monopatin);
         return ResponseEntity.ok(userNew);
     }
     @GetMapping("/cercanos")
     public ResponseEntity<?> getMonopatinesCercanos(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
             @RequestParam double latitud,
             @RequestParam double longitud,
             @RequestParam double distanciaCercana
     ) {
-        roleValidator.require(roleHeader, UserRole.USER, UserRole.ADMIN);
+        roleValidator.require(UserRole.USER, UserRole.ADMIN);
         try {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(monopatinService.getMonopatinesCercanos(latitud, longitud, distanciaCercana));
@@ -80,9 +74,8 @@ public class MonopatinController {
 
     @PatchMapping("/{id}/estado")
     public ResponseEntity<?> actualizarEstado(@PathVariable Long id,
-                                              @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
                                               @RequestBody @Valid ActualizarEstadoMonopatinRequest request) {
-        roleValidator.require(roleHeader, UserRole.ADMIN, UserRole.MAINTENANCE);
+        roleValidator.require(UserRole.ADMIN, UserRole.MAINTENANCE);
         if (request.getEstado() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("{\"error\":\"Debe indicar un estado válido\"}");
@@ -97,9 +90,8 @@ public class MonopatinController {
 
     @PatchMapping("/{id}/ubicacion")
     public ResponseEntity<?> actualizarUbicacion(@PathVariable Long id,
-                                                 @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
                                                  @RequestBody @Valid ActualizarUbicacionMonopatinRequest request) {
-        roleValidator.require(roleHeader, UserRole.ADMIN, UserRole.MAINTENANCE);
+        roleValidator.require(UserRole.ADMIN, UserRole.MAINTENANCE);
         Monopatin actualizado = monopatinService.actualizarUbicacion(id, request.getLatitud(), request.getLongitud(), request.getParadaId());
         if (actualizado == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -109,10 +101,8 @@ public class MonopatinController {
     }
 
     @PostMapping("/{id}/mantenimiento")
-    public ResponseEntity<?> registrarMantenimiento(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
-            @PathVariable Long id) {
-        roleValidator.require(roleHeader, UserRole.ADMIN, UserRole.MAINTENANCE);
+    public ResponseEntity<?> registrarMantenimiento(@PathVariable Long id) {
+        roleValidator.require(UserRole.ADMIN, UserRole.MAINTENANCE);
         Monopatin actualizado = monopatinService.registrarMantenimiento(id);
         if (actualizado == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -122,10 +112,8 @@ public class MonopatinController {
     }
 
     @DeleteMapping("/{id}/mantenimiento")
-    public ResponseEntity<?> finalizarMantenimiento(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
-            @PathVariable Long id) {
-        roleValidator.require(roleHeader, UserRole.ADMIN, UserRole.MAINTENANCE);
+    public ResponseEntity<?> finalizarMantenimiento(@PathVariable Long id) {
+        roleValidator.require(UserRole.ADMIN, UserRole.MAINTENANCE);
         Monopatin actualizado = monopatinService.finalizarMantenimiento(id);
         if (actualizado == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -135,17 +123,15 @@ public class MonopatinController {
     }
 
     @GetMapping("/resumen/estado")
-    public ResponseEntity<ResumenEstadoMonopatinesDTO> obtenerResumenEstados(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader) {
-        roleValidator.require(roleHeader, UserRole.ADMIN);
+    public ResponseEntity<ResumenEstadoMonopatinesDTO> obtenerResumenEstados() {
+        roleValidator.require(UserRole.ADMIN);
         return ResponseEntity.ok(monopatinService.obtenerResumenEstados());
     }
 
     @PatchMapping("/{id}/kilometros")
     public ResponseEntity<?> actualizarKilometros(@PathVariable Long id,
-                                                  @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
                                                   @RequestBody @Valid ActualizarKilometrosMonopatinRequest request) {
-        roleValidator.require(roleHeader, UserRole.ADMIN, UserRole.MAINTENANCE);
+        roleValidator.require(UserRole.ADMIN, UserRole.MAINTENANCE);
         Monopatin actualizado = monopatinService.actualizarKilometros(id, request.getKilometrosRecorridos());
         if (actualizado == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
