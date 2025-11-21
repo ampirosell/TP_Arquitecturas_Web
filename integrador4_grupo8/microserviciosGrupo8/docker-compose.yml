@@ -186,6 +186,18 @@ services:
       - inte4_net
     restart: unless-stopped
 
+  ## MOCKSERVER
+  mockserver:
+    image: mockserver/mockserver
+    container_name: mockserver
+    ports:
+      - "8009:8009"
+    environment:
+      MOCKSERVER_LOG_LEVEL: INFO
+    networks:
+      - inte4_net
+
+
   # 💰 Microservicio de Cuentas
   cuenta-service:
     build:
@@ -227,4 +239,5 @@ services:
 networks:
   inte4_net:
     driver: bridge
+
 

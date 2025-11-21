@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7eb3c95-4ded-48f4-bc99-22d5d275d48d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-monopatin/src/main/java/com/example/microserviciomonopatin/controller/MonopatinController.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-monopatin/src/main/java/com/example/microserviciomonopatin/controller/MonopatinController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-viaje/src/main/java/com/example/microservicioviaje/controller/ViajeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-viaje/src/main/java/com/example/microservicioviaje/controller/ViajeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-viaje/src/main/java/com/example/microservicioviaje/repository/ViajeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-viaje/src/main/java/com/example/microservicioviaje/repository/ViajeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-viaje/src/main/java/com/example/microservicioviaje/service/ViajeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/microservicio-viaje/src/main/java/com/example/microservicioviaje/service/ViajeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +16,18 @@
   </component>
   <component name="ComposerSettings">
     <execution />
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -64,6 +74,8 @@
   &quot;keyToString&quot;: {
     &quot;Application.InteApplication.executor&quot;: &quot;Run&quot;,
     &quot;Application.main.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.microserviciosGrupo8.mockserver: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.microserviciosGrupo8: Compose Deployment.executor&quot;: &quot;Run&quot;,
     &quot;HTTP Request.All in generated-requests.executor&quot;: &quot;Run&quot;,
     &quot;HTTP Request.generated-requests | #1.executor&quot;: &quot;Run&quot;,
     &quot;HTTP Request.requests | Crear Usuario.executor&quot;: &quot;Run&quot;,
@@ -135,13 +147,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Maven.microserviciosGrupo8 [clean,compile]">
-    <configuration name="requests | d) Recuperar un estudiante por LU" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/Integrador3_grupo8/requests.http" executionIdentifier="d) Recuperar un estudiante por LU" index="6" runType="Run single request">
-      <method v="2" />
-    </configuration>
-    <configuration name="requests | e) Recuperar todos los estudiantes por género" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/Integrador3_grupo8/requests.http" executionIdentifier="e) Recuperar todos los estudiantes por género" index="7" runType="Run single request">
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Docker.microserviciosGrupo8.mockserver: Compose Deployment">
     <configuration name="requests | f) Recuperar carreras con estudiantes inscriptos, ordenadas por cantidad de inscriptos" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/Integrador3_grupo8/requests.http" executionIdentifier="f) Recuperar carreras con estudiantes inscriptos, ordenadas por cantidad de inscriptos" index="8" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -305,14 +311,49 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MockMercadopagoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="mock-mercadopago" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="mock.mockmercadopago.MockMercadopagoApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="microserviciosGrupo8: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="integrador4_grupo8/microserviciosGrupo8/docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="microserviciosGrupo8.mockserver: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="mockserver" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="integrador4_grupo8/microserviciosGrupo8/docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <list>
-      <item itemvalue="HTTP Request.requests | d) Recuperar un estudiante por LU" />
-      <item itemvalue="HTTP Request.requests | e) Recuperar todos los estudiantes por género" />
+      <item itemvalue="Docker.microserviciosGrupo8.mockserver: Compose Deployment" />
+      <item itemvalue="Docker.microserviciosGrupo8: Compose Deployment" />
       <item itemvalue="HTTP Request.requests | f) Recuperar carreras con estudiantes inscriptos, ordenadas por cantidad de inscriptos" />
       <item itemvalue="HTTP Request.requests | g) Recuperar estudiantes de una carrera filtrado por ciudad" />
       <item itemvalue="HTTP Request.requests | h) Generar reporte de carreras (inscriptos y egresados por año)" />
       <item itemvalue="Maven.microserviciosGrupo8 [clean,compile]" />
       <item itemvalue="Maven.microserviciosGrupo8 [clean,install]" />
+      <item itemvalue="Spring Boot.MockMercadopagoApplication" />
       <item itemvalue="Spring Boot.FacturacionApplication" />
       <item itemvalue="Spring Boot.MicroservicioParadaApplication (1)" />
       <item itemvalue="Spring Boot.MicroservicioViajeApplication (1)" />
@@ -327,11 +368,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.microserviciosGrupo8.mockserver: Compose Deployment" />
+        <item itemvalue="Docker.microserviciosGrupo8: Compose Deployment" />
         <item itemvalue="HTTP Request.requests | h) Generar reporte de carreras (inscriptos y egresados por año)" />
         <item itemvalue="HTTP Request.requests | g) Recuperar estudiantes de una carrera filtrado por ciudad" />
         <item itemvalue="HTTP Request.requests | f) Recuperar carreras con estudiantes inscriptos, ordenadas por cantidad de inscriptos" />
-        <item itemvalue="HTTP Request.requests | e) Recuperar todos los estudiantes por género" />
-        <item itemvalue="HTTP Request.requests | d) Recuperar un estudiante por LU" />
       </list>
     </recent_temporary>
   </component>
@@ -372,6 +413,8 @@
       <workItem from="1762971384271" duration="4658000" />
       <workItem from="1762976304642" duration="135000" />
       <workItem from="1762992712542" duration="8890000" />
+      <workItem from="1763749897308" duration="5727000" />
+      <workItem from="1763756396223" duration="852000" />
     </task>
     <servers />
   </component>
