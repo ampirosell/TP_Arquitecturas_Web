@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7eb3c95-4ded-48f4-bc99-22d5d275d48d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/mock-mercadopago/src/main/java/mock/mockmercadopago/service/MercadoPagoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/integrador4_grupo8/microserviciosGrupo8/mock-mercadopago/src/main/java/mock/mockmercadopago/service/MercadoPagoService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +114,7 @@
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.55402297&quot;,
     &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
@@ -414,7 +413,10 @@
       <workItem from="1762976304642" duration="135000" />
       <workItem from="1762992712542" duration="8890000" />
       <workItem from="1763749897308" duration="5727000" />
-      <workItem from="1763756396223" duration="852000" />
+      <workItem from="1763756396223" duration="1204000" />
+      <workItem from="1763822110944" duration="1862000" />
+      <workItem from="1763824011082" duration="295000" />
+      <workItem from="1763824349567" duration="174000" />
     </task>
     <servers />
   </component>

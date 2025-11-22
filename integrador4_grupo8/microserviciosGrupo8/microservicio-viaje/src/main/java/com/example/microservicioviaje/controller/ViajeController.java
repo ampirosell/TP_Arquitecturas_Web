@@ -114,7 +114,7 @@ período y por tipo de usuario
     }
 
 
-         @GetMapping("/monopatines-mas-viajes/{anio}/{minViajes}")
+    @GetMapping("/monopatines-mas-viajes/{anio}/{minViajes}")
     public List<Long> obtenerMonopatinesConMasViajes(
             @PathVariable int anio,
             @PathVariable Long minViajes) {

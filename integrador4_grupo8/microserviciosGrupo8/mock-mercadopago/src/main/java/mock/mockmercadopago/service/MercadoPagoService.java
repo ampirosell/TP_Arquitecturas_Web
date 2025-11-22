@@ -15,6 +15,6 @@ public class MercadoPagoService {
     private final RestTemplate restTemplate = new RestTemplate();
 
     public Map<String, Object> procesarPago(Map<String, Object> pago) {
-        return restTemplate.postForObject(url, pago, Map.class);
+            return restTemplate.postForObject(url, pago, Map.class);
     }
 }
