@@ -1,0 +1,17 @@
+server:
+  port: 8099
+
+spring:
+  ai:
+    openai:
+      api-key: ${GROQ_API_KEY}
+      base-url: https://api.groq.com/openai/v1
+      chat:
+        options:
+          model: llama3-70b-8192
+
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: full

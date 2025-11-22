@@ -1,6 +1,7 @@
 package com.example.microserviciocuenta.service;
 
 import com.example.microserviciocuenta.entity.Cuenta;
+import com.example.microserviciocuenta.entity.TipoCuenta;
 import com.example.microserviciocuenta.repository.CuentaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,4 +55,11 @@ public class CuentaService {
         return updated > 0 ? cuentaRepository.findById(idCuenta).orElse(null) : null;
     }
 
+    public boolean esPremium(Long idUsuario) {
+
+        Cuenta cuenta = cuentaRepository.findByIdUsuario(idUsuario)
+                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada"));
+
+        return cuenta.isCuentaActiva() && cuenta.getTipo() == TipoCuenta.PREMIUM;
+    }
 }

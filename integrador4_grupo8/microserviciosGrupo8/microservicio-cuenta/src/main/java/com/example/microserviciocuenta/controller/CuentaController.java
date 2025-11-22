@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -66,5 +67,11 @@ public class CuentaController {
                     .body("{\"error\":\"Cuenta no encontrada\"}");
         }
         return ResponseEntity.ok(cuentaActualizada);
+    }
+    //ejercicio 10 LLM
+    @GetMapping("/premium/{idUsuario}")
+    public ResponseEntity<Boolean> esPremium(@PathVariable Long idUsuario) {
+        boolean esPremium = cuentaService.esPremium(idUsuario);
+        return ResponseEntity.ok(esPremium);
     }
 }

@@ -235,9 +235,11 @@ public class UserService {
         return this.monopatinFeignClient.obtenerMonopatinesCercanos(latitud, longitud, distanciaKm);
     }
 
+    //ejercicio 10 llm
 
-
-
+    public boolean usuarioEsPremium(Long idUsuario) {
+        return cuentaFeignClient.esUsuarioPremium(idUsuario);
+    }
 
 
 }

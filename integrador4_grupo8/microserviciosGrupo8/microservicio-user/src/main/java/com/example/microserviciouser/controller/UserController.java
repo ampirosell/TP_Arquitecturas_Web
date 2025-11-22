@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
@@ -120,5 +121,12 @@ public class UserController {
         return ResponseEntity.ok(ids);
     }
 
+
+    //ejercicio 10 llm
+    @GetMapping("/{id}/premium")
+    public Map<String, Boolean> esPremium(@PathVariable Long id) {
+        boolean premium = userService.usuarioEsPremium(id);
+        return Map.of("premium", premium);
+    }
 
 }
