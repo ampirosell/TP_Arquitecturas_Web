@@ -1,17 +1,22 @@
 server:
-  port: 8099
+  port: 8099 #no se si está bien e
 
 spring:
-  ai:
-    openai:
-      api-key: ${GROQ_API_KEY}
-      base-url: https://api.groq.com/openai/v1
-      chat:
-        options:
-          model: llama3-70b-8192
+datasource:
+url:
+  ,→ jdbc:mysql://localhost:3306/ia_crud_persona?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+username: root
+password:
+driver-class-name: com.mysql.cj.jdbc.Driver
+jpa:
+hibernate:
+ddl-auto: update
+show-sql: true
+properties:
+format_sql: true
+groq:
+api-key: ${GROQ_API_KEY}
+base-url: https://api.groq.com/openai
+model: llama-3.1-8b-instant # o llama3-70b-8192 si querés más calidad
+temperature: 0.3
 
-feign:
-  client:
-    config:
-      default:
-        loggerLevel: full
