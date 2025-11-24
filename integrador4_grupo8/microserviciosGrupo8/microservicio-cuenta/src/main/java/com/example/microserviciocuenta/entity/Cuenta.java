@@ -22,7 +22,7 @@ public class Cuenta {
     private Double monto;
     private TipoCuenta tipo;
     private Date fecha_alta;
-    private boolean cuentaActiva;
+    private Boolean cuentaActiva;
 
 
     public Cuenta(TipoCuenta tipo) {

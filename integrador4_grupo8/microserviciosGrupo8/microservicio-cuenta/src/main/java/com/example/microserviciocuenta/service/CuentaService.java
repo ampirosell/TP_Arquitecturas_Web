@@ -42,12 +42,6 @@ public class CuentaService {
         return cuentaRepository.findById(id).orElse(null);
     }
 
-    //ejercicio B
-    @Transactional
-    public Cuenta actualizarEstadoCuenta(Long idUsuario, Boolean cuentaActiva) {
-        int updated = cuentaRepository.actualizarEstadoCuenta(idUsuario, cuentaActiva);
-        return updated > 0 ? cuentaRepository.findByIdUsuario(idUsuario).orElse(null) : null;
-    }
 
     @Transactional
     public Cuenta actualizarEstadoCuentaPorId(Long idCuenta, Boolean cuentaActiva) {
@@ -60,6 +54,6 @@ public class CuentaService {
         Cuenta cuenta = cuentaRepository.findByIdUsuario(idUsuario)
                 .orElseThrow(() -> new RuntimeException("Cuenta no encontrada"));
 
-        return cuenta.isCuentaActiva() && cuenta.getTipo() == TipoCuenta.PREMIUM;
+        return cuenta.getCuentaActiva() && cuenta.getTipo() == TipoCuenta.PREMIUM;
     }
 }

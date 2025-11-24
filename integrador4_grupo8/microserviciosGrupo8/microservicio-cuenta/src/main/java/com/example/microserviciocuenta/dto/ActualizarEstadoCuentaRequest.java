@@ -5,5 +5,7 @@ import lombok.Data;
 @Data
 public class ActualizarEstadoCuentaRequest {
     private boolean activa;
+
 }
+
 
