@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.arqui</groupId>
-    <artifactId>microservice-ia</artifactId>
+    <artifactId>groq-client</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>microservice-ia</name>
-    <description>microservice-ia</description>
+    <name>groq-client</name>
+    <description>groq-client</description>
     <url/>
     <licenses>
         <license/>

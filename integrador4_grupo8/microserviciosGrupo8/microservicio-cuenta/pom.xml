@@ -8,6 +8,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
+
 	<groupId>com.example</groupId>
 	<artifactId>microservicio-cuenta</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -72,6 +73,10 @@
 			<artifactId>h2</artifactId>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
     </dependencies>
 
 	<build>

@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/ia")
+@RequestMapping("/api/groq")
 @RequiredArgsConstructor
 public class IaController {
-    // IaController exponene el endpoint REST que recibe prompts y delega a IaService.
-    /**🔑 que va a hacer mi app en conjunto
+    // IaController expone el endpoint REST que recibe prompts y delega a IaService.
+    /** que va a hacer mi app en conjunto
      *  IaController recibe prompt →
      *  IaService añade esquema + manda a Ollama →
      *  OllamaClient se conecta a la API →

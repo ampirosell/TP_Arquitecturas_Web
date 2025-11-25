@@ -21,8 +21,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 👉 Servicio que:
- * - Construye el prompt con el esquema SQL
+ *  Este service se encarga de:
+ * - Construir el prompt con el esquema SQL
  * - Llama a Groq para generar SQL
  * - Valida y extrae una ÚNICA sentencia SQL (SELECT/INSERT/UPDATE/DELETE)
  * - Ejecuta de forma segura (bloquea DDL peligrosos)
@@ -100,7 +100,7 @@ public class IaService {
 
             log.info("==== SQL EXTRAÍDA ====\n{}", sql);
 
-            // Ejecutar SQL en método transaccional separado
+            // Ejecutar SQL en metodo transaccional separado
             return ejecutarSQL(sql);
 
         } catch (Exception e) {
@@ -114,7 +114,7 @@ public class IaService {
 
     /**
      * ========================================================================
-     * FIX 3: Método separado con @Transactional para ejecutar SQL
+     * FIX 3: Metodo separado con @Transactional para ejecutar SQL
      * ========================================================================
      */
     @Transactional
@@ -146,10 +146,10 @@ public class IaService {
     }
 
     // ========================================================================
-    // [MOD - REEMPLAZO] Método de extracción robusto y documentado
+    // [MOD - REEMPLAZO] Metodo de extracción robusto y documentado
     //   - Acepta SOLO una sentencia que empiece con SELECT/INSERT/UPDATE/DELETE
     //   - Exige punto y coma final
-    //   - Recorta todo lo que venga después del primer ';'
+    //   - Recorta lo que venga despues del primer ';'
     //   - Bloquea DDL peligrosos (DROP/TRUNCATE/ALTER/CREATE/GRANT/REVOKE)
     // ========================================================================
     private String extraerConsultaSQL(String respuesta) {

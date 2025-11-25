@@ -74,4 +74,13 @@ public class CuentaController {
         boolean esPremium = cuentaService.esPremium(idUsuario);
         return ResponseEntity.ok(esPremium);
     }
+
+    @PostMapping("/{id}/pagar")
+    public ResponseEntity<?> pagar(
+            @PathVariable Long id,
+            @RequestParam Double monto) {
+
+        Map<String, Object> resp = cuentaService.procesarPago(id, monto);
+        return ResponseEntity.ok(resp);
+    }
 }

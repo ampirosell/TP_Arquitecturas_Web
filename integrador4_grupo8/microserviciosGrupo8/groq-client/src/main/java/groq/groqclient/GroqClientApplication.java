@@ -1,13 +1,12 @@
-package mock.mockmercadopago;
+package groq.groqclient;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MockMercadopagoApplication {
+public class GroqClientApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MockMercadopagoApplication.class, args);
+        SpringApplication.run(GroqClientApplication.class, args);
     }
-
 }
