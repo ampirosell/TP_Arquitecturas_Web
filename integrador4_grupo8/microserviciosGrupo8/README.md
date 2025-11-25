@@ -8,6 +8,8 @@ Este módulo contiene los seis microservicios Spring Boot del trabajo integrador
 - `microservicio-viaje`
 - `microservicio-cuenta`
 - `microservicio-facturacion`
+- `mock.mercadopago`
+- `groq-client`
 
 Cada microservicio incluye `Dockerfile`, configuración local (`application.properties`) y configuración para Docker (`application-docker.properties`).
 
@@ -42,18 +44,18 @@ Cada microservicio encapsula su modelo y persistencia según los subdominios det
 
 ## Funcionalidades Implementadas
 
-| Requerimiento | Servicio / Endpoint |
-|---------------|--------------------|
-| a) Reporte de km (con/sin pausas) | `GET /viajes/reportes/kilometros?desde&hasta&incluirPausas` |
-| b) Anular cuenta | `PATCH /cuenta/{id}/estado` |
-| c) Monopatines con más de X viajes | `GET /viajes/reportes/monopatines-frecuentes?anio&minViajes` |
-| d) Total facturado en rango de meses | `GET /facturacion/total-mensual?anio&mesInicio&mesFin` |
-| e) Operación vs mantenimiento | `GET /monopatines/resumen/estado` |
-| f) Ajuste de precios con vigencia futura | `POST /tarifas` (setea `fechaInicio`; activación automática) |
-| g) Monopatines cercanos | `GET /monopatines/cercanos?latitud&longitud&distanciaCercana` |
-| Gestión de mantenimiento | `POST /monopatines/{id}/mantenimiento` / `DELETE .../mantenimiento` |
-| Inicio / fin de viaje con validaciones + facturación | `POST /viajes/start`, `POST /viajes/{id}/finalizar` |
-
+| Requerimiento                                             | Servicio / Endpoint                                              |
+|-----------------------------------------------------------|------------------------------------------------------------------|
+| a) Reporte de km (con/sin pausas)                         | `GET /viajes/reportes/kilometros?desde&hasta&incluirPausas`      |
+| b) Anular cuenta                                          | `PATCH /cuenta/{id}/estado`                                      |
+| c) Monopatines con más de X viajes                        | `GET /viajes/reportes/monopatines-frecuentes?anio&minViajes`     |
+| d) Total facturado en rango de meses                      | `GET /facturacion/total-mensual?anio&mesInicio&mesFin`           |
+| e) Operación vs mantenimiento                             | `GET /monopatines/resumen/estado`                                |
+| f) Ajuste de precios con vigencia futura                  | `POST /tarifas` (setea `fechaInicio`; activación automática)     |
+| g) Monopatines cercanos                                   | `GET /monopatines/cercanos?latitud&longitud&distanciaCercana`    |
+| Gestión de mantenimiento                                  | `POST /monopatines/{id}/mantenimiento` / `DELETE .../mantenimiento` |
+| Inicio / fin de viaje con validaciones + facturación      | `POST /viajes/start`, `POST /viajes/{id}/finalizar`              |
+| h) Funcion payments para usar el mock consumido en cuenta | `POST cuenta/{id}/pagar`                                          |
 ---
 
 ## Seguridad JWT
@@ -116,54 +118,10 @@ Cada UI publica su contrato en `/v3/api-docs` para generar clientes o validar in
 | microservicio-cuenta    | 8005   | cuenta                 | MySQL   |
 | microservicio-facturacion | 8010 | facturacion         | MySQL   |
 
-<<<<<<< HEAD
-Docker Compose levanta automáticamente cuatro instancias de MySQL y una de MongoDB con las credenciales configuradas.
-=======
+
 Docker Compose levanta automáticamente cinco instancias de MySQL y una de MongoDB con las credenciales configuradas.
 
->>>>>>> origin/integrador4-v2
----
 
-## Ejecutar Todo con Docker
-
-```bash
-docker compose up -d --build
-```
-
-Esto construye las imágenes (multi-stage) y levanta:
-- 6 microservicios (`*_service`)
-- 5 MySQL (`inte4_*_db`)
-- 1 MongoDB (`inte4_monopatin_db`)
-- red `inte4_net`
-
-Verificar:
-```bash
-docker ps
-docker logs -f user_service         # ejemplo
-```
-
-Detener:
-```bash
-docker compose down
-```
-
-Opcional (limpieza total):
-```bash
-docker compose down --rmi all --volumes
-```
-
----
-
-## Ejecución Local (sin Docker)
-
-```bash
-cd microservicio-user
-mvn spring-boot:run
-```
-
-Debés tener las bases corriendo localmente con los puertos indicados en `application.properties`.
-
----
 
 ## Postman
 
@@ -203,17 +161,6 @@ mvn test
 ---
 
 ## Guía de Testing Rápida
-
-### Verificar contenedores
-```bash
-docker ps
-```
-Deben aparecer:
-- `inte4_*_db` (MySQL en 3306-3310)
-- `inte4_monopatin_db` (Mongo en 27017)
-- `user_service`, `parada_service`, `monopatin_service`, `viaje_service`, `cuenta_service`, `facturacion_service`
-
-### Curl de ejemplo
 
 **Login (obtener token)**
 ```bash
@@ -276,13 +223,6 @@ curl http://localhost:8005/cuenta/1 \
   docker compose up -d --build
   ```
 
-- **Logs de contenedores**
-  ```bash
-  docker logs -f user_service
-  docker logs -f inte4_user_db
-  docker logs -f inte4_monopatin_db
-  ```
-
 ### Error UNKNOWN al ejecutar
 
 #### Verificar y Configurar el SDK del Proyecto
@@ -296,30 +236,6 @@ curl http://localhost:8005/cuenta/1 \
 
 ---
 
-## Estado de Implementación
-
-### ✅ 1ra Entrega - Completada
-- Modelamiento en sub-dominios con microservicios
-- Backend básico con ABM de entidades
-- Todos los servicios/reportes (a-g) implementados
-- Microservicios en puertos independientes
-- Comunicación REST entre servicios
-- Bases de datos separadas (MySQL y MongoDB)
-
-### ⚠️ 2da Entrega - Parcialmente Completada
-- ✅ Microservicios independientes con puertos distintos
-- ✅ Comunicación REST (Feign, RestTemplate)
-- ✅ Bases de datos separadas
-- ✅ MongoDB implementado en `microservicio-monopatin`
-- ✅ Swagger/OpenAPI en todos los servicios
-- ✅ JWT implementado en `microservicio-user`
-- ✅ Tests implementados en `microservicio-user`
-- ⚠️ JWT pendiente en otros 5 microservicios
-- ⚠️ Tests pendientes en otros 5 microservicios
-
-**Nota:** Para replicar JWT y tests en otros servicios, copiar las clases desde `microservicio-user` siguiendo la misma estructura.
-
----
 
 #### Informativo (diagrama de flujo)
 

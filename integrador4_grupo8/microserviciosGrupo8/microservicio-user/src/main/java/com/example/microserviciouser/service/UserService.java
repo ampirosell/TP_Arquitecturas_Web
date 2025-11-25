@@ -2,19 +2,14 @@ package com.example.microserviciouser.service;
 
 
 import com.example.microserviciouser.dto.ActualizarEstadoCuentaRequest;
-<<<<<<< HEAD
 import com.example.microserviciouser.entity.Rol;
 import com.example.microserviciouser.entity.User;
 import com.example.microserviciouser.feignClients.*;
-=======
 import com.example.microserviciouser.dto.AuthResponse;
 import com.example.microserviciouser.dto.LoginRequest;
-import com.example.microserviciouser.entity.Rol;
-import com.example.microserviciouser.entity.User;
 import com.example.microserviciouser.feignClients.*;
 import com.example.microserviciouser.security.JwtUtil;
 import com.example.microserviciouser.security.UserRole;
->>>>>>> origin/integrador4-v2
 
 import com.example.microserviciouser.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,12 +45,10 @@ public class UserService {
     @Autowired
     CuentaFeignClient cuentaFeignClient;
 
-<<<<<<< HEAD
-=======
+
     @Autowired
     JwtUtil jwtUtil;
 
->>>>>>> origin/integrador4-v2
     public UserService(UserRepository userRepository, MonopatinFeignClient monopatinFeignClient, ViajeFeignClient viajeFeignClient
                          , CuentaFeignClient cuentaFeignClient, ParadaFeignClient paradaFeignClient) {
         this.userRepository = userRepository;
@@ -207,17 +200,11 @@ public class UserService {
             throw new RuntimeException("No tiene permisos para realizar esta consulta");
         }
 
-<<<<<<< HEAD
-        // Se pasa el header con el rol del usuario (ADMIN)
         return facturacionFeignClient.obtenerTotalFacturadoEnMeses(
                 anio,
                 mesInicio,
-                mesFin,
-                admin.getRol().name()
+                mesFin
         );
-=======
-        return facturacionFeignClient.obtenerTotalFacturadoEnMeses(anio, mesInicio, mesFin);
->>>>>>> origin/integrador4-v2
     }
     //ejercicio e Como administrador quiero ver los usuarios que más utilizan los monopatines, filtrado por
     //período y por tipo de usuario.
@@ -245,12 +232,7 @@ public class UserService {
         if (!"ADMIN".equalsIgnoreCase(String.valueOf(admin.getRol()))) {
             throw new RuntimeException("No tiene permisos para crear tarifas");
         }
-
-<<<<<<< HEAD
-        return facturacionFeignClient.crearTarifa("ADMIN", tarifa);
-=======
         return facturacionFeignClient.crearTarifa(tarifa);
->>>>>>> origin/integrador4-v2
     }
 
     // G)

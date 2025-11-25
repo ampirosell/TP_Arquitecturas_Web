@@ -1,11 +1,8 @@
 package com.example.microserviciouser.controller;
 
-<<<<<<< HEAD
 import com.example.microserviciouser.dto.ActualizarEstadoCuentaRequest;
-=======
 import com.example.microserviciouser.dto.AuthResponse;
 import com.example.microserviciouser.dto.LoginRequest;
->>>>>>> origin/integrador4-v2
 import com.example.microserviciouser.entity.User;
 import com.example.microserviciouser.security.RoleValidator;
 import com.example.microserviciouser.security.UserRole;
@@ -56,7 +53,6 @@ public class UserController {
         User userNew = userService.save(user);
         return ResponseEntity.ok(userNew);
     }
-<<<<<<< HEAD
     //ejercicio a)
     @GetMapping("/reportes/kilometros")
     public Object reporteUsoMonopatines(
@@ -69,10 +65,15 @@ public class UserController {
     }
     //ejercicio B
     @PatchMapping("/{id}/estado")
-    public Object actualizarEstado(@RequestHeader(value = "X-User-Role", required = false) String roleHeader,@RequestParam Long id, @RequestParam ActualizarEstadoCuentaRequest request){
+    public Object actualizarEstado(
+            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
+            @PathVariable Long id,
+            @RequestBody ActualizarEstadoCuentaRequest request
+    ) {
+        roleValidator.require(roleHeader, UserRole.ADMIN);
         return userService.actualizarEstado(id, request);
     }
-=======
+
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
@@ -97,8 +98,6 @@ public class UserController {
             );
         }
     }
-
->>>>>>> origin/integrador4-v2
 
 
     /* c)
@@ -152,6 +151,7 @@ public class UserController {
     ) {
         return userService.crearNuevaTarifa(idAdmin, tarifa);
     }
+
     // g)
     @GetMapping("/monopatines-cercanos")
     public ResponseEntity<List<Long>> obtenerMonopatinesCercanos(
