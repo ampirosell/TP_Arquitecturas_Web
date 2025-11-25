@@ -39,7 +39,7 @@ services:
   ## GROQ-CLIENT
   groq-client:
     build: ./groq-client
-    container_name: groq_client
+    container_name: groq_client_h2
     ports:
       - "8011:8011"
     environment: [ ]
