@@ -25,4 +25,7 @@ public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
     int actualizarEstadoCuentaPorId(@Param("idCuenta") Long idCuenta, @Param("estado") Boolean estado);
 
     Optional<Cuenta> findByIdUsuario(Long idUsuario);
+
+
+
 }

@@ -27,15 +27,25 @@ services:
     ports:
       - "3310:3306"
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p1234" ]
+      test: [ "CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p1234" ]
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 20s
+      start_period: 40s
     networks:
       - inte4_net
     restart: unless-stopped
 
+  ## GROQ-CLIENT
+  groq-client:
+    build: ./groq-client
+    container_name: groq_client_h2
+    ports:
+      - "8011:8011"
+    environment: [ ]
+    networks:
+      - inte4_net
+    restart: unless-stopped
 
   # 🚌 Microservicio de Paradas
   parada-service:
@@ -65,14 +75,15 @@ services:
     ports:
       - "3307:3306"
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p1234"]
+      test: [ "CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p1234" ]
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 20s
+      start_period: 40s
     networks:
       - inte4_net
     restart: unless-stopped
+
 
   # 👤 Microservicio de Usuarios
   user-service:
@@ -103,11 +114,11 @@ services:
     ports:
       - "3306:3306"
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p1234"]
+      test: [ "CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p1234" ]
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 20s
+      start_period: 40s
     networks:
       - inte4_net
     restart: unless-stopped
@@ -177,11 +188,23 @@ services:
     ports:
       - "3308:3306"
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p1234"]
+      test: [ "CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p1234" ]
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 20s
+      start_period: 40s
+    networks:
+      - inte4_net
+    restart: unless-stopped
+
+  ## MOCKSERVER
+  mock-mercadopago:
+    build: ./mock-mercadopago
+    container_name: mock_mercadopago
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8009:8009"
     networks:
       - inte4_net
     restart: unless-stopped
@@ -215,11 +238,11 @@ services:
     ports:
       - "3309:3306"
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p1234"]
+      test: [ "CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p1234" ]
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 20s
+      start_period: 40s
     networks:
       - inte4_net
     restart: unless-stopped
@@ -227,4 +250,5 @@ services:
 networks:
   inte4_net:
     driver: bridge
+
 

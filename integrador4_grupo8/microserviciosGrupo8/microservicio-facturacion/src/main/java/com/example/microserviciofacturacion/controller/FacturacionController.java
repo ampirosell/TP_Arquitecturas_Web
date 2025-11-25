@@ -24,26 +24,23 @@ public class FacturacionController {
                            @RequestParam Long idViaje,
                            @RequestParam double km,
                            @RequestParam long minutos,
-                           @RequestParam boolean pausaExtendida,
-                           @RequestHeader(value = "X-User-Role", required = false) String roleHeader) {
-        roleValidator.require(roleHeader, UserRole.ADMIN, UserRole.SYSTEM);
+                           @RequestParam boolean pausaExtendida) {
+        roleValidator.require(UserRole.ADMIN, UserRole.SYSTEM);
         return service.generarFactura(idCuenta, idViaje, km, minutos, pausaExtendida);
     }
 
     @GetMapping("/total")
     public double total(@RequestParam String desde,
-                        @RequestParam String hasta,
-                        @RequestHeader(value = "X-User-Role", required = false) String roleHeader) {
-        roleValidator.require(roleHeader, UserRole.ADMIN);
+                        @RequestParam String hasta) {
+        roleValidator.require(UserRole.ADMIN);
         return service.totalFacturadoEntre(LocalDate.parse(desde), LocalDate.parse(hasta));
     }
     //ejercicio D
     @GetMapping("/total-mensual")
     public double totalPorMeses(@RequestParam int anio,
                                 @RequestParam int mesInicio,
-                                @RequestParam int mesFin,
-                                @RequestHeader(value = "X-User-Role", required = false) String roleHeader) {
-        roleValidator.require(roleHeader, UserRole.ADMIN);
+                                @RequestParam int mesFin) {
+        roleValidator.require(UserRole.ADMIN);
         return service.totalFacturadoEnMeses(anio, mesInicio, mesFin);
     }
 }

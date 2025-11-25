@@ -1,6 +1,11 @@
 package com.example.microserviciouser.controller;
 
+<<<<<<< HEAD
 import com.example.microserviciouser.dto.ActualizarEstadoCuentaRequest;
+=======
+import com.example.microserviciouser.dto.AuthResponse;
+import com.example.microserviciouser.dto.LoginRequest;
+>>>>>>> origin/integrador4-v2
 import com.example.microserviciouser.entity.User;
 import com.example.microserviciouser.security.RoleValidator;
 import com.example.microserviciouser.security.UserRole;
@@ -13,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
@@ -25,9 +31,8 @@ public class UserController {
     private RoleValidator roleValidator;
 
     @GetMapping()
-    public ResponseEntity<List<User>> getAllUsers(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader) {
-        roleValidator.require(roleHeader, UserRole.ADMIN);
+    public ResponseEntity<List<User>> getAllUsers() {
+        roleValidator.require(UserRole.ADMIN);
         List<User> users = userService.getAll();
         if (users.isEmpty()) {
             return  ResponseEntity.noContent().build();
@@ -36,10 +41,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
-            @PathVariable("id") Long id) {
-        roleValidator.require(roleHeader, UserRole.ADMIN);
+    public ResponseEntity<User> getUserById(@PathVariable("id") Long id) {
+        roleValidator.require(UserRole.ADMIN);
         User user = userService.getUserById(id);
         if (user == null) {
             return  ResponseEntity.notFound().build();
@@ -48,13 +51,12 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<User> save(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
-            @RequestBody User user) {
-        roleValidator.require(roleHeader, UserRole.ADMIN, UserRole.USER);
+    public ResponseEntity<User> save(@RequestBody User user) {
+        roleValidator.require(UserRole.ADMIN, UserRole.USER);
         User userNew = userService.save(user);
         return ResponseEntity.ok(userNew);
     }
+<<<<<<< HEAD
     //ejercicio a)
     @GetMapping("/reportes/kilometros")
     public Object reporteUsoMonopatines(
@@ -70,6 +72,33 @@ public class UserController {
     public Object actualizarEstado(@RequestHeader(value = "X-User-Role", required = false) String roleHeader,@RequestParam Long id, @RequestParam ActualizarEstadoCuentaRequest request){
         return userService.actualizarEstado(id, request);
     }
+=======
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
+        try {
+            AuthResponse response = userService.login(request);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(401).body(
+                    new AuthResponse(null, null, null, null, "Error: " + e.getMessage())
+            );
+        }
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<AuthResponse> register(@RequestBody User user) {
+        try {
+            AuthResponse response = userService.register(user);
+            return ResponseEntity.status(201).body(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(400).body(
+                    new AuthResponse(null, null, null, null, "Error: " + e.getMessage())
+            );
+        }
+    }
+
+>>>>>>> origin/integrador4-v2
 
 
     /* c)
@@ -97,10 +126,18 @@ public class UserController {
 // e)
     @GetMapping("/usuarios-mas-viajes")
     public ResponseEntity<List<Long>> getUsuariosMasViajesPorTipo(
-            @RequestHeader("X-User-Id") Long idAdmin,
             @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
             @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta,
-            @RequestParam("tipoUsuario") String tipoUsuario) {
+            @RequestParam("tipoUsuario") String tipoUsuario,
+            jakarta.servlet.http.HttpServletRequest request) {
+        
+        roleValidator.require(UserRole.ADMIN);
+        
+        // Obtener userId del JWT (guardado en el filter)
+        Long idAdmin = (Long) request.getAttribute("userId");
+        if (idAdmin == null) {
+            return ResponseEntity.status(403).build();
+        }
 
         List<Long> usuarios = userService.obtenerUsuariosConMasViajesPorTipo(idAdmin, desde, hasta, tipoUsuario);
         return ResponseEntity.ok(usuarios);
@@ -126,5 +163,12 @@ public class UserController {
         return ResponseEntity.ok(ids);
     }
 
+
+    //ejercicio 10 llm
+    @GetMapping("/{id}/premium")
+    public Map<String, Boolean> esPremium(@PathVariable Long id) {
+        boolean premium = userService.usuarioEsPremium(id);
+        return Map.of("premium", premium);
+    }
 
 }

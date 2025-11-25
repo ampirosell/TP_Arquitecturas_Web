@@ -12,6 +12,7 @@ import java.util.List;
 
 @FeignClient(name = "microservicio-viaje", url = "http://localhost:8004/viajes")
 public interface ViajeFeignClient {
+<<<<<<< HEAD
     /*
      * a) Como administrador quiero poder generar un reporte de uso de monopatines por kilómetros
      * para establecer si un monopatín requiere de mantenimiento.
@@ -34,10 +35,24 @@ public interface ViajeFeignClient {
             @PathVariable("minViajes") Long minViajes);
 
     // Ejercicio E: usuarios con más viajes por período
+=======
+
+    @GetMapping("/reportes/kilometros")
+    List<Object> obtenerReporteKilometros(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate desde,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate hasta);
+
+    @GetMapping("/reportes/monopatines-frecuentes")
+    List<Long> obtenerMonopatinesConMasViajes(
+            @RequestParam("anio") int anio,
+            @RequestParam("minViajes") long minViajes);
+
+>>>>>>> origin/integrador4-v2
     @GetMapping("/usuarios-mas-viajes")
     List<Long> obtenerUsuariosConMasViajes(
             @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
             @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta);
+<<<<<<< HEAD
 
     // Ejercicio H: uso de monopatines por usuario (opcional)
     @GetMapping("/usuarios/{idUsuario}/uso")
@@ -46,3 +61,7 @@ public interface ViajeFeignClient {
             @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
             @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta);
 }
+=======
+}
+
+>>>>>>> origin/integrador4-v2

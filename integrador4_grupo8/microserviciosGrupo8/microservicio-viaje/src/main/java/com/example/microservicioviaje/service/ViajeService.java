@@ -340,10 +340,10 @@ período y por tipo de usuario.
 
         if (idCuenta != null) {
             // Busca todos los viajes de los usuarios de esa cuenta
-            viajes = viajeRepository.findByCuentaAndFechaInicioBetween(idCuenta, fechaDesde, fechaHasta);
+            viajes = viajeRepository.findByidCuentaAndFechaInicioBetween(idCuenta, fechaDesde, fechaHasta);
         } else {
             // Solo los del usuario indicado
-            viajes = viajeRepository.findByUsuarioAndFechaInicioBetween(idUsuario, fechaDesde, fechaHasta);
+            viajes = viajeRepository.findByidUsuarioAndFechaInicioBetween(idUsuario, fechaDesde, fechaHasta);
         }
 
         if (viajes.isEmpty()) return null;

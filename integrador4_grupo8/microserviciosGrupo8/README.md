@@ -1,12 +1,13 @@
 # Microservicios Grupo 8
 
-Este módulo contiene los cinco microservicios Spring Boot del trabajo integrador junto con la infraestructura para ejecutarlos en contenedores Docker.
+Este módulo contiene los seis microservicios Spring Boot del trabajo integrador junto con la infraestructura para ejecutarlos en contenedores Docker.
 
 - `microservicio-user`
 - `microservicio-parada`
 - `microservicio-monopatin`
 - `microservicio-viaje`
 - `microservicio-cuenta`
+- `microservicio-facturacion`
 
 Cada microservicio incluye `Dockerfile`, configuración local (`application.properties`) y configuración para Docker (`application-docker.properties`).
 
@@ -33,11 +34,9 @@ Cada microservicio encapsula su modelo y persistencia según los subdominios det
 - **Flota (`microservicio-monopatin`)**  
   Documento MongoDB con estado (`LIBRE`, `EN_USO`, `MANTENIMIENTO`), posición GPS, `paradaId`, `viajeId` y kilómetros acumulados.
 - **Viajes y pausas (`microservicio-viaje`)**  
-  `Viaje` mantiene `idCuenta`, `idUsuario`, `idMonopatin`, tiempos y pausas (`Pausa`). Nuevos endpoints `POST /viajes/start` y `POST /viajes/{id}/finalizar` validan estados y disparan facturación.
+  `Viaje` mantiene `idCuenta`, `idUsuario`, `idMonopatin`, tiempos y pausas (`Pausa`). Endpoints `POST /viajes/start` y `POST /viajes/{id}/finalizar` validan estados y disparan facturación.
 - **Facturación y tarifas (`microservicio-facturacion`)**  
   `Tarifa` con vigencia (`fechaInicio`, `activa`) y `Factura` generada automáticamente al finalizar un viaje.
-
-Las URLs de los servicios externos son configurables (`services.*.base-url`) para perfiles local y Docker.
 
 ---
 
@@ -57,18 +56,52 @@ Las URLs de los servicios externos son configurables (`services.*.base-url`) par
 
 ---
 
+## Seguridad JWT
+
+Todos los microservicios están protegidos con **JWT (JSON Web Tokens)**. Para acceder a los endpoints protegidos:
+
+1. **Obtener token de autenticación:**
+   ```bash
+   POST /users/login
+   Content-Type: application/json
+   
+   {
+     "userId": 1,
+     "email": "user@example.com"  // Opcional: usar userId o email
+   }
+   ```
+
+2. **Usar el token en las peticiones:**
+   ```bash
+   Authorization: Bearer <token>
+   ```
+
+3. **Roles disponibles:**
+   - `ADMIN`: Administrador con acceso completo
+   - `USER`: Usuario regular
+   - `MAINTENANCE`: Encargado de mantenimiento
+   - `SYSTEM`: Sistema interno
+
+**Nota:** Los endpoints públicos (login, register, Swagger UI) no requieren autenticación.
+
+**Estado JWT:** Implementado en `microservicio-user`. Para replicar en otros servicios, copiar las clases de seguridad desde `microservicio-user/src/main/java/.../security/` y agregar Spring Security al `pom.xml`.
+
+---
+
 ## Swagger / OpenAPI
 
 Todos los microservicios exponen documentación interactiva mediante **springdoc-openapi**:
 
-- `http://localhost:8001/swagger-ui/index.html`
-- `http://localhost:8002/swagger-ui/index.html`
-- `http://localhost:8003/swagger-ui/index.html`
-- `http://localhost:8004/swagger-ui/index.html`
-- `http://localhost:8005/swagger-ui/index.html`
-- `http://localhost:8010/swagger-ui/index.html`
+- `http://localhost:8001/swagger-ui/index.html` (user)
+- `http://localhost:8002/swagger-ui/index.html` (parada)
+- `http://localhost:8003/swagger-ui/index.html` (monopatin)
+- `http://localhost:8004/swagger-ui/index.html` (viaje)
+- `http://localhost:8005/swagger-ui/index.html` (cuenta)
+- `http://localhost:8010/swagger-ui/index.html` (facturacion)
 
 Cada UI publica su contrato en `/v3/api-docs` para generar clientes o validar integraciones.
+
+**Autenticación en Swagger:** Usar el botón "Authorize" en Swagger UI para ingresar el token JWT.
 
 ---
 
@@ -81,8 +114,14 @@ Cada UI publica su contrato en `/v3/api-docs` para generar clientes o validar in
 | microservicio-monopatin | 8003   | monopatin              | MongoDB |
 | microservicio-viaje     | 8004   | viaje                  | MySQL   |
 | microservicio-cuenta    | 8005   | cuenta                 | MySQL   |
+| microservicio-facturacion | 8010 | facturacion         | MySQL   |
 
+<<<<<<< HEAD
 Docker Compose levanta automáticamente cuatro instancias de MySQL y una de MongoDB con las credenciales configuradas.
+=======
+Docker Compose levanta automáticamente cinco instancias de MySQL y una de MongoDB con las credenciales configuradas.
+
+>>>>>>> origin/integrador4-v2
 ---
 
 ## Ejecutar Todo con Docker
@@ -92,8 +131,8 @@ docker compose up -d --build
 ```
 
 Esto construye las imágenes (multi-stage) y levanta:
-- 5 microservicios (`*_service`)
-- 4 MySQL (`inte4_*_db`)
+- 6 microservicios (`*_service`)
+- 5 MySQL (`inte4_*_db`)
 - 1 MongoDB (`inte4_monopatin_db`)
 - red `inte4_net`
 
@@ -132,10 +171,34 @@ Debés tener las bases corriendo localmente con los puertos indicados en `applic
 - Environment: `postman_environment.json` (incluye hosts, IDs, fechas y parámetros para reportes)
 
 Pasos sugeridos:
-1. Importar ambos archivos y seleccionar el environment “Microservicios Grupo8 - Local”.
+1. Importar ambos archivos y seleccionar el environment "Microservicios Grupo8 - Local".
 2. Crear datos base (usuarios, paradas, cuentas, monopatines).
-3. Ejecutar `POST /viajes/start`, opcionalmente registrar pausas y finalizar con `POST /viajes/{id}/finalizar`.
-4. Consultar reportes (kilómetros, monopatines frecuentes, facturación mensual) y resúmenes de flota/mantenimiento.
+3. Ejecutar `POST /users/login` para obtener token JWT.
+4. Ejecutar `POST /viajes/start`, opcionalmente registrar pausas y finalizar con `POST /viajes/{id}/finalizar`.
+5. Consultar reportes (kilómetros, monopatines frecuentes, facturación mensual) y resúmenes de flota/mantenimiento.
+
+---
+
+## Testing
+
+### Ejecutar Tests
+
+```bash
+# Desde la raíz del proyecto
+mvn test
+
+# Para un microservicio específico
+cd microservicio-user
+mvn test
+```
+
+### Tipos de Tests
+
+1. **Tests Unitarios** (`*Test.java`): Utilizan Mockito para mockear dependencias
+2. **Tests de Integración** (`*IntegrationTest.java`): Utilizan `@SpringBootTest` y `MockMvc`
+3. **Configuración**: Usan H2 en memoria para bases de datos SQL, perfil `test` con `application-test.properties`
+
+**Estado Tests:** Implementados en `microservicio-user`. Para replicar, copiar la estructura de tests desde `microservicio-user/src/test/`.
 
 ---
 
@@ -146,53 +209,52 @@ Pasos sugeridos:
 docker ps
 ```
 Deben aparecer:
-- `inte4_*_db` (MySQL en 3306-3309)
+- `inte4_*_db` (MySQL en 3306-3310)
 - `inte4_monopatin_db` (Mongo en 27017)
-- `user_service`, `parada_service`, `monopatin_service`, `viaje_service`, `cuenta_service`
+- `user_service`, `parada_service`, `monopatin_service`, `viaje_service`, `cuenta_service`, `facturacion_service`
 
 ### Curl de ejemplo
 
-**User**
+**Login (obtener token)**
 ```bash
-curl {{user_base_url}}/users
+curl -X POST http://localhost:8001/users/login \
+  -H "Content-Type: application/json" \
+  -d '{"userId": 1}'
+```
+
+**User (con autenticación)**
+```bash
+# Primero obtener el token del login, luego:
+curl http://localhost:8001/users \
+  -H "Authorization: Bearer <tu-token-jwt>"
 ```
 
 **Parada**
 ```bash
-curl -X POST {{parada_base_url}}/paradas \
+curl -X POST http://localhost:8002/paradas \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <token>" \
   -d '{"direccion":"Av. Siempreviva 742","nombre":"Parada Centro","latitud":-34.6037,"longitud":-58.3816}'
 ```
 
 **Monopatín**
 ```bash
-curl -X POST {{monopatin_base_url}}/monopatines \
+curl -X POST http://localhost:8003/monopatines \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <token>" \
   -d '{"estadoMonopatin":"LIBRE","kmRecorridos":0,"latitud":-34.6037,"longitud":-58.3816}'
 ```
 
 **Viaje**
 ```bash
-curl {{viaje_base_url}}/viajes
-```
-
-**Crear viaje**
-```bash
-curl -X POST {{viaje_base_url}}/viajes \
-  -H "Content-Type: application/json" \
-  -d '{"fechaInicio":"2025-11-11T08:30:00","fechaFin":"2025-11-11T09:00:00","kmRecorridos":5.5,"pausa":false,"idMonopatin":1,"idUsuario":1}'
-```
-
-**Crear pausa**
-```bash
-curl -X POST {{viaje_base_url}}/pausas \
-  -H "Content-Type: application/json" \
-  -d '{"fechaInicio":"2025-11-11T09:10:00","fechaFin":"2025-11-11T09:40:00","pausaTotal":30,"viaje":{"idViaje":1}}'
+curl http://localhost:8004/viajes \
+  -H "Authorization: Bearer <token>"
 ```
 
 **Cuenta**
 ```bash
-curl {{cuenta_base_url}}/cuenta/1
+curl http://localhost:8005/cuenta/1 \
+  -H "Authorization: Bearer <token>"
 ```
 
 ---
@@ -206,7 +268,7 @@ curl {{cuenta_base_url}}/cuenta/1
   Revisá `docker ps`. MySQL puede tardar unos segundos en subir; los microservicios esperan los healthchecks, pero si fallan reiniciá con `docker compose up -d`.
 
 - **Conflicto de puertos**  
-  Si tu host ya usa 8001-8005 o 3306-3309, cambiá los puertos en `docker-compose.yml` (lado host).
+  Si tu host ya usa 8001-8010 o 3306-3310, cambiá los puertos en `docker-compose.yml` (lado host).
 
 - **Cambios en el código**  
   Después de editar Java o configuración, rebuild con:
@@ -227,10 +289,36 @@ curl {{cuenta_base_url}}/cuenta/1
 
 1. **File** → **Project Structure** (o `Ctrl+Alt+Shift+S`)
 2. En la sección **Project**:
-    - **SDK**: Selecciona Java 17 (o crea uno si no existe)
-    - **Language level**: Selecciona **17 - Sealed classes, always-strict floating-point semantics**
-    - **Project compiler output**: Puede quedar vacío o usar `demo/out`
+   - **SDK**: Selecciona Java 17 (o crea uno si no existe)
+   - **Language level**: Selecciona **17 - Sealed classes, always-strict floating-point semantics**
+   - **Project compiler output**: Puede quedar vacío o usar `demo/out`
 3. Haz clic en **Apply** y luego **OK**
+
+---
+
+## Estado de Implementación
+
+### ✅ 1ra Entrega - Completada
+- Modelamiento en sub-dominios con microservicios
+- Backend básico con ABM de entidades
+- Todos los servicios/reportes (a-g) implementados
+- Microservicios en puertos independientes
+- Comunicación REST entre servicios
+- Bases de datos separadas (MySQL y MongoDB)
+
+### ⚠️ 2da Entrega - Parcialmente Completada
+- ✅ Microservicios independientes con puertos distintos
+- ✅ Comunicación REST (Feign, RestTemplate)
+- ✅ Bases de datos separadas
+- ✅ MongoDB implementado en `microservicio-monopatin`
+- ✅ Swagger/OpenAPI en todos los servicios
+- ✅ JWT implementado en `microservicio-user`
+- ✅ Tests implementados en `microservicio-user`
+- ⚠️ JWT pendiente en otros 5 microservicios
+- ⚠️ Tests pendientes en otros 5 microservicios
+
+**Nota:** Para replicar JWT y tests en otros servicios, copiar las clases desde `microservicio-user` siguiendo la misma estructura.
+
 ---
 
 #### Informativo (diagrama de flujo)

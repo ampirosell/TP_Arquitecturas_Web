@@ -1,0 +1,23 @@
+server:
+  port: 8011
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:groq_db;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'classpath:schema.sql'
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      format_sql: true
+
+groq:
+  api-key: ${GROQ_API_KEY}
+  base-url: https://api.groq.com/openai
+  model: llama-3.1-8b-instant
+  temperature: 0.3

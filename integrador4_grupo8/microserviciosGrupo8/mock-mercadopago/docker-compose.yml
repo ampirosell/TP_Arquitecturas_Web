@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  mock-mercadopago:
+    build: .
+    container_name: mock_mercadopago
+    ports:
+      - "8009:8009"
+    networks:
+      - inte4_net
+    restart: unless-stopped
+
+networks:
+  inte4_net:
+    external: true

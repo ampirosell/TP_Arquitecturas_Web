@@ -24,9 +24,8 @@ public class ParadaController {
     private RoleValidator roleValidator;
 
     @GetMapping()
-    public ResponseEntity<List<Parada>> getAllParadas(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader) throws Exception {
-        roleValidator.require(roleHeader, UserRole.USER, UserRole.ADMIN);
+    public ResponseEntity<List<Parada>> getAllParadas() throws Exception {
+        roleValidator.require(UserRole.USER, UserRole.ADMIN);
         try {
             List<Parada> paradas = paradaService.getAll();
             return new ResponseEntity<>(paradas, HttpStatus.OK);
@@ -36,10 +35,8 @@ public class ParadaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Parada> getParadaById(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
-            @PathVariable Long id) throws Exception {
-        roleValidator.require(roleHeader, UserRole.USER, UserRole.ADMIN);
+    public ResponseEntity<Parada> getParadaById(@PathVariable Long id) throws Exception {
+        roleValidator.require(UserRole.USER, UserRole.ADMIN);
         Parada parada = paradaService.findById(id);
         if (parada != null) {
             return ResponseEntity.ok(parada);
@@ -49,19 +46,16 @@ public class ParadaController {
     }
 
     @PostMapping()
-    public ResponseEntity<Parada> save(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
-            @RequestBody Parada parada) {
-        roleValidator.require(roleHeader, UserRole.ADMIN);
+    public ResponseEntity<Parada> save(@RequestBody Parada parada) {
+        roleValidator.require(UserRole.ADMIN);
         Parada userNew = paradaService.save(parada);
         return ResponseEntity.ok(userNew);
     }
 
     @GetMapping("/monopatinesCercanos")
     public ResponseEntity<?> getMonopatinesCercanos(
-            @RequestHeader(value = "X-User-Role", required = false) String roleHeader,
             @RequestParam double latitud, @RequestParam double longitud, @RequestParam double distanciaCercana) {
-        roleValidator.require(roleHeader, UserRole.USER, UserRole.ADMIN);
+        roleValidator.require(UserRole.USER, UserRole.ADMIN);
         try {
             return ResponseEntity.ok(
                     paradaService.getMonopatinesCercanos(latitud, longitud, distanciaCercana)
