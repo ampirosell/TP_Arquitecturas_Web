@@ -35,11 +35,6 @@ public interface ViajeFeignClient {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate hasta);
 
 
-    @GetMapping("/reportes/monopatines-frecuentes")
-    List<Long> obtenerMonopatinesConMasViajes(
-            @RequestParam("anio") int anio,
-            @RequestParam("minViajes") long minViajes);
-
 
     @GetMapping("/usuarios/{idUsuario}/uso")
     Double obtenerUsoUsuario(
@@ -47,5 +42,9 @@ public interface ViajeFeignClient {
             @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
             @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta);
 
+    @GetMapping("/usuarios-mas-viajes")
+    List<Long> obtenerUsuariosConMasViajes(
+            @RequestParam("desde") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime desde,
+            @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hasta);
 }
 
